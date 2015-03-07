@@ -1,0 +1,90 @@
+
+pack.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+player-dash
+  rotate: false
+  xy: 404, 98
+  size: 152, 28
+  orig: 152, 28
+  offset: 0, 0
+  index: -1
+player-dash-idle
+  rotate: false
+  xy: 906, 89
+  size: 33, 37
+  orig: 33, 37
+  offset: 0, 0
+  index: -1
+player-fall
+  rotate: false
+  xy: 244, 38
+  size: 132, 47
+  orig: 132, 47
+  offset: 0, 0
+  index: -1
+player-fall-idle
+  rotate: false
+  xy: 650, 84
+  size: 74, 42
+  orig: 74, 42
+  offset: 0, 0
+  index: -1
+player-fall-walk
+  rotate: false
+  xy: 798, 84
+  size: 68, 42
+  orig: 68, 42
+  offset: 0, 0
+  index: -1
+player-idle
+  rotate: false
+  xy: 2, 37
+  size: 240, 48
+  orig: 240, 48
+  offset: 0, 0
+  index: -1
+player-idle-dash
+  rotate: false
+  xy: 2, 2
+  size: 31, 33
+  orig: 31, 33
+  offset: 0, 0
+  index: -1
+player-idle-rise
+  rotate: false
+  xy: 726, 80
+  size: 70, 46
+  orig: 70, 46
+  offset: 0, 0
+  index: -1
+player-idle-walk
+  rotate: false
+  xy: 941, 88
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: -1
+player-rise
+  rotate: false
+  xy: 558, 80
+  size: 90, 46
+  orig: 90, 46
+  offset: 0, 0
+  index: -1
+player-rise-fall
+  rotate: false
+  xy: 868, 80
+  size: 36, 46
+  orig: 36, 46
+  offset: 0, 0
+  index: -1
+player-walk
+  rotate: false
+  xy: 2, 87
+  size: 400, 39
+  orig: 400, 39
+  offset: 0, 0
+  index: -1
