@@ -47,7 +47,10 @@ public class Stage extends ScreenAdapter{
 	public void gameLoop(float timeDelta){
 		step(timeDelta);
 		render();
-
+		processNewActors();
+	}
+	
+	protected void processNewActors(){
 		while(removeQueue.size() > 0){
 			Actor a = removeQueue.poll();
 			a.removeFromStage(this);

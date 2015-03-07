@@ -30,6 +30,7 @@ public class MoveX extends Game {
 		initRes();
 		Level test = new Level(spriteRender, shapeRender);
 		constructLevel(test);
+		test.setPlayer(new Player(), new Vector2(0,10));
 		//test.setDebugDraw(true);
 		setScreen(test);
 	}
@@ -72,9 +73,6 @@ public class MoveX extends Game {
 		
 		SolidBlock plat2 = new SolidBlock(new Vector2(-5, 5), platShape);
 		level.addActor(plat2);
-
-		Player player = new Player();
-		level.addActor(player);
 	}
 
 }
