@@ -19,11 +19,11 @@ public class MoveX extends Game {
 
 	public static TextureAtlas ATLAS;
 
-	public static float PIXELS_PER_METER = 24;
+	public static final float PIXELS_PER_METER = 24;
 
-	public static short CAT_ENVIRONMENT = 0x01;
-	public static short CAT_PLAYER = 0x02;
-	public static short CAT_ENEMY = 0x04;
+	public static final short CAT_ENVIRONMENT = 0x01;
+	public static final short CAT_PLAYER = 0x02;
+	public static final short CAT_ENEMY = 0x04;
 
 	@Override
 	public void create() {

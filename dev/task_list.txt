@@ -1,0 +1,58 @@
+Task		Progress
+Game Engine	Completed
+
+MOVEMENT OPTIONS
+Walking		Completed
+Jumping		Completed
+Wall Jumping	Not Started
+Double Jumping 	Completed
+Dashing		Completed
+Air Dashing	Completed
+D. Dashing	Completed
+Rope		Not Started
+Grapple Hook	Not Started
+Hookshot	Not Started
+
+BASIC FUNCTIONS
+Checkpoints	Not Started
+Upgrades	Not Started
+Game Menu	Not Started
+Title Screen	Not Started
+Saves		Not Started
+Loading Zones	Not Started
+Begin Condition	Not Started
+End Condition	Not Started
+
+LEVEL OBJECTS
+Rect. Surface	Completed
+Slopes		Untested
+Platforms	Not Started
+Dash Blocks	Not Started
+Steel Surface	Not Started
+Sticky Surface	Not Started
+
+HAZARDS
+Blast Zones	Not Started
+Spikes		Not Started
+Turrets		Not Started
+
+DEV TOOLS
+Dev Sprites	Wall Jump and Rope sprites remaining
+Level Loader	Not Started
+Level Builder	Not Started
+
+GRAPHICS
+UI Graphics 	Not Started
+Surface Text.	Not Started
+Player Sprites	Not Started
+
+SOUND
+Music		Delegated to Aaron
+SFX		Not Started
+
+LEVELS
+Design		Not Started
+
+EXTENSIONS
+Control Rebind	Not Started
+Native JInput	Not Started
