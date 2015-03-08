@@ -2,7 +2,6 @@ package jedyobidan.game.moveX;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 
 public class InputGraph extends InputAdapter {
 	public static final int LATENCY = 2; // Number of ticks before positive edge no longer registers
