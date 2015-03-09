@@ -3,13 +3,13 @@ package jedyobidan.game.moveX;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 
-public class InputGraph extends InputAdapter {
+public class InputWave extends InputAdapter {
 	public static final int LATENCY = 2; // Number of ticks before positive edge no longer registers
 	
 	private int posEdge;
 	private int negEdge;
 	private int key;
-	public InputGraph(int key){
+	public InputWave(int key){
 		this.key = key;
 	}
 	

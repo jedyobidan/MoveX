@@ -1,9 +1,10 @@
-package jedyobidan.game.moveX.player;
+package jedyobidan.game.moveX.player.state;
 
 import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.player.PlayerState;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -14,17 +15,17 @@ public class IdleState extends PlayerState {
 	private Animation main;
 	public IdleState(Player p) {
 		super(p);
-		main = JUtil.animationFromSheet(p.textures.get("idle"), 1, 6, 1/6f);
+		main = JUtil.animationFromSheet(p.getTextures().get("idle"), 1, 6, 1/6f);
 		main.setPlayMode(PlayMode.LOOP);	
 		setAnimation(main, 20, 18);
 	}
 	
 	public boolean init(PlayerState prev){
 		if(prev instanceof FallState){
-			Animation anim = JUtil.animationFromSheet(player.textures.get("fall-idle"), 1, 2, 1/24f);
+			Animation anim = JUtil.animationFromSheet(textures.get("fall-idle"), 1, 2, 1/24f);
 			setAnimation(anim, 22, 16);
 		} else if(prev instanceof DashState){
-			Animation anim = JUtil.animationFromSheet(player.textures.get("dash-idle"), 1, 1, 1/12f);
+			Animation anim = JUtil.animationFromSheet(textures.get("dash-idle"), 1, 1, 1/12f);
 			setAnimation(anim, 17, 13);
 		} else {
 			setAnimation(main, 20, 18);
@@ -38,20 +39,26 @@ public class IdleState extends PlayerState {
 			setAnimation(main, 20, 18);
 		}
 		
-		Body body = player.getBody();
+		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();
-		Vector2 force = new Vector2(body.getMass() * player.stats.get("skid_force") * -velocity.x, 0);
+		Vector2 force = new Vector2(body.getMass() * profile.getStat("skid_force") * -velocity.x, 0);
 		body.applyForceToCenter(force, true);
 		
-		Controller c = player.controller;
-		if(!player.onGround()){
-			player.setState(new FallState(player));
-		} else if(c.getInputGraph(Input.JUMP).posEdge()){
-			player.setState(new RiseState(player));
-		} else if(c.getDI().x != 0){
-			player.setState(new WalkState(player));
-		} else if(c.getInputGraph(Input.DASH).posEdge()){
-			player.setState(new DashState(player));
+		if(controller.getDI().x != 0){
+			physics.setFacing(controller.getDI().x < 0);
+		}
+		
+		if(!player.getPhysics().onGround()){
+			if(player.setState(new FallState(player))) return;
+		}
+		if(controller.getWaveform(Input.DASH).posEdge()){
+			if(player.setState(new DashState(player))) return;
+		}
+		if(controller.getWaveform(Input.JUMP).posEdge()){
+			if(player.setState(new RiseState(player))) return;
+		} 
+		if(controller.getDI().x != 0){
+			if(player.setState(new WalkState(player))) return;
 		}
 	}
 

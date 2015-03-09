@@ -10,26 +10,26 @@ import com.badlogic.gdx.math.Vector2;
 import static jedyobidan.game.moveX.Input.*;
 
 public class Controller extends InputAdapter{
-	public Map<Input, InputGraph> graphs;
+	public Map<Input, InputWave> graphs;
 	
 	public Controller(){
 		
-		graphs = new HashMap<Input, InputGraph>();
-		graphs.put(LEFT, new InputGraph(Keys.A));
-		graphs.put(RIGHT, new InputGraph(Keys.D));
-		graphs.put(UP, new InputGraph(Keys.W));
-		graphs.put(DOWN, new InputGraph(Keys.S));
-		graphs.put(JUMP, new InputGraph(Keys.K));
-		graphs.put(ROPE, new InputGraph(Keys.J));
-		graphs.put(DASH, new InputGraph(Keys.L));
+		graphs = new HashMap<Input, InputWave>();
+		graphs.put(LEFT, new InputWave(Keys.A));
+		graphs.put(RIGHT, new InputWave(Keys.D));
+		graphs.put(UP, new InputWave(Keys.W));
+		graphs.put(DOWN, new InputWave(Keys.S));
+		graphs.put(JUMP, new InputWave(Keys.K));
+		graphs.put(ROPE, new InputWave(Keys.J));
+		graphs.put(DASH, new InputWave(Keys.L));
 	}
 	
-	public InputGraph getInputGraph(Input input){
+	public InputWave getWaveform(Input input){
 		return graphs.get(input);
 	}
 	
 	public void step(){
-		for(InputGraph graph: graphs.values()){
+		for(InputWave graph: graphs.values()){
 			graph.step();
 		}
 	}
@@ -54,7 +54,7 @@ public class Controller extends InputAdapter{
 	@Override
 	public boolean keyDown(int keycode) {
 		boolean ans = false;
-		for(InputGraph graph: graphs.values()){
+		for(InputWave graph: graphs.values()){
 			ans |= graph.keyDown(keycode);
 		}
 		return ans;
@@ -63,7 +63,7 @@ public class Controller extends InputAdapter{
 	@Override
 	public boolean keyUp(int keycode) {
 		boolean ans = false;
-		for(InputGraph graph: graphs.values()){
+		for(InputWave graph: graphs.values()){
 			ans |= graph.keyUp(keycode);
 		}
 		return ans;

@@ -31,7 +31,7 @@ public class MoveX extends Game {
 		Level test = new Level(spriteRender, shapeRender);
 		constructLevel(test);
 		test.setPlayer(new Player(), new Vector2(0,10));
-		//test.setDebugDraw(true);
+		test.setDebugDraw(false);
 		setScreen(test);
 	}
 
@@ -54,7 +54,7 @@ public class MoveX extends Game {
 
 	private void constructLevel(jedyobidan.game.moveX.Level level) {
 		PolygonShape groundShape = new PolygonShape();
-		groundShape.setAsBox(10, 1);
+		groundShape.setAsBox(20, 1);
 		SolidBlock ground = new SolidBlock(new Vector2(0, 0), groundShape);
 		level.addActor(ground);
 		
@@ -65,6 +65,9 @@ public class MoveX extends Game {
 		wallShape.setAsBox(0.5f, 5);
 		SolidBlock wall = new SolidBlock(new Vector2(10, 5), wallShape);
 		level.addActor(wall);
+		
+		SolidBlock wall2 = new SolidBlock(new Vector2(15, 5), wallShape);
+		level.addActor(wall2);
 		
 		PolygonShape platShape = new PolygonShape();
 		platShape.setAsBox(2.5f, 0.1f);

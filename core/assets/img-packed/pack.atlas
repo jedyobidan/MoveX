@@ -13,7 +13,7 @@ player-dash
   index: -1
 player-dash-idle
   rotate: false
-  xy: 906, 89
+  xy: 512, 59
   size: 33, 37
   orig: 33, 37
   offset: 0, 0
@@ -27,16 +27,23 @@ player-fall
   index: -1
 player-fall-idle
   rotate: false
-  xy: 650, 84
+  xy: 849, 84
   size: 74, 42
   orig: 74, 42
   offset: 0, 0
   index: -1
 player-fall-walk
   rotate: false
-  xy: 798, 84
+  xy: 404, 54
   size: 68, 42
   orig: 68, 42
+  offset: 0, 0
+  index: -1
+player-fall-wrise
+  rotate: false
+  xy: 769, 87
+  size: 78, 39
+  orig: 78, 39
   offset: 0, 0
   index: -1
 player-idle
@@ -55,28 +62,28 @@ player-idle-dash
   index: -1
 player-idle-rise
   rotate: false
-  xy: 726, 80
+  xy: 925, 80
   size: 70, 46
   orig: 70, 46
   offset: 0, 0
   index: -1
 player-idle-walk
   rotate: false
-  xy: 941, 88
+  xy: 547, 47
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: -1
 player-rise
   rotate: false
-  xy: 558, 80
+  xy: 677, 80
   size: 90, 46
   orig: 90, 46
   offset: 0, 0
   index: -1
 player-rise-fall
   rotate: false
-  xy: 868, 80
+  xy: 474, 50
   size: 36, 46
   orig: 36, 46
   offset: 0, 0
@@ -86,5 +93,12 @@ player-walk
   xy: 2, 87
   size: 400, 39
   orig: 400, 39
+  offset: 0, 0
+  index: -1
+player-wrise
+  rotate: false
+  xy: 558, 87
+  size: 117, 39
+  orig: 117, 39
   offset: 0, 0
   index: -1

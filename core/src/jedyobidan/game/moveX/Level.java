@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.Box2dStage;
@@ -21,12 +22,13 @@ public class Level extends Box2dStage {
 		this.player = p;
 		addActor(p);
 		processNewActors();
-		p.move(start.x, start.y);
+		p.getPhysics().move(start.x, start.y);
 	}
 
 	@Override
 	protected void render() {
-		camera.position.set(player.getBody().getPosition().x, player.getBody().getPosition().y, 0);
+		Body body = player.getPhysics().getBody();
+		camera.position.set(body.getPosition().x, body.getPosition().y, 0);
 		super.render();
 	}
 	

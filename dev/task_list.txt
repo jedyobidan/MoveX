@@ -15,8 +15,9 @@ Hookshot	Not Started
 
 BASIC FUNCTIONS
 Checkpoints	Not Started
-Upgrades	Not Started
+Dialogs		Not Started
 Game Menu	Not Started
+Upgrades	Not Started
 Title Screen	Not Started
 Saves		Not Started
 Loading Zones	Not Started
@@ -37,7 +38,7 @@ Spikes		Not Started
 Turrets		Not Started
 
 DEV TOOLS
-Dev Sprites	Wall Jump and Rope sprites remaining
+Dev Sprites	Rope sprites remaining
 Level Loader	Not Started
 Level Builder	Not Started
 

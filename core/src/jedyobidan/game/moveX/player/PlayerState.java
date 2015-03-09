@@ -5,18 +5,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 
+import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureManager;
 
 public abstract class PlayerState {
 	protected Player player;
+	protected PlayerPhysics physics;
+	protected PlayerProfile profile;
+	protected Controller controller;
+	protected TextureManager textures;
+	
+	
 	private Animation current;
 	protected SpriteTransform transform;
 	private float time;
 	
 	public PlayerState(Player p){
 		this.player = p;
+		this.physics = p.getPhysics();
+		this.profile = p.getProfile();
+		this.textures = p.getTextures();
+		this.controller = p.getController();
+		
 		transform = new SpriteTransform();
 		transform.scale.set(1/MoveX.PIXELS_PER_METER, 1/MoveX.PIXELS_PER_METER);
 	}
@@ -25,10 +38,10 @@ public abstract class PlayerState {
 	public void destroy(PlayerState next){ }
 	
 	public void render(SpriteBatch render){
-		transform.position = new Vector2(player.getBody().getPosition());
-		transform.rotation = player.getBody().getAngle();
+		transform.position = new Vector2(physics.getBody().getPosition());
+		transform.rotation = physics.getBody().getAngle();
 		transform.texture = current.getKeyFrame(time);
-		transform.flipX = player.getFacing();
+		transform.flipX = physics.getFacing();
 		transform.render(render);
 	}
 	
