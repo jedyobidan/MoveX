@@ -22,17 +22,22 @@ public class RiseState extends PlayerState {
 	}
 	
 	@Override
-	public boolean init(PlayerState prev){
-		if(profile.can("can_jump")){
+	public boolean valid(PlayerState prev){
+		if(!profile.can("jump")){
 			return false;
 		}
 		
 		if(!player.getPhysics().onGround()){
-			if(profile.canAirJump()){
-				profile.useAirJump();
-			} else {
-				return false;
-			}
+			return profile.canAirJump();
+		} else {
+			return profile.can("jump");
+		}
+	}
+	
+	@Override
+	public void init(PlayerState prev){		
+		if(!player.getPhysics().onGround()){
+			profile.useAirJump();
 		}
 		
 		Animation anim = JUtil.animationFromSheet(textures.get("idle-rise"), 1, 2, 1/24f);
@@ -44,7 +49,6 @@ public class RiseState extends PlayerState {
 		
 		jumpImpulse.y = body.getMass() * (riseSpeed - velocity.y);
 		body.applyLinearImpulse(jumpImpulse, body.getWorldCenter(), true);
-		return true;
 	}
 
 

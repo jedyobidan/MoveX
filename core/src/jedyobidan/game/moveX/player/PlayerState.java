@@ -34,7 +34,8 @@ public abstract class PlayerState {
 		transform.scale.set(1/MoveX.PIXELS_PER_METER, 1/MoveX.PIXELS_PER_METER);
 	}
 
-	public abstract boolean init(PlayerState prev);
+	public boolean valid(PlayerState prev){return true;}
+	public void init(PlayerState prev){	}
 	public void destroy(PlayerState next){ }
 	
 	public void render(SpriteBatch render){

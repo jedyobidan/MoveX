@@ -22,10 +22,12 @@ public class WallRiseState extends PlayerState {
 		riseSpeed = jump;
 	}
 	
-	public boolean init(PlayerState prev){
-		if(profile.can("wall_jump")){
-			return false;
-		}
+	@Override
+	public boolean valid(PlayerState prev){
+		return profile.can("wall_jump");
+	}
+	
+	public void init(PlayerState prev){
 		
 		Animation anim = JUtil.animationFromSheet(textures.get("fall-wrise"), 1, 2, 1/24f);
 		setAnimation(anim, 19, 13);
@@ -41,7 +43,6 @@ public class WallRiseState extends PlayerState {
 		
 		body.applyLinearImpulse(jumpImpulse, body.getWorldCenter(), true);
 		physics.setFacing(!physics.getFacing());
-		return true;
 	}
 	
 	public void step(float delta, float time){

@@ -17,7 +17,7 @@ public class WalkState extends PlayerState {
 	}
 	
 	@Override
-	public boolean init(PlayerState prev){
+	public void init(PlayerState prev){
 		if (prev instanceof FallState){
 			Animation anim = JUtil.animationFromSheet(textures.get("fall-walk"), 1, 2, 1/24f);
 			setAnimation(anim, 19, 16);
@@ -25,8 +25,14 @@ public class WalkState extends PlayerState {
 			Animation anim = JUtil.animationFromSheet(textures.get("idle-walk"), 1, 1, 1/12f);
 			setAnimation(anim, 16, 13);
 		}
-		return true;
+
+		physics.getBody().setGravityScale(10);
 	}
+	
+	public void destroy(PlayerState next){
+		physics.getBody().setGravityScale(1);
+	}
+	
 	
 
 	@Override
@@ -37,23 +43,24 @@ public class WalkState extends PlayerState {
 			setAnimation(anim, 22, 14);
 		}
 		
+		Vector2 di = controller.getDI();
 		float walkSpeed = profile.getStat("walk_speed");
 		float walkAccel = profile.getStat("walk_accel");
-		Vector2 force = new Vector2(0, 0);
-		Vector2 velocity = physics.getBody().getLinearVelocity();		
-		Vector2 di = controller.getDI();
+		Vector2 velocity = physics.getBody().getLinearVelocity();
 		
-		if(di.x != 0){
-			physics.setFacing(di.x < 0);
-		}
-		
-		// Accelerating Force
-		force.x = physics.getBody().getMass() * walkAccel * (di.x * walkSpeed - velocity.x);
-		
-		// TODO Brake Force
-		
+
+		Vector2 force = new Vector2(di.x * walkSpeed, 0);
+		force = physics.normalize(force);
+		force.add(new Vector2(velocity).scl(-1));
+		force.scl(physics.getBody().getMass() * walkAccel);	
 		
 		physics.getBody().applyForceToCenter(force,  true);
+		
+		physics.stickToGround();
+
+		if(di.x != 0){
+			physics.setFacing(di.x < 0);
+		}	
 		
 		// State changes
 		if(!player.getPhysics().onGround()){

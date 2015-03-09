@@ -4,6 +4,7 @@ import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.player.PlayerPhysics;
 import jedyobidan.game.moveX.player.PlayerState;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,7 +21,8 @@ public class IdleState extends PlayerState {
 		setAnimation(main, 20, 18);
 	}
 	
-	public boolean init(PlayerState prev){
+	@Override
+	public void init(PlayerState prev){
 		if(prev instanceof FallState){
 			Animation anim = JUtil.animationFromSheet(textures.get("fall-idle"), 1, 2, 1/24f);
 			setAnimation(anim, 22, 16);
@@ -30,8 +32,9 @@ public class IdleState extends PlayerState {
 		} else {
 			setAnimation(main, 20, 18);
 		}
-		return true;
+
 	}
+	
 
 	@Override
 	public void step(float delta, float time) {		
@@ -41,8 +44,14 @@ public class IdleState extends PlayerState {
 		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();
-		Vector2 force = new Vector2(body.getMass() * profile.getStat("skid_force") * -velocity.x, 0);
+		Vector2 force = new Vector2();
+		force.add(new Vector2(velocity).scl(-1));
+		force.scl(body.getMass() * profile.getStat("skid_force"));
+		
 		body.applyForceToCenter(force, true);
+		
+		physics.stickToGround();
+		
 		
 		if(controller.getDI().x != 0){
 			physics.setFacing(controller.getDI().x < 0);

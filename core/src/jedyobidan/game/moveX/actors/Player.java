@@ -11,6 +11,7 @@ import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 import jedyobidan.game.moveX.player.PlayerProfile;
 import jedyobidan.game.moveX.player.PlayerState;
+import jedyobidan.game.moveX.player.state.FallState;
 import jedyobidan.game.moveX.player.state.IdleState;
 
 import com.badlogic.gdx.Gdx;
@@ -43,9 +44,11 @@ public class Player extends Actor {
 		if (nextState != null) {
 			state = nextState;
 		}
+		physics.requestGroundNormal();
 		if (physics.onGround()){
 			profile.refreshStat("air_jumps");
 			profile.refreshStat("air_dashes");
+			physics.slopeGuard();
 		}
 		controller.step();
 		state.step(timeDelta);
@@ -64,7 +67,8 @@ public class Player extends Actor {
 		level.addContactListener(physics);
 		
 
-		state = new IdleState(this);
+		state = new FallState(this);
+		state.init(null);
 	}
 
 	@Override
@@ -81,7 +85,8 @@ public class Player extends Actor {
 	}
 
 	public boolean setState(PlayerState next) {
-		if(next.init(state)){
+		if(next.valid(state)){
+			next.init(state);
 			state.destroy(next);
 			nextState = next;
 			return true;

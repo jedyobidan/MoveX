@@ -19,12 +19,13 @@ public class AirDashState extends PlayerState {
 	}
 
 	@Override
-	public boolean init(PlayerState prev) {
-		if (profile.canAirDash()) {
-			profile.useAirDash();
-		} else {
-			return false;
-		}
+	public boolean valid(PlayerState prev){
+		return profile.canAirDash();
+	}
+	
+	@Override
+	public void init(PlayerState prev) {
+		profile.useAirDash();
 		
 		physics.setDashbox(true);
 		Animation transition = JUtil.animationFromSheet(textures.get("idle-dash"), 1, 1, 1/12f);
@@ -51,9 +52,9 @@ public class AirDashState extends PlayerState {
 		
 		body.setGravityScale(0);
 
-		return true;
 	}
 	
+	@Override
 	public void destroy(PlayerState next){
 		physics.setDashbox(false);
 		physics.getBody().setGravityScale(1);
@@ -87,7 +88,7 @@ public class AirDashState extends PlayerState {
 		if(player.getPhysics().onGround()){
 			Vector2 waveDash = new Vector2();
 			waveDash.x = body.getMass() * (dir.x * profile.getStat("walk_speed") * DashState.BOOST);
-			body.applyLinearImpulse(waveDash, body.getWorldCenter(), true);
+			body.applyLinearImpulse(physics.normalize(waveDash), body.getWorldCenter(), true);
 			if(player.setState(new WalkState(player))) return;
 		} 
 		

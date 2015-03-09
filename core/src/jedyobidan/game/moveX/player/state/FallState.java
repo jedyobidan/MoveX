@@ -6,21 +6,22 @@ import com.badlogic.gdx.math.Vector2;
 
 import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
+import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
 import jedyobidan.game.moveX.player.PlayerState;
 
 public class FallState extends PlayerState {
+	public static final int VEL_TERM = 30;
 
 	public FallState(Player p) {
 		super(p);
 	}
 	
 	@Override
-	public boolean init(PlayerState prev){
+	public void init(PlayerState prev){
 		Animation anim = JUtil.animationFromSheet(textures.get("rise-fall"), 1, 1, 1/12f);
 		setAnimation(anim, 22, 18);
-		return true;
 	}
 
 	@Override
@@ -44,6 +45,11 @@ public class FallState extends PlayerState {
 		}
 
 		physics.getBody().applyForceToCenter(force, true);
+		
+		// Air resistance
+		if(velocity.y < -VEL_TERM){
+			physics.getBody().setLinearVelocity(velocity.x, -VEL_TERM);
+		}
 		
 		
 		if(player.getPhysics().onGround()){

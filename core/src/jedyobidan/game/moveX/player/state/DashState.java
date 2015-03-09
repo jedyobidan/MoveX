@@ -19,23 +19,29 @@ public class DashState extends PlayerState{
 		super(p);
 	}
 	
-	public boolean init(PlayerState prev){
-		if(!profile.can("dash")){
-			return false;
-		}
-		player.getPhysics().setDashbox(true);
+	@Override
+	public boolean valid(PlayerState prev){
+		return profile.can("dash");
+	}
+	
+	@Override
+	public void init(PlayerState prev){
 		Animation transition = JUtil.animationFromSheet(textures.get("idle-dash"), 1, 1, 1/12f);
 		setAnimation(transition, 14, 12);
 		
 		dir = physics.getFacing() ? -1 : 1;
 		Vector2 impulse = new Vector2();
 		Body body = physics.getBody();
-		impulse.x = body.getMass() * (dir * profile.getStat("walk_speed") * BOOST - body.getLinearVelocity().x);
-		body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+		impulse.x = dir * profile.getStat("walk_speed") * BOOST;
+		impulse = physics.normalize(impulse);
+		impulse.add(new Vector2(body.getLinearVelocity()).scl(-1));
+		impulse.scl(body.getMass());
 		
-		return true;
+		body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+		player.getPhysics().setDashbox(true);
 	}
 	
+	@Override
 	public void destroy(PlayerState next){
 		player.getPhysics().setDashbox(false);
 	}
@@ -48,12 +54,17 @@ public class DashState extends PlayerState{
 			setAnimation(main, 19, 12);
 		}
 		
-		Vector2 force = new Vector2();
+		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();
+		Vector2 force = new Vector2(dir * profile.getStat("walk_speed") * BOOST, 0);
+		force = physics.normalize(force);
+		force.add(new Vector2(velocity).scl(-1));
+		force.scl(body.getMass() * 10);
 		
-		force.x = body.getMass() * 10 * (dir * profile.getStat("walk_speed") * BOOST - velocity.x);
 		body.applyForceToCenter(force, true);
+		
+		physics.stickToGround();
 		
 		//State changes
 		Vector2 exitImpulse = new Vector2();

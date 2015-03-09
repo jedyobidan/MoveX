@@ -4,7 +4,7 @@ Game Engine	Completed
 MOVEMENT OPTIONS
 Walking		Completed
 Jumping		Completed
-Wall Jumping	Not Started
+Wall Jumping	Completed
 Double Jumping 	Completed
 Dashing		Completed
 Air Dashing	Completed
@@ -26,7 +26,7 @@ End Condition	Not Started
 
 LEVEL OBJECTS
 Rect. Surface	Completed
-Slopes		Untested
+Slopes		Completed (possibly glitchy)
 Platforms	Not Started
 Dash Blocks	Not Started
 Steel Surface	Not Started

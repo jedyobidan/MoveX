@@ -59,12 +59,11 @@ public class PlayerProfile {
 	}
 	
 	public void initStats(){
-
 		setStat("walk_speed", 7f);
 		setStat("walk_accel", 7f);
-		setStat("jump_speed", 13.4f);
-		setStat("air_speed", 5f);
-		setStat("air_accel", 5f);
+		setStat("jump_speed", 13f);
+		setStat("air_speed", 7f);
+		setStat("air_accel", 7f);
 		setStat("skid_force", 15f);
 		setStat("air_jumps", 1f);
 		setStat("air_dashes", 1f);
@@ -72,5 +71,6 @@ public class PlayerProfile {
 		addAbility("jump");
 		addAbility("dash");
 		addAbility("direction_dash");
+		addAbility("wall_jump");
 	}
 }
