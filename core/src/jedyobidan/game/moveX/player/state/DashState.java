@@ -27,7 +27,7 @@ public class DashState extends PlayerState{
 	@Override
 	public void init(PlayerState prev){
 		Animation transition = JUtil.animationFromSheet(textures.get("idle-dash"), 1, 1, 1/12f);
-		setAnimation(transition, 14, 12);
+		setAnimation(transition, 20, 10);
 		
 		dir = physics.getFacing() ? -1 : 1;
 		Vector2 impulse = new Vector2();
@@ -49,9 +49,9 @@ public class DashState extends PlayerState{
 	@Override
 	public void step(float delta, float time) {
 		if(isAnimationFinished()){
-			Animation main = JUtil.animationFromSheet(textures.get("dash"), 1, 4, 1/12f);
+			Animation main = JUtil.animationFromSheet(textures.get("dash"), 1, 1, 1/12f);
 			main.setPlayMode(PlayMode.LOOP);
-			setAnimation(main, 19, 12);
+			setAnimation(main, 20, 10);
 		}
 		
 		

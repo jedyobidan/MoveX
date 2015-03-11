@@ -25,10 +25,10 @@ public class IdleState extends PlayerState {
 	public void init(PlayerState prev){
 		if(prev instanceof FallState){
 			Animation anim = JUtil.animationFromSheet(textures.get("fall-idle"), 1, 2, 1/24f);
-			setAnimation(anim, 22, 16);
+			setAnimation(anim, 15, 18);
 		} else if(prev instanceof DashState){
 			Animation anim = JUtil.animationFromSheet(textures.get("dash-idle"), 1, 1, 1/12f);
-			setAnimation(anim, 17, 13);
+			setAnimation(anim, 20, 11);
 		} else {
 			setAnimation(main, 15, 10);
 		}

@@ -20,7 +20,7 @@ public class WalkState extends PlayerState {
 	public void init(PlayerState prev){
 		if (prev instanceof FallState){
 			Animation anim = JUtil.animationFromSheet(textures.get("fall-walk"), 1, 2, 1/24f);
-			setAnimation(anim, 19, 16);
+			setAnimation(anim, 15, 18);
 		} else {
 			Animation anim = JUtil.animationFromSheet(textures.get("idle-walk"), 1, 1, 1/12f);
 			setAnimation(anim, 20, 11);

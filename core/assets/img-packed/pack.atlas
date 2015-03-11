@@ -1,104 +1,104 @@
 
 pack.png
-size: 512,128
+size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 player-dash
   rotate: false
-  xy: 2, 59
-  size: 152, 28
-  orig: 152, 28
+  xy: 647, 13
+  size: 38, 35
+  orig: 38, 35
   offset: 0, 0
   index: -1
 player-dash-idle
   rotate: false
-  xy: 174, 2
-  size: 33, 37
-  orig: 33, 37
-  offset: 0, 0
-  index: -1
-player-fall
-  rotate: false
-  xy: 2, 10
-  size: 132, 47
-  orig: 132, 47
-  offset: 0, 0
-  index: -1
-player-fall-idle
-  rotate: false
-  xy: 248, 4
-  size: 74, 42
-  orig: 74, 42
-  offset: 0, 0
-  index: -1
-player-fall-walk
-  rotate: false
-  xy: 400, 43
-  size: 68, 42
-  orig: 68, 42
-  offset: 0, 0
-  index: -1
-player-fall-wrise
-  rotate: false
-  xy: 248, 48
-  size: 78, 39
-  orig: 78, 39
-  offset: 0, 0
-  index: -1
-player-idle
-  rotate: false
-  xy: 324, 2
-  size: 29, 35
-  orig: 29, 35
+  xy: 687, 13
+  size: 38, 35
+  orig: 38, 35
   offset: 0, 0
   index: -1
 player-idle-dash
   rotate: false
-  xy: 209, 6
-  size: 31, 33
-  orig: 31, 33
+  xy: 687, 13
+  size: 38, 35
+  orig: 38, 35
+  offset: 0, 0
+  index: -1
+player-fall
+  rotate: false
+  xy: 765, 2
+  size: 29, 46
+  orig: 29, 46
+  offset: 0, 0
+  index: -1
+player-fall-idle
+  rotate: false
+  xy: 432, 2
+  size: 58, 46
+  orig: 58, 46
+  offset: 0, 0
+  index: -1
+player-fall-walk
+  rotate: false
+  xy: 492, 2
+  size: 58, 46
+  orig: 58, 46
+  offset: 0, 0
+  index: -1
+player-fall-wrise
+  rotate: false
+  xy: 364, 5
+  size: 66, 43
+  orig: 66, 43
+  offset: 0, 0
+  index: -1
+player-idle
+  rotate: false
+  xy: 858, 13
+  size: 29, 35
+  orig: 29, 35
   offset: 0, 0
   index: -1
 player-idle-rise
   rotate: false
-  xy: 328, 39
-  size: 70, 46
-  orig: 70, 46
+  xy: 552, 2
+  size: 58, 46
+  orig: 58, 46
   offset: 0, 0
   index: -1
 player-idle-walk
   rotate: false
-  xy: 136, 2
+  xy: 727, 11
   size: 36, 37
   orig: 36, 37
   offset: 0, 0
   index: -1
 player-rise
   rotate: false
-  xy: 156, 41
-  size: 90, 46
-  orig: 90, 46
+  xy: 796, 2
+  size: 29, 46
+  orig: 29, 46
   offset: 0, 0
   index: -1
 player-rise-fall
   rotate: false
-  xy: 470, 39
-  size: 36, 46
-  orig: 36, 46
+  xy: 827, 2
+  size: 29, 46
+  orig: 29, 46
   offset: 0, 0
   index: -1
 player-walk
   rotate: false
-  xy: 2, 89
+  xy: 2, 11
   size: 360, 37
   orig: 360, 37
   offset: 0, 0
   index: -1
 player-wrise
   rotate: false
-  xy: 364, 87
-  size: 117, 39
-  orig: 117, 39
+  xy: 612, 5
+  size: 33, 43
+  orig: 33, 43
   offset: 0, 0
   index: -1

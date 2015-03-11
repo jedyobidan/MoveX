@@ -29,7 +29,7 @@ public class AirDashState extends PlayerState {
 		
 		physics.setDashbox(true);
 		Animation transition = JUtil.animationFromSheet(textures.get("idle-dash"), 1, 1, 1/12f);
-		setAnimation(transition, 14, 12);
+		setAnimation(transition, 20, 10);
 
 		Vector2 di = controller.getDI();
 		dir = new Vector2();
@@ -63,9 +63,9 @@ public class AirDashState extends PlayerState {
 	@Override
 	public void step(float delta, float time) {
 		if(isAnimationFinished()){
-			Animation main = JUtil.animationFromSheet(textures.get("dash"), 1, 4, 1/12f);
+			Animation main = JUtil.animationFromSheet(textures.get("dash"), 1, 1, 1/12f);
 			main.setPlayMode(PlayMode.LOOP);
-			setAnimation(main, 19, 12);
+			setAnimation(main, 20, 10);
 		}
 		
 		Vector2 force = new Vector2();

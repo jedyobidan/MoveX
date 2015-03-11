@@ -30,7 +30,7 @@ public class WallRiseState extends PlayerState {
 	public void init(PlayerState prev){
 		
 		Animation anim = JUtil.animationFromSheet(textures.get("fall-wrise"), 1, 2, 1/24f);
-		setAnimation(anim, 19, 13);
+		setAnimation(anim, 17, 15);
 		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();
@@ -47,9 +47,9 @@ public class WallRiseState extends PlayerState {
 	
 	public void step(float delta, float time){
 		if(isAnimationFinished()){
-			Animation anim = JUtil.animationFromSheet(textures.get("wrise"), 1, 3, 1/9f);
+			Animation anim = JUtil.animationFromSheet(textures.get("wrise"), 1, 1, 1/9f);
 			anim.setPlayMode(PlayMode.LOOP);
-			setAnimation(anim, 19, 13);
+			setAnimation(anim, 17, 15);
 		}
 
 		Body body = physics.getBody();

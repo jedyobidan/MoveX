@@ -21,15 +21,15 @@ public class FallState extends PlayerState {
 	@Override
 	public void init(PlayerState prev){
 		Animation anim = JUtil.animationFromSheet(textures.get("rise-fall"), 1, 1, 1/12f);
-		setAnimation(anim, 22, 18);
+		setAnimation(anim, 15, 18);
 	}
 
 	@Override
 	public void step(float delta, float time) {
 		if(isAnimationFinished()){
-			Animation anim = JUtil.animationFromSheet(textures.get("fall"), 1, 4, 1/9f);
+			Animation anim = JUtil.animationFromSheet(textures.get("fall"), 1, 1, 1/9f);
 			anim.setPlayMode(PlayMode.LOOP);
-			setAnimation(anim, 19, 18);
+			setAnimation(anim, 15, 18);
 		}
 		
 		Vector2 force = new Vector2();

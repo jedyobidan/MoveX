@@ -41,7 +41,7 @@ public class RiseState extends PlayerState {
 		}
 		
 		Animation anim = JUtil.animationFromSheet(textures.get("idle-rise"), 1, 2, 1/24f);
-		setAnimation(anim, 19, 18);
+		setAnimation(anim, 15, 18);
 		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();
@@ -83,9 +83,9 @@ public class RiseState extends PlayerState {
 	
 	protected void animationStep(float time){
 		if(isAnimationFinished()){
-			Animation anim = JUtil.animationFromSheet(textures.get("rise"), 1, 3, 1/9f);
+			Animation anim = JUtil.animationFromSheet(textures.get("rise"), 1, 1, 1/9f);
 			anim.setPlayMode(PlayMode.LOOP);
-			setAnimation(anim, 16, 18);
+			setAnimation(anim, 15, 18);
 		}
 	}
 
