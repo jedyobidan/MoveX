@@ -16,9 +16,9 @@ public class IdleState extends PlayerState {
 	private Animation main;
 	public IdleState(Player p) {
 		super(p);
-		main = JUtil.animationFromSheet(p.getTextures().get("idle"), 1, 6, 1/6f);
+		main = JUtil.animationFromSheet(p.getTextures().get("idle"), 1, 1, 1/6f);
 		main.setPlayMode(PlayMode.LOOP);	
-		setAnimation(main, 20, 18);
+		setAnimation(main, 15, 10);
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class IdleState extends PlayerState {
 			Animation anim = JUtil.animationFromSheet(textures.get("dash-idle"), 1, 1, 1/12f);
 			setAnimation(anim, 17, 13);
 		} else {
-			setAnimation(main, 20, 18);
+			setAnimation(main, 15, 10);
 		}
 
 	}
@@ -39,7 +39,7 @@ public class IdleState extends PlayerState {
 	@Override
 	public void step(float delta, float time) {		
 		if(isAnimationFinished()){
-			setAnimation(main, 20, 18);
+			setAnimation(main, 15, 10);
 		}
 		
 		Body body = physics.getBody();
@@ -47,12 +47,9 @@ public class IdleState extends PlayerState {
 		Vector2 force = new Vector2();
 		force.add(new Vector2(velocity).scl(-1));
 		force.scl(body.getMass() * profile.getStat("skid_force"));
-		
+
 		body.applyForceToCenter(force, true);
-		
-		physics.stickToGround();
-		
-		
+				
 		if(controller.getDI().x != 0){
 			physics.setFacing(controller.getDI().x < 0);
 		}
@@ -69,6 +66,7 @@ public class IdleState extends PlayerState {
 		if(controller.getDI().x != 0){
 			if(player.setState(new WalkState(player))) return;
 		}
+		physics.stickToGround();
 	}
 
 }

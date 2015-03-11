@@ -64,7 +64,6 @@ public class DashState extends PlayerState{
 		
 		body.applyForceToCenter(force, true);
 		
-		physics.stickToGround();
 		
 		//State changes
 		Vector2 exitImpulse = new Vector2();
@@ -92,6 +91,7 @@ public class DashState extends PlayerState{
 				if(player.setState(new WalkState(player))) return;
 			}
 		}
+		physics.stickToGround();
 		
 	}
 

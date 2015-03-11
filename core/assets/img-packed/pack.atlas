@@ -1,103 +1,103 @@
 
 pack.png
-size: 1024,128
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 player-dash
   rotate: false
-  xy: 404, 98
+  xy: 2, 59
   size: 152, 28
   orig: 152, 28
   offset: 0, 0
   index: -1
 player-dash-idle
   rotate: false
-  xy: 512, 59
+  xy: 174, 2
   size: 33, 37
   orig: 33, 37
   offset: 0, 0
   index: -1
 player-fall
   rotate: false
-  xy: 244, 38
+  xy: 2, 10
   size: 132, 47
   orig: 132, 47
   offset: 0, 0
   index: -1
 player-fall-idle
   rotate: false
-  xy: 849, 84
+  xy: 248, 4
   size: 74, 42
   orig: 74, 42
   offset: 0, 0
   index: -1
 player-fall-walk
   rotate: false
-  xy: 404, 54
+  xy: 400, 43
   size: 68, 42
   orig: 68, 42
   offset: 0, 0
   index: -1
 player-fall-wrise
   rotate: false
-  xy: 769, 87
+  xy: 248, 48
   size: 78, 39
   orig: 78, 39
   offset: 0, 0
   index: -1
 player-idle
   rotate: false
-  xy: 2, 37
-  size: 240, 48
-  orig: 240, 48
+  xy: 324, 2
+  size: 29, 35
+  orig: 29, 35
   offset: 0, 0
   index: -1
 player-idle-dash
   rotate: false
-  xy: 2, 2
+  xy: 209, 6
   size: 31, 33
   orig: 31, 33
   offset: 0, 0
   index: -1
 player-idle-rise
   rotate: false
-  xy: 925, 80
+  xy: 328, 39
   size: 70, 46
   orig: 70, 46
   offset: 0, 0
   index: -1
 player-idle-walk
   rotate: false
-  xy: 547, 47
-  size: 30, 38
-  orig: 30, 38
+  xy: 136, 2
+  size: 36, 37
+  orig: 36, 37
   offset: 0, 0
   index: -1
 player-rise
   rotate: false
-  xy: 677, 80
+  xy: 156, 41
   size: 90, 46
   orig: 90, 46
   offset: 0, 0
   index: -1
 player-rise-fall
   rotate: false
-  xy: 474, 50
+  xy: 470, 39
   size: 36, 46
   orig: 36, 46
   offset: 0, 0
   index: -1
 player-walk
   rotate: false
-  xy: 2, 87
-  size: 400, 39
-  orig: 400, 39
+  xy: 2, 89
+  size: 360, 37
+  orig: 360, 37
   offset: 0, 0
   index: -1
 player-wrise
   rotate: false
-  xy: 558, 87
+  xy: 364, 87
   size: 117, 39
   orig: 117, 39
   offset: 0, 0

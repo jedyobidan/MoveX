@@ -23,7 +23,7 @@ public class WalkState extends PlayerState {
 			setAnimation(anim, 19, 16);
 		} else {
 			Animation anim = JUtil.animationFromSheet(textures.get("idle-walk"), 1, 1, 1/12f);
-			setAnimation(anim, 16, 13);
+			setAnimation(anim, 20, 11);
 		}
 
 		physics.getBody().setGravityScale(10);
@@ -40,7 +40,7 @@ public class WalkState extends PlayerState {
 		if(isAnimationFinished()){
 			Animation anim = JUtil.animationFromSheet(textures.get("walk"), 1, 10, 1/12f);
 			anim.setPlayMode(PlayMode.LOOP);
-			setAnimation(anim, 22, 14);
+			setAnimation(anim, 20, 11);
 		}
 		
 		Vector2 di = controller.getDI();
@@ -56,7 +56,6 @@ public class WalkState extends PlayerState {
 		
 		physics.getBody().applyForceToCenter(force,  true);
 		
-		physics.stickToGround();
 
 		if(di.x != 0){
 			physics.setFacing(di.x < 0);
@@ -78,6 +77,7 @@ public class WalkState extends PlayerState {
 		if(controller.getWaveform(Input.JUMP).posEdge()){
 			if(player.setState(new RiseState(player))) return;
 		}
+		physics.stickToGround();
 		
 	}
 

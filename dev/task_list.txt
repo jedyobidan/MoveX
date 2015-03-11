@@ -45,7 +45,7 @@ Level Builder	Not Started
 GRAPHICS
 UI Graphics 	Not Started
 Surface Text.	Not Started
-Player Sprites	Not Started
+Player Sprites	Rope Sprites and Wall jump remaining
 
 SOUND
 Music		Delegated to Aaron

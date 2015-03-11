@@ -19,7 +19,7 @@ public class MoveX extends Game {
 
 	public static TextureAtlas ATLAS;
 
-	public static final float PIXELS_PER_METER = 24;
+	public static final float PIXELS_PER_METER = 20;
 
 	public static final short CAT_ENVIRONMENT = 0x01;
 	public static final short CAT_PLAYER = 0x02;
@@ -31,7 +31,7 @@ public class MoveX extends Game {
 		Level test = new Level(spriteRender, shapeRender);
 		constructLevel(test);
 		test.setPlayer(new Player(), new Vector2(0,10));
-		test.setDebugDraw(true);
+		test.setDebugDraw(false);
 		setScreen(test);
 	}
 
