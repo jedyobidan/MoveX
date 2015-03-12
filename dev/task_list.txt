@@ -23,11 +23,12 @@ Saves		Not Started
 Loading Zones	Not Started
 Begin Condition	Not Started
 End Condition	Not Started
+Control Rebind	Not Started
 
 LEVEL OBJECTS
 Rect. Surface	Completed
 Slopes		Completed (possibly glitchy)
-Platforms	Not Started
+Platforms	Completed (also possible glitchy, but less than slopes)
 Dash Blocks	Not Started
 Steel Surface	Not Started
 Sticky Surface	Not Started
@@ -38,14 +39,14 @@ Spikes		Not Started
 Turrets		Not Started
 
 DEV TOOLS
-Dev Sprites	Rope sprites remaining
+Dev Sprites	Unneeded
 Level Loader	Not Started
 Level Builder	Not Started
 
 GRAPHICS
 UI Graphics 	Not Started
 Surface Text.	Not Started
-Player Sprites	Rope Sprites and Wall jump remaining
+Player Sprites	Rope Sprites remaining, need airdash->fall transition
 
 SOUND
 Music		Delegated to Aaron
@@ -55,5 +56,4 @@ LEVELS
 Design		Not Started
 
 EXTENSIONS
-Control Rebind	Not Started
 Native JInput	Not Started

@@ -82,17 +82,21 @@ public class AirDashState extends PlayerState {
 		exitImpulse.y = body.getMass() * - velocity.y;
 		
 		if (controller.getWaveform(Input.JUMP).posEdge()){
-			if(player.setState(new RiseState(player))) return;
+			if(physics.facingWall()){
+				if(player.setState(new WallRiseState(player))) return;
+			} else {
+				if(player.setState(new RiseState(player))) return;
+			}
 		} 
 		
-		if(player.getPhysics().onGround()){
+		if(player.getPhysics().onGround() && dir.y <= 0){
 			Vector2 waveDash = new Vector2();
 			waveDash.x = body.getMass() * (dir.x * profile.getStat("walk_speed") * DashState.BOOST);
 			body.applyLinearImpulse(physics.normalize(waveDash), body.getWorldCenter(), true);
 			if(player.setState(new WalkState(player))) return;
 		} 
 		
-		if (time > DashState.TIME){
+		if (time > DashState.DEFAULT_TIME){
 			body.applyLinearImpulse(exitImpulse, body.getWorldCenter(), true);
 			if(player.setState(new FallState(player))) return;
 		}

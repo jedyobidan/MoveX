@@ -14,7 +14,7 @@ public class Level extends Box2dStage {
 	private Player player;
 	public Level(SpriteBatch sb, ShapeRenderer sr) {
 		super(sb, sr);
-		camera.setToOrtho(false, Gdx.graphics.getWidth() / MoveX.PIXELS_PER_METER, Gdx.graphics.getHeight() / MoveX.PIXELS_PER_METER);
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / Const.PIXELS_PER_METER, Gdx.graphics.getHeight() / Const.PIXELS_PER_METER);
 		camera.position.set(0, 0, 0);
 		physics.setGravity(new Vector2(0, GRAVITY));
 	}

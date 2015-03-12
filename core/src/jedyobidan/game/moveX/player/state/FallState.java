@@ -13,23 +13,28 @@ import jedyobidan.game.moveX.player.PlayerState;
 
 public class FallState extends PlayerState {
 	public static final int VEL_TERM = 30;
+	private Animation main;
 
 	public FallState(Player p) {
 		super(p);
+		main = JUtil.animationFromSheet(textures.get("fall"), 1, 1, 1/9f);
+		main.setPlayMode(PlayMode.LOOP);
 	}
 	
 	@Override
 	public void init(PlayerState prev){
-		Animation anim = JUtil.animationFromSheet(textures.get("rise-fall"), 1, 1, 1/12f);
-		setAnimation(anim, 15, 18);
+		if(prev instanceof AirDashState){
+			setAnimation(main, 15, 18);
+		} else {
+			Animation anim = JUtil.animationFromSheet(textures.get("rise-fall"), 1, 1, 1/12f);
+			setAnimation(anim, 15, 18);
+		}
 	}
 
 	@Override
 	public void step(float delta, float time) {
 		if(isAnimationFinished()){
-			Animation anim = JUtil.animationFromSheet(textures.get("fall"), 1, 1, 1/9f);
-			anim.setPlayMode(PlayMode.LOOP);
-			setAnimation(anim, 15, 18);
+			setAnimation(main, 15, 18);
 		}
 		
 		Vector2 force = new Vector2();

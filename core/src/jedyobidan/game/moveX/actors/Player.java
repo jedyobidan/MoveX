@@ -64,6 +64,7 @@ public class Player extends Actor {
 		Level level = (Level) s;
 		Gdx.input.setInputProcessor(controller);
 		physics = new PlayerPhysics(this, level.getPhysics());
+		physics.move(0, 0);
 		level.addContactListener(physics);
 		
 
@@ -86,8 +87,8 @@ public class Player extends Actor {
 
 	public boolean setState(PlayerState next) {
 		if(next.valid(state)){
-			next.init(state);
 			state.destroy(next);
+			next.init(state);
 			nextState = next;
 			return true;
 		}
