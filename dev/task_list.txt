@@ -14,7 +14,7 @@ Grapple Hook	Not Started
 Hookshot	Not Started
 
 BASIC FUNCTIONS
-Checkpoints	In development
+Checkpoints	Completed
 Dialogs		Not Started
 Game Menu	Not Started
 Upgrades	Not Started

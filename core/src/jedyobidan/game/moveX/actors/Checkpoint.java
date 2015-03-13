@@ -86,7 +86,7 @@ public class Checkpoint extends Actor implements ContactListener {
 		Actor a = (Actor) other.getUserData();
 		if(a instanceof Player){
 			if(!on){
-				// emit some text
+				stage.addActor(new FlyingText("Checkpoint", position.x, position.y + 0.75f));
 			}
 			Player p = (Player) a;
 			p.setCheckpoint(this);
@@ -99,6 +99,10 @@ public class Checkpoint extends Actor implements ContactListener {
 	
 	public void setEnabled(boolean en){
 		on = en;
+	}
+	
+	public float getZIndex(){
+		return 0.5f;
 	}
  
 	@Override

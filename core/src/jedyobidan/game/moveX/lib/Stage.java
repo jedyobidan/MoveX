@@ -1,13 +1,16 @@
 package jedyobidan.game.moveX.lib;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.TreeSet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,7 +22,8 @@ public class Stage extends ScreenAdapter{
 	private Queue<Actor> addQueue;
 	private Queue<Actor> removeQueue;	
 
-	protected OrthographicCamera camera;
+	private List<OrthographicCamera> cameras;
+	private int defaultCamera;
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
 	
@@ -37,7 +41,8 @@ public class Stage extends ScreenAdapter{
 		removeQueue = new LinkedList<Actor>();
 		
 
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameras = new ArrayList<OrthographicCamera>();
+		cameras.add(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		spriteRender = sb;
 		shapeRender = sr;
 	}
@@ -70,16 +75,35 @@ public class Stage extends ScreenAdapter{
 	protected void render(){
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    camera.update();
-		
-		spriteRender.setProjectionMatrix(camera.combined);
-		shapeRender.setProjectionMatrix(camera.combined);
+	    for(Camera cam: cameras){
+	    	cam.update();
+	    }
+
+	    useCamera(defaultCamera);
 		
 		spriteRender.begin();
 		for(Actor a: actors){
 			a.render(spriteRender, shapeRender);
 		}		
 		spriteRender.end();
+	}
+	
+	public void useCamera(int camID){
+		spriteRender.setProjectionMatrix(cameras.get(camID).combined);
+		shapeRender.setProjectionMatrix(cameras.get(camID).combined);
+	}
+	
+	public void setDefaultCamera(int camID){
+		defaultCamera = camID;
+	}
+	
+	public int addCamera(OrthographicCamera cam){
+		cameras.add(cam);
+		return cameras.size() - 1;
+	}
+	
+	public OrthographicCamera getCamera(int camID){
+		return cameras.get(camID);
 	}
 	
 	public void addActor(Actor a){

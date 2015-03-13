@@ -27,10 +27,10 @@ public class MoveX extends Game {
 	@Override
 	public void create() {
 		initRes();
-		Level test = new Level(0, spriteRender, shapeRender);
+		Level test = new Level(spriteRender, shapeRender);
 		constructLevel(test);
 		test.setPlayer(new Player(), new Vector2(0,15));
-		test.setDebugDraw(true);
+		test.setDebug(true);
 		setScreen(test);
 	}
 
@@ -63,6 +63,7 @@ public class MoveX extends Game {
 		level.addActor(new Checkpoint(-5f, 3.75f));
 		level.addActor(new Checkpoint(15, 11.75f));
 		level.addActor(new Checkpoint(0, 17.75f));
+		level.addActor(new Checkpoint(-25, 1.75f));
 		
 		
 		// slope

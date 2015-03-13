@@ -1,5 +1,8 @@
 package jedyobidan.game.moveX;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import jedyobidan.game.moveX.actors.RectBlock;
 import jedyobidan.game.moveX.actors.StaticPlatform;
 import jedyobidan.game.moveX.actors.TriBlock;
@@ -28,5 +31,13 @@ public class Const {
 	public static boolean isWall(Actor a) {
 		return  a instanceof RectBlock |
 				a instanceof TriBlock;
+	}
+	
+	public static class Fonts {
+		public static final BitmapFont SANS;
+		
+		static {
+			SANS = new BitmapFont(Gdx.files.internal("fonts/sans.fnt"));
+		}
 	}
 }

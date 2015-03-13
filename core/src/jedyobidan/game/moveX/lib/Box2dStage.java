@@ -3,6 +3,10 @@ package jedyobidan.game.moveX.lib;
 import java.util.HashSet;
 import java.util.Set;
 
+import jedyobidan.game.moveX.Const;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +22,7 @@ public class Box2dStage extends Stage implements ContactListener{
 	protected int velocityIterations, positionIterations;
 	private boolean debugDraw;
 	private Box2DDebugRenderer physicsDebug;
+	private int physicsCamera;
 	
 	private Set<ContactListener> contactListeners;
 	
@@ -32,6 +37,17 @@ public class Box2dStage extends Stage implements ContactListener{
 		physicsDebug.setDrawContacts(true);
 		physicsDebug.setDrawJoints(true);
 		physics.setContactListener(this);
+		
+		OrthographicCamera physicsCam = new OrthographicCamera();
+		physicsCam.setToOrtho(false, Gdx.graphics.getWidth() / Const.PIXELS_PER_METER, Gdx.graphics.getHeight() / Const.PIXELS_PER_METER);
+		physicsCam.position.set(0, 0, 0);
+		physicsCamera = addCamera(physicsCam);
+		
+		setDefaultCamera(physicsCamera);
+	}
+	
+	protected int getPhysicsCamera(){
+		return physicsCamera;
 	}
 	
 	
@@ -45,7 +61,7 @@ public class Box2dStage extends Stage implements ContactListener{
 		
 		shapeRender.begin();
 		if(debugDraw){
-			physicsDebug.render(physics, camera.combined);
+			physicsDebug.render(physics, getCamera(physicsCamera).combined);
 		}
 		shapeRender.end();
 	}
@@ -54,8 +70,12 @@ public class Box2dStage extends Stage implements ContactListener{
 		return physics;
 	}
 	
-	public void setDebugDraw(boolean draw){
+	public void setDebug(boolean draw){
 		debugDraw = draw;
+	}
+	
+	public boolean isDebug(){
+		return debugDraw;
 	}
 	
 	public void dispose(){

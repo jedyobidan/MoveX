@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -19,24 +20,16 @@ public class Level extends Box2dStage {
 	public static final int GRAVITY = -30;
 	private Player player;
 	private InputMultiplexer input;
-	public final int id;
+	private Camera physicsCamera;
 	
-	private static final Map<Integer, Level> levels = new HashMap<Integer, Level>();
 	
-	public Level(int id, SpriteBatch sb, ShapeRenderer sr) {
+	public Level(SpriteBatch sb, ShapeRenderer sr) {
 		super(sb, sr);
-		this.id = id;
-		levels.put(id, this);
-		camera.setToOrtho(false, Gdx.graphics.getWidth() / Const.PIXELS_PER_METER, Gdx.graphics.getHeight() / Const.PIXELS_PER_METER);
-		camera.position.set(0, 0, 0);
 		physics.setGravity(new Vector2(0, GRAVITY));
 		input = new InputMultiplexer();
 		input.addProcessor(new UIController());
 	}
 	
-	public static Level getLevel(int id){
-		return levels.get(id);
-	}
 	
 	public void setPlayer(Player p, Vector2 start){
 		this.player = p;
@@ -48,7 +41,7 @@ public class Level extends Box2dStage {
 	@Override
 	protected void render() {
 		Body body = player.getPhysics().getBody();
-		camera.position.set(body.getPosition().x, body.getPosition().y, 0);
+		getCamera(getPhysicsCamera()).position.set(body.getPosition().x, body.getPosition().y, 0);
 		super.render();
 	}
 	
@@ -82,6 +75,8 @@ public class Level extends Box2dStage {
 				// XXX: Temporary
 				player.moveToCheckpoint();
 				return true;
+			} else if (keycode == Keys.TAB){
+				setDebug(!isDebug());
 			}
 			return false;
 		}
