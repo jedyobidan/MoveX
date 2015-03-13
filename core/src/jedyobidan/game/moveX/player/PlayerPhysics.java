@@ -3,6 +3,7 @@ package jedyobidan.game.moveX.player;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
+import jedyobidan.game.moveX.actors.Checkpoint;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.Accumulator;
 import jedyobidan.game.moveX.lib.Actor;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayerPhysics implements ContactListener {
 	private Body body;
 	private Fixture stand, dash, foot, left, right;
+	private Player player;
 
 	private Accumulator<Actor> groundContact, leftContact, rightContact;
 	private Vector2 groundNormal;
@@ -35,6 +37,7 @@ public class PlayerPhysics implements ContactListener {
 	public static final float WIDTH = 0.5f, GROUND= 0.5f, HEAD = 1f, DASH = 0.5f;
 
 	public PlayerPhysics(Player player, World physics) {
+		this.player = player;
 		groundContact = new Accumulator<Actor>();
 		leftContact = new Accumulator<Actor>();
 		rightContact = new Accumulator<Actor>();
@@ -129,6 +132,7 @@ public class PlayerPhysics implements ContactListener {
 	}
 
 	public void move(float x, float y) {
+		player.setCheckpoint(new Checkpoint(x, y));
 		body.setTransform(new Vector2(x, y), 0);
 		clearContacts();
 		setDashbox(false);
@@ -233,7 +237,6 @@ public class PlayerPhysics implements ContactListener {
 		} else if (Const.isWall(a) && hitbox == right) {
 			rightContact.decrement(a);
 		}
-		
 
 	}
 

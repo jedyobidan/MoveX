@@ -1,7 +1,7 @@
 package jedyobidan.game.moveX;
 
+import jedyobidan.game.moveX.actors.Checkpoint;
 import jedyobidan.game.moveX.actors.RectBlock;
-import jedyobidan.game.moveX.actors.SolidBlock;
 import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.actors.StaticPlatform;
 import jedyobidan.game.moveX.actors.TriBlock;
@@ -27,10 +27,10 @@ public class MoveX extends Game {
 	@Override
 	public void create() {
 		initRes();
-		Level test = new Level(spriteRender, shapeRender);
+		Level test = new Level(0, spriteRender, shapeRender);
 		constructLevel(test);
 		test.setPlayer(new Player(), new Vector2(0,15));
-		test.setDebugDraw(false);
+		test.setDebugDraw(true);
 		setScreen(test);
 	}
 
@@ -60,6 +60,9 @@ public class MoveX extends Game {
 		level.addActor(new RectBlock(-20, 7.25f, 1, 5));	// Low ceil
 		level.addActor(new RectBlock(-16, 13.25f, 5, 1));
 		level.addActor(new StaticPlatform(0, 17, 3));
+		level.addActor(new Checkpoint(-5f, 3.75f));
+		level.addActor(new Checkpoint(15, 11.75f));
+		level.addActor(new Checkpoint(0, 17.75f));
 		
 		
 		// slope

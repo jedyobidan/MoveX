@@ -47,6 +47,7 @@ public class TriBlock extends Actor{
 	}
 	
 	public void addToStage(Stage s){
+		super.addToStage(s);
 		Level level = (Level) s;
 		float slope = hdy/hdx;
 		
@@ -84,6 +85,12 @@ public class TriBlock extends Actor{
 		edge.setVertex0( hdx + PlayerPhysics.WIDTH * 3,  hdy + slope * PlayerPhysics.WIDTH * 3);
 		body.createFixture(fix);
 		
+	}
+	
+	public void removeFromStage(Stage s){
+		super.removeFromStage(s);
+		Level level = (Level) s;
+		level.getPhysics().destroyBody(this.body);
 	}
 
 }

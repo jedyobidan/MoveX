@@ -14,13 +14,14 @@ Grapple Hook	Not Started
 Hookshot	Not Started
 
 BASIC FUNCTIONS
-Checkpoints	Not Started
+Checkpoints	In development
 Dialogs		Not Started
 Game Menu	Not Started
 Upgrades	Not Started
 Title Screen	Not Started
-Saves		Not Started
 Loading Zones	Not Started
+Saves		Not Started
+Timer		Not Started
 Begin Condition	Not Started
 End Condition	Not Started
 Control Rebind	Not Started

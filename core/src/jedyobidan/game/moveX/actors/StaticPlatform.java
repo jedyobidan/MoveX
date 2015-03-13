@@ -49,6 +49,7 @@ public class StaticPlatform extends Actor implements ContactListener{
 	}
 	
 	public void addToStage(Stage s){
+		super.addToStage(s);
 		Level level = (Level) s;
 		
 		level.addContactListener(this);
@@ -79,6 +80,7 @@ public class StaticPlatform extends Actor implements ContactListener{
 	
 	@Override
 	public void removeFromStage(Stage s) {
+		super.removeFromStage(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(body);
 		level.removeContactListener(this);

@@ -10,7 +10,11 @@ public class Accumulator<K> extends HashMap<K, Integer> {
 	}
 	
 	public void decrement(K key){
-		put(key, get(key) - 1);
+		if(get(key) - 1 < 0){
+			put(key, 0);
+		} else {
+			put(key, get(key) - 1);
+		}
 	}
 	
 	public int sum(){

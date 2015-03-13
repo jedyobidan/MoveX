@@ -29,6 +29,7 @@ public class Player extends Actor {
 	private Controller controller;
 	private TextureManager textures;
 	private PlayerProfile profile;
+	private Checkpoint lastCheckpoint;
 
 	// Player Physics
 	private PlayerPhysics physics;
@@ -53,6 +54,7 @@ public class Player extends Actor {
 		controller.step();
 		state.step(timeDelta);
 	}
+	
 
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRender) {
@@ -61,8 +63,9 @@ public class Player extends Actor {
 
 	@Override
 	public void addToStage(Stage s) {
+		super.addToStage(s);
 		Level level = (Level) s;
-		Gdx.input.setInputProcessor(controller);
+		level.setController(controller);
 		physics = new PlayerPhysics(this, level.getPhysics());
 		physics.move(0, 0);
 		level.addContactListener(physics);
@@ -74,6 +77,7 @@ public class Player extends Actor {
 
 	@Override
 	public void removeFromStage(Stage s) {
+		super.removeFromStage(s);
 		Level level = (Level) s;
 		Gdx.input.setInputProcessor(null);
 		level.getPhysics().destroyBody(physics.getBody());
@@ -93,6 +97,18 @@ public class Player extends Actor {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setCheckpoint(Checkpoint check){
+		if(lastCheckpoint != null){
+			lastCheckpoint.setEnabled(false);
+		}
+		lastCheckpoint = check;
+		check.setEnabled(true);
+	}
+	
+	public void moveToCheckpoint(){
+		physics.move(lastCheckpoint.getPosition().x, lastCheckpoint.getPosition().y);
 	}
 	
 	// Physics Delegations

@@ -47,6 +47,7 @@ public class RectBlock extends Actor {
 	}
 	
 	public void addToStage(Stage s){
+		super.addToStage(s);
 		Level level = (Level) s;
 		
 		BodyDef def = new BodyDef();
@@ -91,6 +92,7 @@ public class RectBlock extends Actor {
 	}
 	
 	public void removeFromStage(Stage s){
+		super.removeFromStage(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(this.body);
 	}
