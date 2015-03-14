@@ -26,8 +26,10 @@ public class Box2dStage extends Stage implements ContactListener{
 	
 	private Set<ContactListener> contactListeners;
 	
-	public Box2dStage(SpriteBatch sb, ShapeRenderer sr){
-		super(sb, sr);
+	private boolean physicsPaused;
+	
+	public Box2dStage(SpriteBatch sb, ShapeRenderer sr, int groups){
+		super(sb, sr, groups);
 		velocityIterations = 6;
 		positionIterations = 3;
 		contactListeners = new HashSet<ContactListener>();
@@ -53,7 +55,10 @@ public class Box2dStage extends Stage implements ContactListener{
 	
 	protected void step(float timeDelta){
 		super.step(timeDelta);
-		physics.step(timeDelta, velocityIterations, positionIterations);
+		if(!physicsPaused)
+			physics.step(timeDelta, velocityIterations, positionIterations);
+		else
+			physics.clearForces();
 	}
 	
 	protected void render(){		
@@ -76,6 +81,14 @@ public class Box2dStage extends Stage implements ContactListener{
 	
 	public boolean isDebug(){
 		return debugDraw;
+	}
+	
+	public void setPaused(boolean paused){
+		this.physicsPaused = paused;
+	}
+	
+	public boolean isPaused(){
+		return physicsPaused;
 	}
 	
 	public void dispose(){

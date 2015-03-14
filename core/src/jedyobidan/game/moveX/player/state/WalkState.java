@@ -42,6 +42,11 @@ public class WalkState extends PlayerState {
 			anim.setPlayMode(PlayMode.LOOP);
 			setAnimation(anim, 20, 11);
 		}
+
+		physics.requestGroundNormal();
+		profile.refreshStat("air_jumps");
+		profile.refreshStat("air_dashes");
+		physics.slopeGuard();
 		
 		Vector2 di = controller.getDI();
 		float walkSpeed = profile.getStat("walk_speed");

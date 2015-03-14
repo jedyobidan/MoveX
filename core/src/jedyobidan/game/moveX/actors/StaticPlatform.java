@@ -105,7 +105,7 @@ public class StaticPlatform extends Actor implements ContactListener{
 		Actor a = (Actor) other.getUserData();
 		if(a instanceof Player){
 			float feet = other.getPosition().y - PlayerPhysics.GROUND;
-			if(feet < body.getPosition().y) {
+			if(feet + 0.1f < body.getPosition().y) {
 				contact.setEnabled(false);
 			}
 		}

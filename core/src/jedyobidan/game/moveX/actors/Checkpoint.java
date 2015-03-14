@@ -86,7 +86,7 @@ public class Checkpoint extends Actor implements ContactListener {
 		Actor a = (Actor) other.getUserData();
 		if(a instanceof Player){
 			if(!on){
-				stage.addActor(new FlyingText("Checkpoint", position.x, position.y + 0.75f));
+				stage.addActor(Const.ACT_GROUP_GAME, new FlyingText("Checkpoint", position.x, position.y + 0.75f));
 			}
 			Player p = (Player) a;
 			p.setCheckpoint(this);

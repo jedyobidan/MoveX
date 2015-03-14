@@ -41,6 +41,11 @@ public class IdleState extends PlayerState {
 		if(isAnimationFinished()){
 			setAnimation(main, 15, 10);
 		}
+
+		physics.requestGroundNormal();
+		profile.refreshStat("air_jumps");
+		profile.refreshStat("air_dashes");
+		physics.slopeGuard();
 		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();

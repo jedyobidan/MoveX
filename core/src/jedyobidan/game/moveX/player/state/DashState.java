@@ -49,6 +49,7 @@ public class DashState extends PlayerState{
 			Animation transition = JUtil.animationFromSheet(textures.get("idle-dash"), 1, 1, 1/12f);
 			setAnimation(transition, 20, 10);
 		}
+
 		
 		dir = physics.getFacing() ? -1 : 1;
 		Vector2 impulse = new Vector2();
@@ -73,6 +74,11 @@ public class DashState extends PlayerState{
 			setAnimation(main, 20, 10);
 		}
 		
+
+		physics.requestGroundNormal();
+		profile.refreshStat("air_jumps");
+		profile.refreshStat("air_dashes");
+		physics.slopeGuard();
 		
 		Body body = physics.getBody();
 		Vector2 velocity = body.getLinearVelocity();

@@ -14,6 +14,10 @@ public class Const {
 	public static final short CAT_ENVIRONMENT = 0x0001;
 	public static final short CAT_PLAYER = 0x0002;
 	public static final short CAT_ENEMY = 0x0004;
+	public static final int GRAVITY = -30;
+	
+	public static final int ACT_GROUP_GAME = 0;
+	public static final int ACT_GROUP_UI = 1;
 	
 
 	
@@ -34,10 +38,11 @@ public class Const {
 	}
 	
 	public static class Fonts {
-		public static final BitmapFont SANS;
-		
+		public static final BitmapFont PIXEL;
+		public static final BitmapFont UI;
 		static {
-			SANS = new BitmapFont(Gdx.files.internal("fonts/sans.fnt"));
+			PIXEL = new BitmapFont(Gdx.files.internal("fonts/pixel.fnt"));
+			UI = new BitmapFont(Gdx.files.internal("fonts/ui.fnt"));
 		}
 	}
 }

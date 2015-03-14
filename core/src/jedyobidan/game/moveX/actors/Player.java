@@ -45,12 +45,6 @@ public class Player extends Actor {
 		if (nextState != null) {
 			state = nextState;
 		}
-		physics.requestGroundNormal();
-		if (physics.onGround()){
-			profile.refreshStat("air_jumps");
-			profile.refreshStat("air_dashes");
-			physics.slopeGuard();
-		}
 		controller.step();
 		state.step(timeDelta);
 	}
@@ -108,7 +102,7 @@ public class Player extends Actor {
 	}
 	
 	public void moveToCheckpoint(){
-		physics.move(lastCheckpoint.getPosition().x, lastCheckpoint.getPosition().y);
+		physics.move(lastCheckpoint.getPosition().x, lastCheckpoint.getPosition().y - 0.2f);
 	}
 	
 	// Physics Delegations

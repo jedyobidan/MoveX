@@ -23,7 +23,7 @@ public class FlyingText extends Actor {
 	public void step(float delta){
 		time += delta;
 		if(time > TIME){
-			stage.removeActor(this);
+			stage.removeActor(Const.ACT_GROUP_GAME, this);
 		}
 	}
 	@Override
@@ -43,7 +43,7 @@ public class FlyingText extends Actor {
 		
 		
 		
-		BitmapFont sans = Const.Fonts.SANS;
+		BitmapFont sans = Const.Fonts.PIXEL;
 		sans.setColor(1, 1, 1, alpha);
 		sans.setScale(1/Const.PIXELS_PER_METER);
 		TextBounds bounds = sans.getBounds(text);

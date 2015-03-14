@@ -26,7 +26,6 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayerPhysics implements ContactListener {
 	private Body body;
 	private Fixture stand, dash, foot, left, right;
-	private Player player;
 
 	private Accumulator<Actor> groundContact, leftContact, rightContact;
 	private Vector2 groundNormal;
@@ -37,7 +36,6 @@ public class PlayerPhysics implements ContactListener {
 	public static final float WIDTH = 0.5f, GROUND= 0.5f, HEAD = 1f, DASH = 0.5f;
 
 	public PlayerPhysics(Player player, World physics) {
-		this.player = player;
 		groundContact = new Accumulator<Actor>();
 		leftContact = new Accumulator<Actor>();
 		rightContact = new Accumulator<Actor>();
@@ -132,9 +130,7 @@ public class PlayerPhysics implements ContactListener {
 	}
 
 	public void move(float x, float y) {
-		player.setCheckpoint(new Checkpoint(x, y));
 		body.setTransform(new Vector2(x, y), 0);
-		clearContacts();
 		setDashbox(false);
 		setFacing(false);
 		groundNormal = new Vector2(0, 1);
@@ -148,25 +144,27 @@ public class PlayerPhysics implements ContactListener {
 				return Const.isGround((Actor) fix.getBody().getUserData());
 			}
 		};
-		Vector2 center = body.getWorldCenter();
+		Vector2 center = body.getWorldCenter().cpy().add(0, -GROUND + 0.05f);
 		Vector2 left = new Vector2(center).add(-WIDTH, 0);
 		Vector2 right = new Vector2(center).add(WIDTH, 0);
 
 		body.getWorld().rayCast(finder, center,
-				new Vector2(center.x, center.y - GROUND * 4));
-		body.getWorld().rayCast(finder, left, new Vector2(left.x, left.y - GROUND * 4));
+				new Vector2(center.x, center.y - 0.5f));
+		body.getWorld().rayCast(finder, left, new Vector2(left.x, left.y - 0.5f));
 		body.getWorld().rayCast(finder, right,
-				new Vector2(right.x, right.y - 2f));
+				new Vector2(right.x, right.y - 0.5f));
 
 		if (finder.normal != null){
 			groundNormal = finder.normal;
+		} else {
+			groundNormal = new Vector2(0, 1);
 		}
 
 	}
 
 	public void slopeGuard() {
 		if(groundNormal == null) return;
-		Vector2 weight = new Vector2(0, Level.GRAVITY * body.getMass()
+		Vector2 weight = new Vector2(0, Const.GRAVITY * body.getMass()
 				* body.getGravityScale());
 		Vector2 normal = new Vector2(groundNormal).scl(-groundNormal
 				.dot(weight));

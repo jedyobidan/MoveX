@@ -9,6 +9,7 @@ public class InputWave extends InputAdapter {
 	private int posEdge;
 	private int negEdge;
 	private int key;
+	private boolean wave;
 	public InputWave(int key){
 		this.key = key;
 	}
@@ -27,13 +28,17 @@ public class InputWave extends InputAdapter {
 	}
 	
 	public boolean high(){
-		return Gdx.input.isKeyPressed(key);
+		return wave;
+	}
+	public boolean low() {
+		return !wave;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode == key){
 			posEdge = LATENCY;
+			wave = true;
 			return true;
 		}
 		return false;
@@ -43,13 +48,11 @@ public class InputWave extends InputAdapter {
 	public boolean keyUp(int keycode) {
 		if(keycode == key){
 			negEdge = LATENCY;
+			wave = false;
 			return true;
 		}
 		return false;
 	}
 
-	public boolean low() {
-		return !Gdx.input.isKeyPressed(key);
-	}
 
 }

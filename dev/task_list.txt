@@ -15,8 +15,9 @@ Hookshot	Not Started
 
 BASIC FUNCTIONS
 Checkpoints	Completed
-Dialogs		Not Started
+Dialogs		In development
 Game Menu	Not Started
+Control Rebind	Not Started
 Upgrades	Not Started
 Title Screen	Not Started
 Loading Zones	Not Started
@@ -24,7 +25,6 @@ Saves		Not Started
 Timer		Not Started
 Begin Condition	Not Started
 End Condition	Not Started
-Control Rebind	Not Started
 
 LEVEL OBJECTS
 Rect. Surface	Completed
@@ -45,7 +45,7 @@ Level Loader	Not Started
 Level Builder	Not Started
 
 GRAPHICS
-UI Graphics 	Not Started
+UI Graphics 	In Development
 Surface Text.	Not Started
 Player Sprites	Rope Sprites remaining, need airdash->fall transition
 

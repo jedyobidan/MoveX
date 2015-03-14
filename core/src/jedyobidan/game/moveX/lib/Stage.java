@@ -3,6 +3,7 @@ package jedyobidan.game.moveX.lib;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -16,60 +17,75 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Stage extends ScreenAdapter{
-	protected Collection<Actor> actors;
+public class Stage extends ScreenAdapter implements Comparator<Actor>{
+	protected List<Collection<Actor>> actors;
 	
-	private Queue<Actor> addQueue;
-	private Queue<Actor> removeQueue;	
+	private List<Queue<Actor>> addQueue;
+	private List<Queue<Actor>> removeQueue;	
 
 	private List<OrthographicCamera> cameras;
 	private int defaultCamera;
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
 	
-	public Stage(SpriteBatch sb, ShapeRenderer sr){
-		actors = new TreeSet<Actor>(new Comparator<Actor>(){
-			@Override
-			public int compare(Actor o1, Actor o2) {
-				float zDiff = o1.getZIndex() - o2.getZIndex();
-				if(zDiff != 0) return (int) Math.signum(zDiff);
-				else return o1.hashCode() - o2.hashCode();
-			}
-			
-		});
-		addQueue = new LinkedList<Actor>();
-		removeQueue = new LinkedList<Actor>();
+	private float speed;
+	
+	public Stage(SpriteBatch sb, ShapeRenderer sr, int groups){
+		actors = new ArrayList<Collection<Actor>>();
+		addQueue = new ArrayList<Queue<Actor>>();
+		removeQueue = new ArrayList<Queue<Actor>>();
 		
 
 		cameras = new ArrayList<OrthographicCamera>();
 		cameras.add(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		spriteRender = sb;
 		shapeRender = sr;
+		
+		for(int i = 0; i < groups; i++){
+			actors.add(new TreeSet<Actor>(this));
+			addQueue.add(new LinkedList<Actor>());
+			removeQueue.add(new LinkedList<Actor>());
+		}
+		
+		speed = 1;
+	}
+	
+	public int getNumGroups(){
+		return actors.size();
 	}
 	
 	public void gameLoop(float timeDelta){
-		step(timeDelta);
+		step(timeDelta * speed);
 		render();
 		processNewActors();
 	}
 	
 	protected void processNewActors(){
-		while(removeQueue.size() > 0){
-			Actor a = removeQueue.poll();
-			a.removeFromStage(this);
-			actors.remove(a);
+		for(int group = 0; group < getNumGroups(); group ++){
+			while(removeQueue.get(group).size() > 0){
+				Actor a = removeQueue.get(group).poll();
+				a.removeFromStage(this);
+				actors.get(group).remove(a);
+			}
+			while(addQueue.get(group).size() > 0){
+				Actor a = addQueue.get(group).poll();
+				a.addToStage(this);
+				actors.get(group).add(a);
+			}
 		}
-		while(addQueue.size() > 0){
-			Actor a = addQueue.poll();
-			a.addToStage(this);
-			actors.add(a);
-		}
+		
 	}
 	
 	protected void step(float timeDelta){
-		for(Actor a: actors){
-			a.step(timeDelta);
+		for(int group = 0; group < getNumGroups(); group ++){
+			for(Actor a: actors.get(group)){
+				a.step(timeDelta);
+			}
 		}
+	}
+	
+	protected int chooseCamera(int group){
+		return defaultCamera;
 	}
 	
 	protected void render(){
@@ -79,10 +95,15 @@ public class Stage extends ScreenAdapter{
 	    	cam.update();
 	    }
 
-	    useCamera(defaultCamera);
-		
+	    for(int i = 0; i < getNumGroups(); i++){
+	    	render(i);
+	    }
+	}
+	
+	protected void render(int group){
+		useCamera(chooseCamera(group));
 		spriteRender.begin();
-		for(Actor a: actors){
+		for(Actor a: actors.get(group)){
 			a.render(spriteRender, shapeRender);
 		}		
 		spriteRender.end();
@@ -106,21 +127,36 @@ public class Stage extends ScreenAdapter{
 		return cameras.get(camID);
 	}
 	
-	public void addActor(Actor a){
-		addQueue.add(a);
+	public void addActor(int group, Actor a){
+		addQueue.get(group).add(a);
 	}
 	
-	public void removeActor(Actor a){
-		removeQueue.add(a);
+	public void removeActor(int group, Actor a){
+		removeQueue.get(group).add(a);
 	}
 	
-	public Collection<Actor> getActors(){
-		return actors;
+	public Collection<Actor> getActors(int group){
+		return actors.get(group);
 	}
 
 	@Override
 	public void render(float delta) {
 		gameLoop(delta);
+	}
+	
+	public float getSpeed(){
+		return speed;
+	}
+	
+	public void setSpeed(float speed){
+		this.speed = speed;
+	}
+
+	@Override
+	public int compare(Actor o1, Actor o2) {
+		float zDiff = o1.getZIndex() - o2.getZIndex();
+		if(zDiff != 0) return (int) Math.signum(zDiff);
+		else return o1.hashCode() - o2.hashCode();
 	}
 
 }
