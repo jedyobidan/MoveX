@@ -35,7 +35,7 @@ public class Player extends Actor {
 	private PlayerPhysics physics;
 
 	public Player() {
-		textures = new TextureManager(MoveX.ATLAS, "player");
+		textures = new TextureManager(MoveX.ATLAS, "player-");
 		profile = new PlayerProfile();		
 		controller = new Controller();
 	}

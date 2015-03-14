@@ -116,3 +116,58 @@ player-wrise
   orig: 33, 43
   offset: 0, 0
   index: -1
+
+pack2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui/bg
+  rotate: false
+  xy: 2, 58
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+ui/frame-botleft
+  rotate: false
+  xy: 2, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui/frame-botright
+  rotate: false
+  xy: 78, 30
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui/frame-horz
+  rotate: false
+  xy: 2, 30
+  size: 74, 26
+  orig: 74, 26
+  offset: 0, 0
+  index: -1
+ui/frame-topleft
+  rotate: false
+  xy: 516, 483
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui/frame-topright
+  rotate: false
+  xy: 544, 544
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui/frame-vert
+  rotate: false
+  xy: 516, 511
+  size: 26, 59
+  orig: 26, 59
+  offset: 0, 0
+  index: -1

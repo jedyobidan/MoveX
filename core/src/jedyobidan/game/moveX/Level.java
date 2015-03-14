@@ -18,11 +18,13 @@ import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.actors.ui.Dialog;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Box2dStage;
+import jedyobidan.game.moveX.lib.TextureManager;
 
 public class Level extends Box2dStage {
 	private Player player;
 	private InputMultiplexer input;
 	private Dialog dialog;
+	public final TextureManager textures;
 
 	public Level(SpriteBatch sb, ShapeRenderer sr) {
 		super(sb, sr, 2);
@@ -30,6 +32,7 @@ public class Level extends Box2dStage {
 		input = new InputMultiplexer();
 		input.addProcessor(new UIController());
 		dialog = new Dialog(Gdx.graphics.getWidth());
+		textures = new TextureManager(MoveX.ATLAS, "");
 		addUIActor(dialog);
 	}
 
@@ -67,6 +70,7 @@ public class Level extends Box2dStage {
 	@Override
 	public void hide() {
 		super.hide();
+		textures.release();
 		Gdx.input.setInputProcessor(null);
 	}
 

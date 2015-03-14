@@ -17,8 +17,12 @@ public class TextureManager {
 	
 	public TextureRegion get(String name){
 		if(!textures.containsKey(name)){
-			textures.put(name, atlas.findRegion(prefix + "-" + name));
+			textures.put(name, atlas.findRegion(prefix + name));
 		}
 		return textures.get(name);
+	}
+	
+	public void release(){
+		textures.clear();
 	}
 }

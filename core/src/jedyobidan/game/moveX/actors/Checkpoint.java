@@ -29,13 +29,13 @@ public class Checkpoint extends Actor implements ContactListener {
 
 	public Checkpoint(float x, float y) {
 		position = new Vector2().set(x, y);
-		txOn = MoveX.ATLAS.findRegion("checkpoint-on");
-		txOff = MoveX.ATLAS.findRegion("checkpoint-off");
 	}
 
 	public void addToStage(Stage s) {
 		super.addToStage(s);
 		Level level = (Level) s;
+		txOn = level.textures.get("checkpoint-on");
+		txOff = level.textures.get("checkpoint-off");
 
 		BodyDef def = new BodyDef();
 		def.type = BodyType.StaticBody;
