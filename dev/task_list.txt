@@ -15,7 +15,7 @@ Hookshot	Not Started
 
 BASIC FUNCTIONS
 Checkpoints	Completed
-Dialogs		In development
+Dialogs		On hold (needs with icon)
 Game Menu	Not Started
 Control Rebind	Not Started
 Upgrades	Not Started
@@ -47,6 +47,7 @@ Level Builder	Not Started
 GRAPHICS
 UI Graphics 	In Development
 Surface Text.	Not Started
+Backgrounds	Not Started
 Player Sprites	Rope Sprites remaining, need airdash->fall transition
 
 SOUND

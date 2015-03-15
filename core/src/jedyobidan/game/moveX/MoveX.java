@@ -31,8 +31,9 @@ public class MoveX extends Game {
 		Level test = new Level(spriteRender, shapeRender);
 		constructLevel(test);
 		test.setPlayer(new Player(), new Vector2(0,15));
-		test.setDebug(true);
+		test.setDebug(false);
 		setScreen(test);
+		test.showDialog("Welcome to MoveX!", "Press w/a/s/d to move\n Press k to jump\n Press l to dash");
 	}
 
 	private void initRes() {
@@ -53,15 +54,15 @@ public class MoveX extends Game {
 	}
 
 	private void constructLevel(Level level) {
-		level.addGameActor(new RectBlock(0, 0, 30, 1)); 		// Ground
-		level.addGameActor(new RectBlock(10, 12, 0.5f, 9)); 		// Left wall
-		level.addGameActor(new RectBlock(15, 9.5f, 0.5f, 8.5f)); 		// Right wall
-		level.addGameActor(new RectBlock(20, 11, 0.5f, 10));
-		level.addGameActor(new RectBlock(15, 21.5f, 5.5f, 0.5f));
-		level.addGameActor(new StaticPlatform(5, 5.5f, 2.5f));		// Right plat
-		level.addGameActor(new StaticPlatform(-5, 7f, 2.5f)); 		// Left plat
-		level.addGameActor(new RectBlock(-20, 7.25f, 1, 5));	// Low ceil
-		level.addGameActor(new RectBlock(-19, 13.25f, 2, 1));
+		level.addGameActor(new RectBlock("cave", 0, 0, 30, 1)); 		
+		level.addGameActor(new RectBlock("cave", 10, 12, 0.5f, 9)); 		
+		level.addGameActor(new RectBlock("cave", 15, 9.5f, 0.5f, 8.5f)); 		
+		level.addGameActor(new RectBlock("cave", 20, 11, 0.5f, 10));
+		level.addGameActor(new RectBlock("cave", 15, 21.5f, 5.5f, 0.5f));
+		level.addGameActor(new StaticPlatform(5, 5.5f, 2.5f));		
+		level.addGameActor(new StaticPlatform(-5, 7f, 2.5f)); 		
+		level.addGameActor(new RectBlock("cave", -20, 7.25f, 1, 5));	
+		level.addGameActor(new RectBlock("cave", -19, 13.25f, 2, 1));
 		level.addGameActor(new StaticPlatform(-5, 17, 3));
 		level.addGameActor(new Checkpoint(-5f, 3.75f));
 		level.addGameActor(new Checkpoint(17.5f, 1.75f));
@@ -69,15 +70,9 @@ public class MoveX extends Game {
 		level.addGameActor(new Checkpoint(-25, 1.75f));
 		
 		// slope
-		level.addGameActor(new RectBlock(-5, 2, 2.5f, 1)); 
+		level.addGameActor(new RectBlock("cave/", -5, 2, 2.5f, 1)); 
 		level.addGameActor(new TriBlock(-9.5f, 2, 2, 1));
 		level.addGameActor(new TriBlock(-0.5f, 2, 2, -1));
-		
-//		PolygonShape slopeShape = new PolygonShape();
-//		slopeShape.set(new Vector2[]{new Vector2(-5, 0), new Vector2(-3, 1f), new Vector2(3, 1f), new Vector2(5,0)});
-//		SolidBlock slope = new SolidBlock(new Vector2(-5, 1), slopeShape);
-//		level.addActor(slope);
-		
 	}
 	
 

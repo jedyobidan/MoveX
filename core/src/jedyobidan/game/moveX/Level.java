@@ -74,8 +74,7 @@ public class Level extends Box2dStage {
 		Gdx.input.setInputProcessor(null);
 	}
 
-	public void showDialog(String text) {
-		setPaused(true);
+	public void showDialog(String... text) {
 		dialog.show(text);
 	}
 
@@ -109,8 +108,7 @@ public class Level extends Box2dStage {
 		@Override
 		public boolean keyDown(int keycode) {
 			if (dialog.isOpen()) {
-				dialog.hide();
-				setPaused(false);
+				dialog.keyPressed();
 				return true;
 			}
 			if (keycode == Keys.ESCAPE) {
@@ -132,7 +130,16 @@ public class Level extends Box2dStage {
 			} else if (keycode == Keys.NUM_1) {
 				showDialog("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
 						+ "Nulla maximus maximus placerat. Curabitur et orci vitae arcu "
-						+ "consequat congue. Sed. ");
+						+ "consequat congue. Sed. ", 
+						"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis "
+						+ "egestas. Phasellus pulvinar rutrum nisl. Proin euismod erat justo, nec pellentesque "
+						+ "nulla tempus vel. Nam tristique nunc lacus, ut ornare sem fermentum eu. Ut vel accumsan "
+						+ "odio, scelerisque convallis sapien. Nulla id mi turpis. Pellentesque ullamcorper sollicitudin "
+						+ "enim, id iaculis augue elementum nec. Pellentesque in purus finibus, consectetur nisl id.",
+						"Hello.");
+						return true;
+			} else if (keycode == Keys.ENTER){
+				System.out.println(player.getPhysics().getBody().getPosition());
 				return true;
 			}
 

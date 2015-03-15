@@ -17,6 +17,7 @@ import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.lib.Actor;
+import jedyobidan.game.moveX.lib.Box2dStage;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 
@@ -24,16 +25,18 @@ public class Dialog extends Actor {
 	private float da;
 	private float alpha;
 	private float width;
+	private float height;
+	private float time;
 
-	private String text;
-	private TextBounds bounds;
-
-	private TextureRegion bg, horz, vert, tl, tr, bl, br;
+	private String[] text;
+	private int currentText;
+	private TextureRegion bg, horz, vert, tl, tr, bl, br, arrow, square;
 
 	private static final float V_PADDING = 20;
 	private static final float H_PADDING = 15;
 	private static final float SPEED = 5;
 	private static final BitmapFont FONT = Const.Fonts.UI;
+	private static final float ARROW_CYCLE = 0.8f, ARROW_AMP = 8;
 
 	public Dialog(float width) {
 		this.width = width - 10;
@@ -51,19 +54,28 @@ public class Dialog extends Actor {
 		tr = level.textures.get("ui/frame-topright");
 		bl = level.textures.get("ui/frame-botleft");
 		br = level.textures.get("ui/frame-botright");
+		arrow = level.textures.get("ui/arrow-down");
+		square = level.textures.get("ui/square");
 	}
 
 	@Override
 	public void step(float delta) {
 		alpha += da * delta;
 		alpha = Math.max(0, Math.min(1, alpha));
+		time = (time + delta) % ARROW_CYCLE;
 	}
 
-	public void show(String str) {
+	public void show(String... str) {
 		this.text = str;
+		this.currentText = 0;
 		FONT.setScale(1);
-		bounds = FONT.getWrappedBounds(str, width - H_PADDING * 2);
+		for (int i = 0; i < str.length; i++) {
+			TextBounds bounds = FONT.getWrappedBounds(str[i], width - H_PADDING
+					* 2);
+			height = Math.max(height, bounds.height + V_PADDING * 2);
+		}
 		da = SPEED;
+		((Level) stage).setPaused(true);
 	}
 
 	public void hide() {
@@ -73,52 +85,76 @@ public class Dialog extends Actor {
 	public boolean isOpen() {
 		return da > 0;
 	}
-	
-	public void keyPressed(){
-		
+
+	public void keyPressed() {
+		if(alpha != 1) return;
+		if (currentText >= text.length - 1) {
+			hide();
+			((Level) stage).setPaused(false);
+		} else {
+			currentText++;
+		}
 	}
 
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
 		if (alpha == 0)
 			return;
-		float height = bounds.height + V_PADDING * 2;
 
-		Vector2 position = new Vector2(-Gdx.graphics.getWidth() / 2 + 5, 
+		Vector2 position = new Vector2(-Gdx.graphics.getWidth() / 2 + 5,
 				Gdx.graphics.getHeight() / 2 - height - 5);
 
 		spriteRenderer.setColor(1, 1, 1, alpha);
 
 		TiledDrawable tile = new TiledDrawable(bg);
 		tile.draw(spriteRenderer, position.x, position.y, width, height);
-		
-		float frameSize = bl.getRegionHeight()/2;
+
+		float frameSize = bl.getRegionHeight() / 2;
 
 		// Frame Sides
 		TiledDrawable horztile = new TiledDrawable(horz);
-		horztile.draw(spriteRenderer, position.x + frameSize, position.y - frameSize, 
-				width - frameSize * 2, frameSize * 2);
-		horztile.draw(spriteRenderer, position.x + frameSize, position.y + height - frameSize, 
-				width - frameSize * 2,	frameSize * 2);
+		horztile.draw(spriteRenderer, position.x + frameSize, position.y
+				- frameSize, width - frameSize * 2, frameSize * 2);
+		horztile.draw(spriteRenderer, position.x + frameSize, position.y
+				+ height - frameSize, width - frameSize * 2, frameSize * 2);
 
 		TiledDrawable vertile = new TiledDrawable(vert);
-		vertile.draw(spriteRenderer, position.x - frameSize, position.y + frameSize,
-				frameSize * 2, height - frameSize * 2);
-		vertile.draw(spriteRenderer, position.x + width - frameSize, position.y + frameSize, 
-				frameSize * 2, height - frameSize * 2);
-		
-		spriteRenderer.draw(bl, position.x - bl.getRegionWidth()/2, position.y - bl.getRegionHeight()/2);
-		spriteRenderer.draw(tl, position.x - bl.getRegionWidth()/2, position.y + height - bl.getRegionHeight()/2);
-		spriteRenderer.draw(br, position.x + width - bl.getRegionWidth()/2, position.y - bl.getRegionHeight()/2);
-		spriteRenderer.draw(tr, position.x + width - bl.getRegionWidth()/2, position.y + height - bl.getRegionHeight()/2);
-		
-		spriteRenderer.setColor(1, 1, 1, 1);
+		vertile.draw(spriteRenderer, position.x - frameSize, position.y
+				+ frameSize, frameSize * 2, height - frameSize * 2);
+		vertile.draw(spriteRenderer, position.x + width - frameSize, position.y
+				+ frameSize, frameSize * 2, height - frameSize * 2);
+
+		spriteRenderer.draw(bl, position.x - bl.getRegionWidth() / 2,
+				position.y - bl.getRegionHeight() / 2);
+		spriteRenderer.draw(tl, position.x - bl.getRegionWidth() / 2,
+				position.y + height - bl.getRegionHeight() / 2);
+		spriteRenderer.draw(br, position.x + width - bl.getRegionWidth() / 2,
+				position.y - bl.getRegionHeight() / 2);
+		spriteRenderer.draw(tr, position.x + width - bl.getRegionWidth() / 2,
+				position.y + height - bl.getRegionHeight() / 2);
+
 
 		FONT.setScale(1);
 		FONT.setColor(1, 1, 1, alpha);
-		FONT.drawWrapped(spriteRenderer, text, position.x + H_PADDING,
-				position.y + bounds.height + V_PADDING + FONT.getAscent(),
+		float textHeight = FONT.getWrappedBounds(text[currentText], width
+				- H_PADDING * 2).height;
+
+		FONT.drawWrapped(spriteRenderer, text[currentText], position.x
+				+ H_PADDING,
+				position.y + (height + textHeight) / 2 + FONT.getAscent(),
 				width - H_PADDING * 2);
+
+		// QED
+		Vector2 qedPos = new Vector2(position.x + width - frameSize, position.y + frameSize);  
+		if (currentText < text.length - 1) {
+			qedPos.add(-arrow.getRegionWidth()/2, -arrow.getRegionHeight()/2);
+			qedPos.add(0, (-Math.abs(time/ARROW_CYCLE - 0.5f)) * ARROW_AMP);
+			spriteRenderer.draw(arrow, qedPos.x, qedPos.y);
+		} else {
+			qedPos.add(-square.getRegionWidth()/2, -square.getRegionHeight()/2);
+			spriteRenderer.draw(square, qedPos.x, qedPos.y);
+		}
+		spriteRenderer.setColor(1, 1, 1, 1);
 
 	}
 }

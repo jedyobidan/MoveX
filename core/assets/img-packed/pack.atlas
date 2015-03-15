@@ -118,56 +118,90 @@ player-wrise
   index: -1
 
 pack2.png
+size: 128,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+cave/ground
+  rotate: false
+  xy: 2, 13
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+cave/platform
+  rotate: false
+  xy: 2, 2
+  size: 48, 9
+  orig: 48, 9
+  offset: 0, 0
+  index: -1
+
+pack3.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+ui/arrow-down
+  rotate: false
+  xy: 2, 2
+  size: 15, 12
+  orig: 15, 12
+  offset: 0, 0
+  index: -1
 ui/bg
   rotate: false
-  xy: 2, 58
+  xy: 2, 72
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 ui/frame-botleft
   rotate: false
-  xy: 2, 2
+  xy: 2, 16
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-botright
   rotate: false
-  xy: 78, 30
+  xy: 78, 44
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-horz
   rotate: false
-  xy: 2, 30
+  xy: 2, 44
   size: 74, 26
   orig: 74, 26
   offset: 0, 0
   index: -1
 ui/frame-topleft
   rotate: false
-  xy: 516, 483
+  xy: 516, 497
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-topright
   rotate: false
-  xy: 544, 544
+  xy: 544, 558
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-vert
   rotate: false
-  xy: 516, 511
+  xy: 516, 525
   size: 26, 59
   orig: 26, 59
+  offset: 0, 0
+  index: -1
+ui/square
+  rotate: false
+  xy: 30, 29
+  size: 13, 13
+  orig: 13, 13
   offset: 0, 0
   index: -1

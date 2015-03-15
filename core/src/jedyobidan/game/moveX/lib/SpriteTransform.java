@@ -14,12 +14,19 @@ public class SpriteTransform {
 	public boolean flipX, flipY;
 
 	public void render(SpriteBatch render) {
-		render.draw(texture, position.x - origin.x, position.y - origin.y, 
+		TextureRegion clipped;
+		float width, height;
+		clipped = texture;
+		width = texture.getRegionWidth();
+		height = texture.getRegionHeight();
+		
+		render.draw(clipped, position.x - origin.x, position.y - origin.y, 
 				origin.x, origin.y,
-				texture.getRegionWidth(), texture.getRegionHeight(), 
+				width, height, 
 				flipX ? -scale.x : scale.x,
 				flipY ? -scale.y: scale.y, 
 				(float) Math.toDegrees(rotation));
+		
 
 	}
 }
