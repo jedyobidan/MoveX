@@ -24,7 +24,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 
 public class MoveX extends Game {
-	private SpriteBatch spriteRender;
+	private SpriteBatch spriteRender;	
 	private BitmapFont font;
 	private ShapeRenderer shapeRender;
 
@@ -34,8 +34,6 @@ public class MoveX extends Game {
 	public void create() {
 		initRes();
 		Level test = constructLevel("level/test.dat");
-		test.addGameActor(new TriBlock("cave", 12, 15f, 2, true));
-		test.addGameActor(new TriBlock("cave", 17, 15f, 2, false));
 		test.setPlayer(new Player(), new Vector2(0,15));
 		test.setDebug(false);
 		setScreen(test);

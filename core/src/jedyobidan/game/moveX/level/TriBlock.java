@@ -22,7 +22,7 @@ import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 
-public class TriBlock extends Actor{
+public class TriBlock extends LevelObject{
 	private Vector2 position;
 	private float hwidth;
 	private boolean ascending;
@@ -81,9 +81,9 @@ public class TriBlock extends Actor{
 				}
 				transform.position.y = position.y + hwidth - y - 1	;
 				if(ascending){
-					transform.position.x = position.x + hwidth + 0.5f - (3 + y * 2) + x;
+					transform.position.x = (position.x + hwidth + 1) - (3 + y * 2) + x;
 				} else {
-					transform.position.x = position.x - hwidth - 0.5f + x;
+					transform.position.x = (position.x - hwidth - 1) + x;
 				}
 				transform.render(spriteRenderer);
 			}
@@ -91,8 +91,8 @@ public class TriBlock extends Actor{
 		
 	}
 	
-	public void addToStage(Stage s){
-		super.addToStage(s);
+	public void onAdd(Stage s){
+		super.onAdd(s);
 		Level level = (Level) s;
 		
 		BodyDef def = new BodyDef();
@@ -108,15 +108,15 @@ public class TriBlock extends Actor{
 		ChainShape chain = new ChainShape();
 		Vector2[] vertices = new Vector2[4];
 		if(ascending){
-			vertices[0] = new Vector2(-hwidth, 0);
-			vertices[1] = new Vector2(hwidth + 0.5f, 0);
-			vertices[2] = new Vector2(hwidth + 0.5f, hwidth);
-			vertices[3] = new Vector2(hwidth, hwidth);
+			vertices[0] = new Vector2(-hwidth + 0.5f, 0);
+			vertices[1] = new Vector2(hwidth + 1f, 0);
+			vertices[2] = new Vector2(hwidth + 1f, hwidth);
+			vertices[3] = new Vector2(hwidth + 0.5f, hwidth);
 		} else {
-			vertices[0] = new Vector2(-hwidth - 0.5f, 0);
-			vertices[1] = new Vector2(hwidth, 0);
-			vertices[2] = new Vector2(-hwidth, hwidth);
-			vertices[3] = new Vector2(-hwidth - 0.5f, hwidth);
+			vertices[0] = new Vector2(-hwidth - 1f, 0);
+			vertices[1] = new Vector2(hwidth - 0.5f, 0);
+			vertices[2] = new Vector2(-hwidth - 0.5f, hwidth);
+			vertices[3] = new Vector2(-hwidth - 1f, hwidth);
 		}
 		chain.createLoop(vertices);
 		
@@ -129,10 +129,47 @@ public class TriBlock extends Actor{
 		
 	}
 	
-	public void removeFromStage(Stage s){
-		super.removeFromStage(s);
+	public void onRemove(Stage s){
+		super.onRemove(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(this.body);
+	}
+
+	@Override
+	public String writeString() {
+		StringBuilder ans = new StringBuilder("Tri;\n");
+		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + " ");
+		ans.append(ascending? 0.5f: -0.5f);
+		ans.append(";\n");
+		
+		for(int y = 0; y < tiles.length; y++){
+			ans.append("   ");
+			for(int x = 0; x < 3 + y * 2; x++){
+				ans.append(" " + tiles[y][x]);
+			}
+			ans.append("\n");
+		}
+		ans.insert(ans.length()-1, ";");
+		return ans.toString();
+	}
+
+	@Override
+	public void readString(String str) {
+		String[] lines = str.split(";\\s*");
+		String[] params = lines[1].split("\\s+");
+		type = params[0];
+		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
+		hwidth = Float.parseFloat(params[3]);
+		ascending = Float.parseFloat(params[4]) > 0;
+		tiles = new int[(int) (hwidth)][(int) (hwidth * 2) + 1];
+		
+		String[] grid = lines[2].split("\\s+");
+		int i = 0;
+		for(int y = 0; y < tiles.length; y++){
+			for(int x = 0; x < 3 + 2 * y; x++){
+				tiles[y][x] = Integer.parseInt(grid[i++]);
+			}
+		}
 	}
 
 }

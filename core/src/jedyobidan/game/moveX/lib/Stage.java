@@ -67,12 +67,12 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		for(int group = 0; group < getNumGroups(); group ++){
 			while(removeQueue.get(group).size() > 0){
 				Actor a = removeQueue.get(group).poll();
-				a.removeFromStage(this);
+				a.onRemove(this);
 				actors.get(group).remove(a);
 			}
 			while(addQueue.get(group).size() > 0){
 				Actor a = addQueue.get(group).poll();
-				a.addToStage(this);
+				a.onAdd(this);
 				actors.get(group).add(a);
 			}
 		}

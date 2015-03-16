@@ -37,8 +37,8 @@ public class Checkpoint extends LevelObject implements ContactListener{
 		this(0,0);
 	}
 
-	public void addToStage(Stage s) {
-		super.addToStage(s);
+	public void onAdd(Stage s) {
+		super.onAdd(s);
 		Level level = (Level) s;
 		txOn = level.textures.get("checkpoint-on");
 		txOff = level.textures.get("checkpoint-off");
@@ -61,8 +61,8 @@ public class Checkpoint extends LevelObject implements ContactListener{
 		level.addContactListener(this);
 	}
 
-	public void removeFromStage(Stage s) {
-		super.removeFromStage(s);
+	public void onRemove(Stage s) {
+		super.onRemove(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(body);
 		level.removeContactListener(this);

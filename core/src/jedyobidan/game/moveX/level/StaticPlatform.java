@@ -69,8 +69,8 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 		}
 	}
 	
-	public void addToStage(Stage s){
-		super.addToStage(s);
+	public void onAdd(Stage s){
+		super.onAdd(s);
 		Level level = (Level) s;
 		
 		level.addContactListener(this);
@@ -100,8 +100,8 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 	}
 	
 	@Override
-	public void removeFromStage(Stage s) {
-		super.removeFromStage(s);
+	public void onRemove(Stage s) {
+		super.onRemove(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(body);
 		level.removeContactListener(this);

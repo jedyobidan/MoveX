@@ -44,8 +44,8 @@ public class Dialog extends Actor {
 	}
 
 	@Override
-	public void addToStage(Stage s) {
-		super.addToStage(s);
+	public void onAdd(Stage s) {
+		super.onAdd(s);
 		Level level = (Level) s;
 		bg = level.textures.get("ui/bg");
 		horz = level.textures.get("ui/frame-horz");

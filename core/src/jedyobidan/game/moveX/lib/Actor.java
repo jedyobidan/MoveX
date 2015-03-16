@@ -14,10 +14,10 @@ public abstract class Actor {
 	 */
 	public abstract void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer);
 	public float getZIndex() { return 0; }
-	public void addToStage(Stage s) {
+	public void onAdd(Stage s) {
 		stage = s;
 	}	
-	public void removeFromStage(Stage s) {
+	public void onRemove(Stage s) {
 		stage = null;
 	}
 }

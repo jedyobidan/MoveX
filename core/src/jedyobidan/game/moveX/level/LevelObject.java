@@ -13,7 +13,11 @@ public abstract class LevelObject extends Actor implements Stringable{
 			object = new StaticPlatform();
 		} else if (objType.equals("Checkpoint")){
 			object = new Checkpoint();
-		} else {
+		} else if (objType.equals("Tri")){
+			object = new TriBlock();
+		}
+		
+		else {
 			throw new IllegalArgumentException("Cannot parse code for object type: " + objType);
 		}
 		object.readString(code);

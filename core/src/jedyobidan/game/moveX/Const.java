@@ -13,7 +13,7 @@ public class Const {
 
 	public static final short CAT_ENVIRONMENT = 0x0001;
 	public static final short CAT_PLAYER = 0x0002;
-	public static final short CAT_ENEMY = 0x0004;
+	public static final short CAT_HAZARD = 0x0004;
 	public static final int GRAVITY = -30;
 	
 	public static final int ACT_GROUP_GAME = 0;

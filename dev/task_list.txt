@@ -46,7 +46,7 @@ Level Builder	Not Started
 
 GRAPHICS
 UI Graphics 	In Development
-Surface Text.	Cave completed (could be better)
+Surface Text.	Cave completed
 Backgrounds	Cave completed (could be better)
 Player Sprites	Rope Sprites remaining, need airdash->fall transition
 

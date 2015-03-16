@@ -54,8 +54,8 @@ public class Player extends Actor {
 	}
 
 	@Override
-	public void addToStage(Stage s) {
-		super.addToStage(s);
+	public void onAdd(Stage s) {
+		super.onAdd(s);
 		Level level = (Level) s;
 		level.setController(controller);
 		physics = new PlayerPhysics(this, level.getPhysics());
@@ -68,8 +68,8 @@ public class Player extends Actor {
 	}
 
 	@Override
-	public void removeFromStage(Stage s) {
-		super.removeFromStage(s);
+	public void onRemove(Stage s) {
+		super.onRemove(s);
 		Level level = (Level) s;
 		Gdx.input.setInputProcessor(null);
 		level.getPhysics().destroyBody(physics.getBody());
