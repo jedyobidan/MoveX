@@ -1,8 +1,8 @@
 package jedyobidan.game.moveX.player.state;
 
 import jedyobidan.game.moveX.Input;
-import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerState;
 
 import com.badlogic.gdx.graphics.g2d.Animation;

@@ -1,4 +1,4 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,8 +20,10 @@ import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.SpriteTransform;
 import jedyobidan.game.moveX.lib.Stage;
+import jedyobidan.game.moveX.player.Player;
+import jedyobidan.game.moveX.ui.FlyingText;
 
-public class Checkpoint extends Actor implements ContactListener {
+public class Checkpoint extends LevelObject implements ContactListener{
 	private TextureRegion txOn, txOff;
 	private boolean on;
 	private Vector2 position;
@@ -29,6 +31,10 @@ public class Checkpoint extends Actor implements ContactListener {
 
 	public Checkpoint(float x, float y) {
 		position = new Vector2().set(x, y);
+	}
+
+	public Checkpoint() {
+		this(0,0);
 	}
 
 	public void addToStage(Stage s) {
@@ -115,6 +121,20 @@ public class Checkpoint extends Actor implements ContactListener {
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+	}
+
+	@Override
+	public String writeString() {
+		StringBuilder ans = new StringBuilder("Checkpoint;\n");
+		ans.append("    " + position.x + " " + position.y + ";\n");
+		return ans.toString();
+	}
+
+	@Override
+	public void readString(String str) {
+		String[] lines = str.split(";\\s*");
+		String[] params = lines[1].split("\\s+");
+		position.set(Float.parseFloat(params[0]), Float.parseFloat(params[1]));
 	}
 
 }

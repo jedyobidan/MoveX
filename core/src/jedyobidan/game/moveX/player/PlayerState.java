@@ -2,7 +2,6 @@ package jedyobidan.game.moveX.player;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Controller;
-import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.SpriteTransform;
 import jedyobidan.game.moveX.lib.TextureManager;
 

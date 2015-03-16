@@ -1,12 +1,17 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.level;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.lib.Actor;
+import jedyobidan.game.moveX.lib.SpriteTransform;
 import jedyobidan.game.moveX.lib.Stage;
+import jedyobidan.game.moveX.lib.TextureManager;
+import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -21,31 +26,40 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-public class StaticPlatform extends Actor implements ContactListener{
+public class StaticPlatform extends LevelObject implements ContactListener{
 	private float hwidth;
 	private Vector2 position;
 	private Body body;
 	
-	public StaticPlatform(Vector2 position, float hwidth){
-		this(position.x, position.y, hwidth);
+	private String type;
+	private int[] tiles;
+	
+	public StaticPlatform(){
+		this("", 0, 0, 0);
 	}
 	
-	public StaticPlatform(float x, float y, float width){
+	public StaticPlatform(String type, Vector2 position, float hwidth){
+		this(type, position.x, position.y, hwidth);
+	}
+	
+	public StaticPlatform(String type, float x, float y, float hwidth){
 		this.position = new Vector2().set(x, y);
-		this.hwidth = width;
+		this.hwidth = hwidth;
+		this.type = type;
+		this.tiles = new int[(int) (hwidth * 2)];
 	}
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		spriteRenderer.end();
-		shapeRenderer.begin(ShapeType.Filled);
+		TextureManager textures = ((Level) stage).textures;
+		SpriteTransform transform = new SpriteTransform();
+		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
-		
-		shapeRenderer.setColor(Color.LIGHT_GRAY);
-		shapeRenderer.rect(pos.x - hwidth, pos.y, hwidth * 2, -0.2f);
-		
-		shapeRenderer.end();
-		spriteRenderer.begin();
+		for(int x = 0; x < tiles.length; x++){
+			transform.position.set(pos.x - hwidth + x, pos.y - 0.5f);
+			transform.texture = textures.get(type + "/plat" + tiles[x]);
+			transform.render(spriteRenderer);			
+		}
 	}
 	
 	public void addToStage(Stage s){
@@ -113,5 +127,31 @@ public class StaticPlatform extends Actor implements ContactListener{
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) { }
+
+	@Override
+	public String writeString() {
+		StringBuilder ans = new StringBuilder("Plat;\n");
+		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + ";\n");
+		ans.append("   ");
+		for(int tile: tiles){
+			ans.append(" " + tile);
+		}
+		ans.append(";\n");
+		return ans.toString();
+	}
+
+	@Override
+	public void readString(String str) {
+		String[] lines = str.split(";\\s*");
+		String[] params = lines[1].trim().split("\\s+");
+		type = params[0];
+		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
+		hwidth = Float.parseFloat(params[3]);
+		tiles = new int[(int) (hwidth * 2)];
+		String[] tileString = lines[2].split("\\s+");
+		for(int i = 0; i < tiles.length; i++){
+			tiles[i] = Integer.parseInt(tileString[i]);
+		}
+	}
 
 }

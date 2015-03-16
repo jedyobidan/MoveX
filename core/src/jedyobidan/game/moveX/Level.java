@@ -8,17 +8,19 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import jedyobidan.game.moveX.actors.Checkpoint;
-import jedyobidan.game.moveX.actors.Player;
-import jedyobidan.game.moveX.actors.ui.Dialog;
+import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Box2dStage;
 import jedyobidan.game.moveX.lib.TextureManager;
+import jedyobidan.game.moveX.player.Player;
+import jedyobidan.game.moveX.ui.Dialog;
 
 public class Level extends Box2dStage {
 	private Player player;
@@ -42,6 +44,10 @@ public class Level extends Box2dStage {
 		processNewActors();
 		p.setCheckpoint(new Checkpoint(start.x, start.y));
 		p.moveToCheckpoint();
+	}
+	
+	public void setBackground(String texture){
+		background = textures.getLiteral(texture + "/bg.png");
 	}
 
 	@Override

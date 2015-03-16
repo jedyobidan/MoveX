@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import jedyobidan.game.moveX.Input;
-import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerState;
 
 public class WallRiseState extends PlayerState {

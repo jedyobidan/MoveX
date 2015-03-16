@@ -1,0 +1,22 @@
+Tile Definitions
+
+Squares:
+0 : center
+1 : top left
+2 : top
+3 : top right
+4 : left
+5 : right
+6 : bottom left
+7 : bottom
+8 : bottom right
+9 : left top right
+10: left bottom right
+11: left top bottom
+12: right top bottom
+13: single
+
+Platforms:
+0 : center
+1 : left
+2 : right

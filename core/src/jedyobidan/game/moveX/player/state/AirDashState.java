@@ -1,14 +1,20 @@
 package jedyobidan.game.moveX.player.state;
 
+import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Input;
-import jedyobidan.game.moveX.actors.Player;
+import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.lib.ShortestRaycast;
+import jedyobidan.game.moveX.player.Player;
+import jedyobidan.game.moveX.player.PlayerPhysics;
 import jedyobidan.game.moveX.player.PlayerState;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class AirDashState extends PlayerState {
 	private static final double ANGLE = (Math.PI / 4);
@@ -81,6 +87,8 @@ public class AirDashState extends PlayerState {
 		exitImpulse.x = body.getMass() * (dir.x * profile.getStat("walk_speed") - velocity.x);
 		exitImpulse.y = body.getMass() * - velocity.y;
 		
+		if(clearHeight() < PlayerPhysics.GROUND + PlayerPhysics.HEAD) return; //WARNING: Possible softlock here
+		
 		if (controller.getWaveform(Input.JUMP).posEdge()){
 			if(physics.facingWall()){
 				if(player.setState(new WallRiseState(player))) return;
@@ -100,6 +108,40 @@ public class AirDashState extends PlayerState {
 			body.applyLinearImpulse(exitImpulse, body.getWorldCenter(), true);
 			if(player.setState(new FallState(player))) return;
 		}
+	}
+	
+	private float clearHeight(){
+		float toGround, toCeil;
+		
+		Vector2 c = physics.getBody().getPosition();
+		Vector2 l = c.cpy().add(-PlayerPhysics.WIDTH, 0);
+		Vector2 r = c.cpy().add(PlayerPhysics.WIDTH, 0);
+		World world = physics.getBody().getWorld();
+				
+		ShortestRaycast groundFind = new ShortestRaycast(){
+			@Override
+			public boolean shouldCheck(Fixture fix) {
+				return Const.isGround((Actor) fix.getBody().getUserData());
+			}			
+		};
+		
+		world.rayCast(groundFind, l, l.cpy().add(0, -PlayerPhysics.GROUND * 2));
+		world.rayCast(groundFind, c, c.cpy().add(0, -PlayerPhysics.GROUND * 2));
+		world.rayCast(groundFind, r, r.cpy().add(0, -PlayerPhysics.GROUND * 2));
+		toGround = groundFind.fraction * PlayerPhysics.GROUND * 2;
+		
+		ShortestRaycast ceilFind = new ShortestRaycast(){
+			@Override
+			public boolean shouldCheck(Fixture fix) {
+				return Const.isCeil((Actor) fix.getBody().getUserData());
+			}
+		};
+		world.rayCast(ceilFind, l, l.cpy().add(0, PlayerPhysics.HEAD * 2));
+		world.rayCast(ceilFind, c, c.cpy().add(0, PlayerPhysics.HEAD * 2));
+		world.rayCast(ceilFind, r, r.cpy().add(0, PlayerPhysics.HEAD * 2));
+		toCeil = ceilFind.fraction * PlayerPhysics.HEAD * 2;
+		
+		return toGround + toCeil;
 	}
 
 }

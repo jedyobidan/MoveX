@@ -3,9 +3,9 @@ package jedyobidan.game.moveX;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-import jedyobidan.game.moveX.actors.RectBlock;
-import jedyobidan.game.moveX.actors.StaticPlatform;
-import jedyobidan.game.moveX.actors.TriBlock;
+import jedyobidan.game.moveX.level.RectBlock;
+import jedyobidan.game.moveX.level.StaticPlatform;
+import jedyobidan.game.moveX.level.TriBlock;
 import jedyobidan.game.moveX.lib.Actor;
 
 public class Const {

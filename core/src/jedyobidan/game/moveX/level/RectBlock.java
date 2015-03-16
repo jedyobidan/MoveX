@@ -1,41 +1,31 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.level;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
-import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.SpriteTransform;
 import jedyobidan.game.moveX.lib.Stage;
+import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
-public class RectBlock extends Actor {
+public class RectBlock extends LevelObject{
 	private Vector2 position;
 	private float hwidth, hheight;
 	private Body body;
 
 	private String type;
-
-	private Texture ground, top;
-
-	private Set<Integer[]> topped;
+	private int[][] tiles;
 
 	public RectBlock(String type, Vector2 position, float hwidth, float hheight) {
 		this(type, position.x, position.y, hwidth, hheight);
@@ -45,66 +35,36 @@ public class RectBlock extends Actor {
 		this.position = new Vector2().set(x, y);
 		this.hwidth = hwidth;
 		this.hheight = hheight;
-		this.type = type + "/";
-		this.topped = new HashSet<Integer[]>();
+		this.type = type;
+		this.tiles = new int[(int) (hheight * 2)][(int) (hwidth * 2)];
+	}
+	
+	public RectBlock(){
+		this("", 0, 0, 0, 0);
 	}
 
-	public void setTextures(String prefix) {
-		Level level = (Level) stage;
-		ground = level.textures.getLiteral(prefix + "ground.png");
-		top = level.textures.getLiteral(prefix + "platform.png");
-	}
-
-	public RectBlock addToppedInterval(int start, int end) {
-		Integer[] interval = new Integer[] { start, end };
-		topped.add(interval);
-		return this;
-	}
-
-	public void removeToppedInterval(int start, int end) {
-		Integer[] interval = new Integer[] { start, end };
-		topped.remove(interval);
-	}
-
-	public Set<Integer[]> getToppedIntervals() {
-		return topped;
-	}
 
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
+		TextureManager textures = ((Level) stage).textures;
+		SpriteTransform transform = new SpriteTransform();
+		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
-		float txWidth = ground.getWidth() / Const.PIXELS_PER_METER;
-		float txHeight = ground.getHeight() / Const.PIXELS_PER_METER;
-		ground.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		spriteRenderer.draw(ground, pos.x - hwidth, pos.y - hheight,
-				hwidth * 2, hheight * 2, 0, 0, hwidth * 2 / txWidth, -hheight
-						* 2 / txHeight); // May adjust u-v later
-
-		if (topped.size() > 0) {
-			float platWidth = top.getWidth() / Const.PIXELS_PER_METER;
-			float platHeight = top.getHeight() / Const.PIXELS_PER_METER;
-			top.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			for (Integer[] interval : topped) {
-				spriteRenderer.draw(top, pos.x - hwidth + interval[0], pos.y + hheight - platHeight, 
-						interval[1] - interval[0], platHeight, 0, 0, 
-						(interval[1] - interval[0])	/ platWidth, -1);
+		for(int y = 0; y < tiles.length; y++){
+			for(int x = 0; x < tiles[y].length; x++){
+				transform.position.set(pos.x - hwidth + x, pos.y + hheight - y - 1);
+				transform.texture = textures.get(type + "/square" + tiles[y][x]);
+				transform.render(spriteRenderer);
 			}
 		}
-
-		// spriteRenderer.end();
-		// shapeRenderer.begin(ShapeType.Filled);
-		//
-		// shapeRenderer.setColor(Color.DARK_GRAY);
-		// shapeRenderer.rect(pos.x - hwidth, pos.y - hheight, 2*hwidth,
-		// 2*hheight);
-		//
-		// shapeRenderer.end();
-		// spriteRenderer.begin();
+	}
+	
+	public void setTiles(int[][] tiles){
+		this.tiles = tiles;
 	}
 
 	public void addToStage(Stage s) {
 		super.addToStage(s);
-		setTextures(type);
 		Level level = (Level) s;
 
 		BodyDef def = new BodyDef();
@@ -152,6 +112,41 @@ public class RectBlock extends Actor {
 		super.removeFromStage(s);
 		Level level = (Level) s;
 		level.getPhysics().destroyBody(this.body);
+	}
+
+	@Override
+	public String writeString() {
+		StringBuilder ans = new StringBuilder("Rect;\n");
+		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + " " + hheight + ";\n");
+		for(int i = 0; i < tiles.length; i++){
+			ans.append("   ");
+			for(int j = 0; j < tiles[i].length; j++){
+				ans.append(" " + tiles[i][j]);
+			}
+			ans.append("\n");
+		}
+		ans.deleteCharAt(ans.length() - 1);
+		ans.append(";\n");
+		return ans.toString();
+	}
+
+	@Override
+	public void readString(String str) {
+		String[] lines = str.split(";\\s*");
+		String[] params = lines[1].trim().split("\\s+");
+		type = params[0];
+		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
+		hwidth = Float.parseFloat(params[3]);
+		hheight = Float.parseFloat(params[4]);
+		tiles = new int[(int) (hheight * 2)][(int) (hwidth * 2)];
+		String[] grid = lines[2].trim().split("\\s+");
+		
+		int i = 0;
+		for(int y = 0; y < tiles.length; y++){
+			for(int x = 0; x < tiles[y].length; x++){
+				tiles[y][x] = Integer.parseInt(grid[i++]);
+			}
+		}
 	}
 
 }

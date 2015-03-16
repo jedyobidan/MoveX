@@ -1,4 +1,4 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.ui;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.lib.Actor;

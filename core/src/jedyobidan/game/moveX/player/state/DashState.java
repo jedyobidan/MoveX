@@ -3,10 +3,10 @@ package jedyobidan.game.moveX.player.state;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Input;
 import jedyobidan.game.moveX.MoveX;
-import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.JUtil;
 import jedyobidan.game.moveX.lib.ShortestRaycast;
+import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 import jedyobidan.game.moveX.player.PlayerState;
 
@@ -99,7 +99,8 @@ public class DashState extends PlayerState{
 			if(player.setState(new FallState(player))) return;
 		} 
 
-		if (controller.getWaveform(Input.JUMP).posEdge()){
+		if (controller.getWaveform(Input.JUMP).posEdge() && 
+				clearHeight() >= PlayerPhysics.GROUND + PlayerPhysics.HEAD){
 			if(player.setState(new RiseState(player))) return;
 		} 
 		

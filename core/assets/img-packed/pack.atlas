@@ -118,22 +118,134 @@ player-wrise
   index: -1
 
 pack2.png
-size: 128,128
+size: 256,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-cave/ground
+cave/bg
   rotate: false
-  xy: 2, 13
-  size: 96, 96
-  orig: 96, 96
+  xy: 2, 14
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
-cave/platform
+cave/plat0
   rotate: false
   xy: 2, 2
-  size: 48, 9
-  orig: 48, 9
+  size: 20, 10
+  orig: 20, 10
+  offset: 0, 0
+  index: -1
+cave/plat1
+  rotate: false
+  xy: 24, 2
+  size: 20, 10
+  orig: 20, 10
+  offset: 0, 0
+  index: -1
+cave/plat2
+  rotate: false
+  xy: 46, 2
+  size: 20, 10
+  orig: 20, 10
+  offset: 0, 0
+  index: -1
+cave/square0
+  rotate: false
+  xy: 52, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square5
+  rotate: false
+  xy: 52, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square4
+  rotate: false
+  xy: 52, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square7
+  rotate: false
+  xy: 52, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square1
+  rotate: false
+  xy: 52, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square10
+  rotate: false
+  xy: 118, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square11
+  rotate: false
+  xy: 140, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square12
+  rotate: false
+  xy: 140, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square13
+  rotate: false
+  xy: 162, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square2
+  rotate: false
+  xy: 74, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square3
+  rotate: false
+  xy: 74, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square6
+  rotate: false
+  xy: 96, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square8
+  rotate: false
+  xy: 96, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square9
+  rotate: false
+  xy: 118, 42
+  size: 20, 20
+  orig: 20, 20
   offset: 0, 0
   index: -1
 

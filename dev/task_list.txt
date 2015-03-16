@@ -41,18 +41,18 @@ Turrets		Not Started
 
 DEV TOOLS
 Dev Sprites	Unneeded
-Level Loader	Not Started
+Level Loader	In Development
 Level Builder	Not Started
 
 GRAPHICS
 UI Graphics 	In Development
-Surface Text.	Not Started
-Backgrounds	Not Started
+Surface Text.	Cave completed (could be better)
+Backgrounds	Cave completed (could be better)
 Player Sprites	Rope Sprites remaining, need airdash->fall transition
 
 SOUND
 Music		Delegated to Aaron
-SFX		Not Started
+SFX		Delegated to Aaron
 
 LEVELS
 Design		Not Started

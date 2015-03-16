@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
 import jedyobidan.game.moveX.Level;
-import jedyobidan.game.moveX.actors.Player;
 import jedyobidan.game.moveX.lib.JUtil;
+import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerState;
 
 public class FallState extends PlayerState {

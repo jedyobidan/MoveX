@@ -1,16 +1,14 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.player;
 
 import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
 import jedyobidan.game.moveX.InputWave;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
+import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
-import jedyobidan.game.moveX.player.PlayerPhysics;
-import jedyobidan.game.moveX.player.PlayerProfile;
-import jedyobidan.game.moveX.player.PlayerState;
 import jedyobidan.game.moveX.player.state.FallState;
 import jedyobidan.game.moveX.player.state.IdleState;
 

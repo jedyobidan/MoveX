@@ -3,8 +3,7 @@ package jedyobidan.game.moveX.player;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
-import jedyobidan.game.moveX.actors.Checkpoint;
-import jedyobidan.game.moveX.actors.Player;
+import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.lib.Accumulator;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.ShortestRaycast;
@@ -33,7 +32,7 @@ public class PlayerPhysics implements ContactListener {
 	private boolean facing;
 
 	public static final int STICK_STRENGTH = 10;
-	public static final float WIDTH = 0.5f, GROUND= 0.5f, HEAD = 1f, DASH = 0.5f;
+	public static final float WIDTH = 0.5f, GROUND= 0.5f, HEAD = 1f, DASH = 0.4f;
 
 	public PlayerPhysics(Player player, World physics) {
 		groundContact = new Accumulator<Actor>();

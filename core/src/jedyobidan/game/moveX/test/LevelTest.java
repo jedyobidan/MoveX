@@ -3,7 +3,7 @@ package jedyobidan.game.moveX.test;
 import static org.junit.Assert.assertEquals;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
-import jedyobidan.game.moveX.actors.Player;
+import jedyobidan.game.moveX.player.Player;
 
 import org.junit.Test;
 

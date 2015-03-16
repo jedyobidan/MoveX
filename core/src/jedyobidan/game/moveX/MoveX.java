@@ -1,11 +1,16 @@
 package jedyobidan.game.moveX;
 
-import jedyobidan.game.moveX.actors.Checkpoint;
-import jedyobidan.game.moveX.actors.RectBlock;
-import jedyobidan.game.moveX.actors.Player;
-import jedyobidan.game.moveX.actors.StaticPlatform;
-import jedyobidan.game.moveX.actors.TriBlock;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import jedyobidan.game.moveX.level.Checkpoint;
+import jedyobidan.game.moveX.level.LevelObject;
+import jedyobidan.game.moveX.level.RectBlock;
+import jedyobidan.game.moveX.level.StaticPlatform;
+import jedyobidan.game.moveX.level.TriBlock;
 import jedyobidan.game.moveX.lib.Actor;
+import jedyobidan.game.moveX.player.Player;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -28,12 +33,11 @@ public class MoveX extends Game {
 	@Override
 	public void create() {
 		initRes();
-		Level test = new Level(spriteRender, shapeRender);
-		constructLevel(test);
+		Level test = constructLevel("level/test.dat");
 		test.setPlayer(new Player(), new Vector2(0,15));
 		test.setDebug(false);
 		setScreen(test);
-		test.showDialog("Welcome to MoveX!", "Press w/a/s/d to move\n Press k to jump\n Press l to dash");
+		test.showDialog("Welcome to Move X!", "Press w/a/s/d to move\nPress k to jump\nPress l to dash");
 	}
 
 	private void initRes() {
@@ -53,26 +57,24 @@ public class MoveX extends Game {
 		getScreen().dispose();
 	}
 
-	private void constructLevel(Level level) {
-		level.addGameActor(new RectBlock("cave", 0, 0, 30, 1)); 		
-		level.addGameActor(new RectBlock("cave", 10, 12, 0.5f, 9)); 		
-		level.addGameActor(new RectBlock("cave", 15, 9.5f, 0.5f, 8.5f)); 		
-		level.addGameActor(new RectBlock("cave", 20, 11, 0.5f, 10));
-		level.addGameActor(new RectBlock("cave", 15, 21.5f, 5.5f, 0.5f));
-		level.addGameActor(new StaticPlatform(5, 5.5f, 2.5f));		
-		level.addGameActor(new StaticPlatform(-5, 7f, 2.5f)); 		
-		level.addGameActor(new RectBlock("cave", -20, 7.25f, 1, 5));	
-		level.addGameActor(new RectBlock("cave", -19, 13.25f, 2, 1));
-		level.addGameActor(new StaticPlatform(-5, 17, 3));
-		level.addGameActor(new Checkpoint(-5f, 3.75f));
-		level.addGameActor(new Checkpoint(17.5f, 1.75f));
-		level.addGameActor(new Checkpoint(-5, 17.75f));
-		level.addGameActor(new Checkpoint(-25, 1.75f));
-		
-		// slope
-		level.addGameActor(new RectBlock("cave/", -5, 2, 2.5f, 1)); 
-		level.addGameActor(new TriBlock(-9.5f, 2, 2, 1));
-		level.addGameActor(new TriBlock(-0.5f, 2, 2, -1));
+	private Level constructLevel(String file) {
+		Level level = new Level(spriteRender, shapeRender);
+		level.setBackground("cave");
+		String levelCode = Gdx.files.internal(file).readString();
+		Scanner in = new Scanner(levelCode.replaceAll("\\#.*", ""));
+		in.useDelimiter("\\s*--\\s*");
+		while(in.hasNext()){
+			String objCode = in.next().trim();
+			if(objCode.isEmpty()) continue;
+			try{
+				level.addGameActor(LevelObject.constructObject(objCode));
+			} catch (RuntimeException e){
+				System.err.println("Could not parse code: \n" + objCode);
+				e.printStackTrace();
+			}
+		}
+		in.close();
+		return level;
 	}
 	
 

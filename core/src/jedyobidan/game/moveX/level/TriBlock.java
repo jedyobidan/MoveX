@@ -1,4 +1,4 @@
-package jedyobidan.game.moveX.actors;
+package jedyobidan.game.moveX.level;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

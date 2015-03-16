@@ -14,6 +14,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -27,6 +29,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	private int defaultCamera;
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
+	protected Texture background;
 	
 	private float speed;
 	
@@ -94,6 +97,17 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	    for(Camera cam: cameras){
 	    	cam.update();
 	    }
+	    
+		if(background != null){
+			useCamera(0);
+			spriteRender.begin();
+			background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+			this.spriteRender.draw(background, -Gdx.graphics.getWidth() / 2, - Gdx.graphics.getHeight() / 2, 
+					Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
+					0, 0, 
+					Gdx.graphics.getWidth() / background.getWidth() + 1, Gdx.graphics.getHeight() / background.getHeight() + 1);
+			spriteRender.end();
+		}
 
 	    for(int i = 0; i < getNumGroups(); i++){
 	    	render(i);
