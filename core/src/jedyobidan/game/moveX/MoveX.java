@@ -34,6 +34,8 @@ public class MoveX extends Game {
 	public void create() {
 		initRes();
 		Level test = constructLevel("level/test.dat");
+		test.addGameActor(new TriBlock("cave", 12, 15f, 2, true));
+		test.addGameActor(new TriBlock("cave", 17, 15f, 2, false));
 		test.setPlayer(new Player(), new Vector2(0,15));
 		test.setDebug(false);
 		setScreen(test);
@@ -61,10 +63,10 @@ public class MoveX extends Game {
 		Level level = new Level(spriteRender, shapeRender);
 		level.setBackground("cave");
 		String levelCode = Gdx.files.internal(file).readString();
-		Scanner in = new Scanner(levelCode.replaceAll("\\#.*", ""));
-		in.useDelimiter("\\s*--\\s*");
-		while(in.hasNext()){
-			String objCode = in.next().trim();
+		levelCode = levelCode.replaceAll("\\#.*", "");
+		String[] in = levelCode.split("\\s*--\\s*");
+		for(String objCode: in){
+			objCode = objCode.trim();
 			if(objCode.isEmpty()) continue;
 			try{
 				level.addGameActor(LevelObject.constructObject(objCode));
@@ -73,7 +75,6 @@ public class MoveX extends Game {
 				e.printStackTrace();
 			}
 		}
-		in.close();
 		return level;
 	}
 	

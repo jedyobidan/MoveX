@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -37,10 +38,37 @@ public class RectBlock extends LevelObject{
 		this.hheight = hheight;
 		this.type = type;
 		this.tiles = new int[(int) (hheight * 2)][(int) (hwidth * 2)];
+		tileDefaults();
 	}
 	
 	public RectBlock(){
 		this("", 0, 0, 0, 0);
+	}
+	
+	public void tileDefaults(){
+		if(tiles.length == 0) return;
+		for(int y = 1; y < tiles.length - 1; y++){
+			tiles[y][0] = Const.Tiles.SQ_L;
+			tiles[y][tiles[y].length - 1] = Const.Tiles.SQ_R;
+		}
+		for(int x = 1; x < tiles.length - 1; x++){
+			tiles[tiles.length - 1][x] = Const.Tiles.SQ_B;
+			tiles[0][x] = Const.Tiles.SQ_T;
+		}
+		if(tiles.length == 1 && tiles[0].length == 1){
+			tiles[0][0] = Const.Tiles.SQ_SINGLE;
+		} else if(tiles.length == 1){
+			tiles[0][0] = Const.Tiles.SQ_L3;
+			tiles[0][tiles[0].length - 1] = Const.Tiles.SQ_R3;
+		} else if (tiles[0].length == 1){
+			tiles[0][0] = Const.Tiles.SQ_T3;
+			tiles[tiles.length - 1][0] = Const.Tiles.SQ_B3;
+		} else {
+			tiles[0][0] = Const.Tiles.SQ_TL;
+			tiles[0][tiles[0].length - 1] = Const.Tiles.SQ_TR;
+			tiles[tiles.length][0] = Const.Tiles.SQ_BL;
+			tiles[tiles.length - 1][tiles[0].length - 1] = Const.Tiles.SQ_BR;
+		}
 	}
 
 
@@ -73,38 +101,42 @@ public class RectBlock extends LevelObject{
 		body = level.getPhysics().createBody(def);
 		body.setUserData(this);
 
-		EdgeShape edge = new EdgeShape();
+		ChainShape shape = new ChainShape();
 		FixtureDef fix = new FixtureDef();
 		fix.friction = 1;
 		fix.restitution = 0;
 		fix.filter.categoryBits = Const.CAT_ENVIRONMENT;
-		fix.shape = edge;
+		fix.shape = shape;
 
-		edge.setHasVertex0(true);
-		edge.setHasVertex3(true);
+		Vector2[] vertices = new Vector2[4];
+		vertices[0] = new Vector2(-hwidth, hheight);
+		vertices[1] = new Vector2(hwidth, hheight);
+		vertices[2] = new Vector2(hwidth, -hheight);
+		vertices[3] = new Vector2(-hwidth, -hheight);
+		shape.createLoop(vertices);
 
-		// Top Edge
-		edge.set(-hwidth, hheight, hwidth, hheight);
-		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, hheight);
-		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, hheight);
-		body.createFixture(fix);
-
-		// Bottom Edge
-		edge.set(-hwidth, -hheight, hwidth, -hheight);
-		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, -hheight);
-		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, -hheight);
-		body.createFixture(fix);
-
-		// Left Edge
-		edge.set(-hwidth, -hheight, -hwidth, hheight);
-		edge.setVertex0(-hwidth, -hheight - PlayerPhysics.GROUND * 3);
-		edge.setVertex3(-hwidth, hheight + PlayerPhysics.GROUND * 3);
-		body.createFixture(fix);
-
-		// Right Edge
-		edge.set(hwidth, -hheight, hwidth, hheight);
-		edge.setVertex0(hwidth, -hheight - PlayerPhysics.GROUND * 3);
-		edge.setVertex3(hwidth, hheight + PlayerPhysics.GROUND * 3);
+//		// Top Edge
+//		edge.set(-hwidth, hheight, hwidth, hheight);
+//		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, hheight);
+//		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, hheight);
+//		body.createFixture(fix);
+//
+//		// Bottom Edge
+//		edge.set(-hwidth, -hheight, hwidth, -hheight);
+//		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, -hheight);
+//		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, -hheight);
+//		body.createFixture(fix);
+//
+//		// Left Edge
+//		edge.set(-hwidth, -hheight, -hwidth, hheight);
+//		edge.setVertex0(-hwidth, -hheight - PlayerPhysics.GROUND * 3);
+//		edge.setVertex3(-hwidth, hheight + PlayerPhysics.GROUND * 3);
+//		body.createFixture(fix);
+//
+//		// Right Edge
+//		edge.set(hwidth, -hheight, hwidth, hheight);
+//		edge.setVertex0(hwidth, -hheight - PlayerPhysics.GROUND * 3);
+//		edge.setVertex3(hwidth, hheight + PlayerPhysics.GROUND * 3);
 		body.createFixture(fix);
 	}
 

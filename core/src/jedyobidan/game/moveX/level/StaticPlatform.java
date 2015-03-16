@@ -47,6 +47,13 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 		this.hwidth = hwidth;
 		this.type = type;
 		this.tiles = new int[(int) (hwidth * 2)];
+		tileDefaults();
+	}
+	
+	public void tileDefaults(){
+		if(tiles.length == 0) return;
+		tiles[0] = Const.Tiles.PL_L;
+		tiles[tiles.length - 1] = Const.Tiles.PL_R;
 	}
 	
 	@Override
@@ -78,8 +85,8 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 		shape.setHasVertex0(true);
 		shape.setHasVertex3(true);
 		shape.set(- hwidth, 0, hwidth, 0);
-		shape.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, 0);
-		shape.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, 0);
+//		shape.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, 0);
+//		shape.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, 0);
 		
 		
 		FixtureDef fix = new FixtureDef();

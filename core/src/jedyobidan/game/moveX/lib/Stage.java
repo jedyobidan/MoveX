@@ -3,7 +3,6 @@ package jedyobidan.game.moveX.lib;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,10 +13,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	protected List<Collection<Actor>> actors;
@@ -29,7 +29,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	private int defaultCamera;
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
-	protected Texture background;
+	protected TextureRegion background;
 	
 	private float speed;
 	
@@ -101,11 +101,8 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		if(background != null){
 			useCamera(0);
 			spriteRender.begin();
-			background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			this.spriteRender.draw(background, -Gdx.graphics.getWidth() / 2, - Gdx.graphics.getHeight() / 2, 
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
-					0, 0, 
-					Gdx.graphics.getWidth() / background.getWidth() + 1, Gdx.graphics.getHeight() / background.getHeight() + 1);
+			TiledDrawable tiled = new TiledDrawable(background);
+			tiled.draw(spriteRender, -Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			spriteRender.end();
 		}
 

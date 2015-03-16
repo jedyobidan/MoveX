@@ -15,8 +15,16 @@ Squares:
 11: left top bottom
 12: right top bottom
 13: single
+14: ascending edge
+15: decending edge
 
 Platforms:
 0 : center
 1 : left
 2 : right
+
+Triangles:
+0 : ascending small
+1 : ascending large
+2 : descending large
+3 : descending small

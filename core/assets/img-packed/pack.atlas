@@ -157,7 +157,7 @@ cave/square0
   orig: 20, 20
   offset: 0, 0
   index: -1
-cave/square5
+cave/square7
   rotate: false
   xy: 52, 42
   size: 20, 20
@@ -171,7 +171,7 @@ cave/square4
   orig: 20, 20
   offset: 0, 0
   index: -1
-cave/square7
+cave/square5
   rotate: false
   xy: 52, 42
   size: 20, 20
@@ -213,6 +213,20 @@ cave/square13
   orig: 20, 20
   offset: 0, 0
   index: -1
+cave/square14
+  rotate: false
+  xy: 162, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square15
+  rotate: false
+  xy: 184, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 cave/square2
   rotate: false
   xy: 74, 42
@@ -244,6 +258,34 @@ cave/square8
 cave/square9
   rotate: false
   xy: 118, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/triangle0
+  rotate: false
+  xy: 184, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/triangle1
+  rotate: false
+  xy: 206, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/triangle2
+  rotate: false
+  xy: 206, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/triangle3
+  rotate: false
+  xy: 228, 42
   size: 20, 20
   orig: 20, 20
   offset: 0, 0

@@ -47,7 +47,7 @@ public class Level extends Box2dStage {
 	}
 	
 	public void setBackground(String texture){
-		background = textures.getLiteral(texture + "/bg.png");
+		background = textures.get(texture + "/bg");
 	}
 
 	@Override
