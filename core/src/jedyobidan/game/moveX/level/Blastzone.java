@@ -67,6 +67,17 @@ public class Blastzone extends LevelObject implements ContactListener {
 			spriteRenderer.begin();
 			stage.popMatrix();
 		}
+		if(((Level) stage).isDebug()){
+			spriteRenderer.end();
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+		    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			shapeRenderer.begin(ShapeType.Filled);
+			shapeRenderer.setColor(1, 0, 0, 0.5f);
+			shapeRenderer.rect(position.x - hwidth, position.y - hheight, hwidth * 2, hheight * 2);
+			shapeRenderer.end();
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+			spriteRenderer.begin();
+		}
 	}
 	
 	@Override
