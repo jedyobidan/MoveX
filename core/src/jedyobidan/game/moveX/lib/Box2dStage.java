@@ -46,7 +46,7 @@ public class Box2dStage extends Stage implements ContactListener{
 		physicsCamera = addCamera(physicsCam);
 	}
 	
-	protected int getPhysicsCamera(){
+	public int getPhysicsCamera(){
 		return physicsCamera;
 	}
 	

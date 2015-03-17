@@ -128,6 +128,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		shapeRender.setProjectionMatrix(cameras.get(camID).combined);
 	}
 	
+	
 	public int addCamera(OrthographicCamera cam){
 		cameras.add(cam);
 		return cameras.size() - 1;

@@ -64,7 +64,8 @@ public class MoveX extends Game {
 	
 	public void editLevel(String file){
 		Level level = constructLevel(file);
-		level.addGameActor(new LevelEditor());
+		level.setDebug(true);
+		level.addGameActor(new LevelEditor(file));
 		setScreen(level);
 	}
 
