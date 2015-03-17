@@ -148,7 +148,13 @@ public class Level extends Box2dStage implements Stringable {
 	}
 	
 	public void readMetaData(String meta){
-		
+		String[] lines = meta.split(";\\s*");
+		for(int i = 1; i < lines.length; i++){
+			String[] arg = lines[i].split("\\s*=\\s*");
+			if(arg[0].equals("tileset")){
+				setTileset(arg[1]);
+			}
+		}
 	}
 	
 	public String writeMeta(){

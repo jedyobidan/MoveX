@@ -1,5 +1,5 @@
-$META
-
+$META;
+tileset = cave;
 --
 Rect; # Floor
     0.0 0.0 30.0 1.0;

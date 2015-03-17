@@ -88,24 +88,8 @@ public class MoveX extends Game {
 
 	private Level constructLevel(String file) {
 		Level level = new Level(spriteRender, shapeRender);
-		level.setTileset("cave");
 		String levelCode = Gdx.files.internal(file).readString();
-		levelCode = levelCode.replaceAll("\\#.*", "");
-		String[] in = levelCode.split("\\s*--\\s*");
-		for(String objCode: in){
-			objCode = objCode.trim();
-			if(objCode.isEmpty()) continue;
-			if(objCode.startsWith("$META")){
-				
-			} else {
-				try{
-					level.addGameActor(LevelObject.constructObject(objCode));
-				} catch (RuntimeException e){
-					System.err.println("Could not parse code: \n" + objCode);
-					e.printStackTrace();
-				}
-			}
-		}
+		level.readString(levelCode);
 		return level;
 	}
 	
