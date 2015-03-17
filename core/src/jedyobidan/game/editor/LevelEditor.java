@@ -48,15 +48,20 @@ public class LevelEditor extends Actor implements InputProcessor{
 		BitmapFont font = Const.Fonts.PIXEL;
 		font.setScale(1);
 		TextBounds bounds = font.getBounds(getInfo());
-		font.drawMultiLine(spriteRenderer, getInfo(), -Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		font.drawMultiLine(spriteRenderer, getInfo(), -Gdx.graphics.getWidth()/2 + 4, Gdx.graphics.getHeight()/2 - 2);
 		level.popMatrix();
 	}
 	
 	public String getInfo(){
 		StringBuilder ans = new StringBuilder();
+		ans.append(file + "\n");
 		// Mouse information
 		ans.append(String.format("[%.2f:%.2f]\n", mousePosition.x, mousePosition.y));
 		return ans.toString();
+	}
+	
+	public void execCommand(String command){
+		System.out.println(command);
 	}
 	
 	@Override
