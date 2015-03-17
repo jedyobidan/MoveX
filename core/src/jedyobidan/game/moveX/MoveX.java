@@ -95,11 +95,15 @@ public class MoveX extends Game {
 		for(String objCode: in){
 			objCode = objCode.trim();
 			if(objCode.isEmpty()) continue;
-			try{
-				level.addGameActor(LevelObject.constructObject(objCode));
-			} catch (RuntimeException e){
-				System.err.println("Could not parse code: \n" + objCode);
-				e.printStackTrace();
+			if(objCode.startsWith("$META")){
+				
+			} else {
+				try{
+					level.addGameActor(LevelObject.constructObject(objCode));
+				} catch (RuntimeException e){
+					System.err.println("Could not parse code: \n" + objCode);
+					e.printStackTrace();
+				}
 			}
 		}
 		return level;

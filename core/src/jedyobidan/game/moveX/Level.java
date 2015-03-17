@@ -1,6 +1,7 @@
 package jedyobidan.game.moveX;
 
 import jedyobidan.game.moveX.level.Checkpoint;
+import jedyobidan.game.moveX.level.LevelObject;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Box2dStage;
 import jedyobidan.game.moveX.lib.TextureManager;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Level extends Box2dStage {
+public class Level extends Box2dStage implements Stringable {
 	private Player player;
 	private InputMultiplexer input;
 	private InputMultiplexer ui;
@@ -111,6 +112,47 @@ public class Level extends Box2dStage {
 		} else {
 			ui.addProcessor(input);
 		}
+	}
+
+
+	@Override
+	public String writeString() {
+		StringBuilder ans = new StringBuilder(writeMeta());
+		ans.append("--\n");
+		for(Actor a: actors.get(Const.ACT_GROUP_GAME)){
+			if(a instanceof LevelObject){
+				ans.append(((LevelObject) a).writeString());
+			}
+		}
+		return ans.toString();
+	}
+
+	@Override
+	public void readString(String str) {
+		str = str.replaceAll("\\#.*", "");
+		String[] in = str.split("\\s*--\\s*");
+		for(String objCode: in){
+			objCode = objCode.trim();
+			if(objCode.isEmpty()) continue;
+			if(objCode.startsWith("$META;")){
+				readMetaData(objCode);
+			} else {
+				try{
+					addGameActor(LevelObject.constructObject(objCode));
+				} catch (RuntimeException e){
+					System.err.println("Could not parse code: \n" + objCode);
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void readMetaData(String meta){
+		
+	}
+	
+	public String writeMeta(){
+		return "$META;\n";
 	}
 	
 	public void removeUIInput(InputProcessor input){
