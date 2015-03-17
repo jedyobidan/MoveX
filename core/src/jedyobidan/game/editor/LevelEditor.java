@@ -1,5 +1,7 @@
 package jedyobidan.game.editor;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -24,14 +26,17 @@ public class LevelEditor extends Actor implements InputProcessor{
 	private String file;
 	
 	private StringBuilder console;
+	private LinkedList<String> log;
 	
 	public LevelEditor(String file){
 		mousePosition = new Vector2(0,0);
 		this.file = file;
+		this.log = new LinkedList<String>();
 	}
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
+		BitmapFont font = Const.Fonts.PIXEL;
 		spriteRenderer.end();
 		
 		Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -48,14 +53,26 @@ public class LevelEditor extends Actor implements InputProcessor{
 		spriteRenderer.begin();
 		level.pushMatrix();
 		level.useCamera(0);
-		BitmapFont font = Const.Fonts.PIXEL;
+		
+		// Info
 		font.setScale(1);
 		font.drawMultiLine(spriteRenderer, getInfo(), -Gdx.graphics.getWidth()/2 + 4, Gdx.graphics.getHeight()/2 - 2);
+		
+		// Console
 		if(console != null){
 			TextBounds bounds = font.getBounds(console);
 			font.draw(spriteRenderer, console, -Gdx.graphics.getWidth()/2, 
 					-Gdx.graphics.getHeight()/2 + bounds.height + 2);
 		}
+		
+		// Log
+		StringBuilder logString = new StringBuilder();
+		for(String msg: log){
+			logString.append(msg + "\n");
+		}
+		TextBounds bounds = font.getMultiLineBounds(logString.toString());
+		font.drawMultiLine(spriteRenderer, logString.toString(),
+				-Gdx.graphics.getWidth()/2, -Gdx.graphics.getHeight()/2 + bounds.height + 2 + font.getLineHeight());
 		level.popMatrix();
 	}
 	
@@ -72,6 +89,14 @@ public class LevelEditor extends Actor implements InputProcessor{
 		if(command.equals("write")){
 			FileHandle file = Gdx.files.local("../core/assets/" + this.file);
 			file.writeString(level.writeString(), false);
+			log("Wrote level to " + file + " (" + file.length() + " bytes)");
+		}
+	}
+	
+	public void log(String msg){
+		log.addLast(msg);
+		while(log.size() > 5){
+			log.removeFirst();
 		}
 	}
 	
