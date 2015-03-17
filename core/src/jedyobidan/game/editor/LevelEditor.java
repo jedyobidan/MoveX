@@ -29,10 +29,13 @@ public class LevelEditor extends Actor implements InputProcessor{
 	private StringBuilder console;
 	private LinkedList<String> log;
 	
+	private Context context;
+	
 	public LevelEditor(String file){
 		mousePosition = new Vector2(0,0);
 		this.file = file;
 		this.log = new LinkedList<String>();
+		this.context = new NoneContext(this);
 	}
 	
 	@Override
@@ -45,6 +48,11 @@ public class LevelEditor extends Actor implements InputProcessor{
 		shapeRenderer.begin();
 		shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
 		for(int i = -1000; i <= 1000; i++){
+			if(i == 0){
+				shapeRenderer.setColor(1, 1, 0, 0.5f);
+			} else if (i == 1){
+				shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
+			}
 			shapeRenderer.line(i, -1000, i, 1000);
 			shapeRenderer.line(-1000, i , 1000, i);
 		}
@@ -52,6 +60,8 @@ public class LevelEditor extends Actor implements InputProcessor{
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		
 		spriteRenderer.begin();
+		context.render(spriteRenderer, shapeRenderer);
+		
 		level.pushMatrix();
 		level.useCamera(0);
 		
@@ -80,6 +90,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 	public String getInfo(){
 		StringBuilder ans = new StringBuilder();
 		ans.append(file + "\n");
+		ans.append("Context: " + context.getName()+ "\n");
 		// Mouse information
 		ans.append(String.format("[%.2f:%.2f]\n", mousePosition.x, mousePosition.y));
 		return ans.toString();
@@ -107,9 +118,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 				MoveX.GAME.editLevel(location);
 			} else if (args[0].equals("new")){
 				MoveX.GAME.editLevel("*new");
-			}
-			
-			else {
+			} else if (args[0].equals("context")){
+				context = Context.construct(this, args[1]);
+				
+			}else if (!context.execCommand(args)){
 				throw new IllegalArgumentException("Invalid command: " + command);
 			}
 		} catch (Exception e){
@@ -145,7 +157,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 	public boolean keyDown(int keycode) {
 		if(console != null){
 			if(keycode == Keys.BACKSPACE){
-				console.deleteCharAt(console.length() - 1);
+				console.setLength(console.length() - 1);
+				if(console.length() == 0){
+					console = null;
+				}
 			} else if (keycode == Keys.ESCAPE){
 				console = null;
 			} else if (keycode == Keys.ENTER){
@@ -177,7 +192,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 	public boolean keyTyped(char character) {
 		if(character == ':' && console == null){
 			console = new StringBuilder(":");
-		} else if (console != null) {
+		} else if (console != null && !Character.isISOControl(character)) {
 			console.append(character);
 		}
 		return true;
@@ -185,8 +200,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
+		Vector3 position = cam.unproject(new Vector3(screenX, screenY, 0));
+		context.mouseClicked(position.x, position.y);
+		return true;
 	}
 
 	@Override
@@ -217,6 +234,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 			level.getCamera(level.getPhysicsCamera()).zoom /= 2;
 		}
 		return true;
+	}
+	
+	public Level getLevel(){
+		return level;
 	}
 
 }

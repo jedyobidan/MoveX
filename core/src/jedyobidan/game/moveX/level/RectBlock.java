@@ -49,10 +49,11 @@ public class RectBlock extends LevelObject{
 			tiles[y][0] = Const.Tiles.SQ_L;
 			tiles[y][tiles[y].length - 1] = Const.Tiles.SQ_R;
 		}
-		for(int x = 1; x < tiles.length - 1; x++){
+		for(int x = 1; x < tiles[0].length - 1; x++){
 			tiles[tiles.length - 1][x] = Const.Tiles.SQ_B;
 			tiles[0][x] = Const.Tiles.SQ_T;
 		}
+		
 		if(tiles.length == 1 && tiles[0].length == 1){
 			tiles[0][0] = Const.Tiles.SQ_SINGLE;
 		} else if(tiles.length == 1){
@@ -64,7 +65,7 @@ public class RectBlock extends LevelObject{
 		} else {
 			tiles[0][0] = Const.Tiles.SQ_TL;
 			tiles[0][tiles[0].length - 1] = Const.Tiles.SQ_TR;
-			tiles[tiles.length][0] = Const.Tiles.SQ_BL;
+			tiles[tiles.length - 1][0] = Const.Tiles.SQ_BL;
 			tiles[tiles.length - 1][tiles[0].length - 1] = Const.Tiles.SQ_BR;
 		}
 	}
