@@ -32,6 +32,7 @@ public class MoveX extends Game {
 	private ShapeRenderer shapeRender;
 
 	public static TextureAtlas ATLAS;
+	public static MoveX GAME;
 	
 	private Player player;
 	
@@ -43,6 +44,7 @@ public class MoveX extends Game {
 	@Override
 	public void create() {
 		initRes();
+		GAME = this;
 		player = new Player();
 		if(args.length > 0){
 			editLevel(args[0]);
@@ -64,7 +66,12 @@ public class MoveX extends Game {
 	}
 	
 	public void editLevel(String file){
-		Level level = constructLevel(file);
+		Level level;
+		if(file.equals("*new")){
+			level = new Level(spriteRender, shapeRender);
+		} else {
+			level = constructLevel(file);
+		}
 		level.setDebug(true);
 		level.addGameActor(new LevelEditor(file));
 		setScreen(level);

@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
+import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Stage;
 
@@ -85,11 +86,35 @@ public class LevelEditor extends Actor implements InputProcessor{
 	}
 	
 	public void execCommand(String command){
-		System.out.println(command);
-		if(command.equals("write")){
-			FileHandle file = Gdx.files.local("../core/assets/" + this.file);
-			file.writeString(level.writeString(), false);
-			log("Wrote level to " + file + " (" + file.length() + " bytes)");
+		command = command.trim();
+		String[] args = command.split("\\s+");
+		try{
+			if(args[0].equals("write")){
+				String location;
+				if(args.length == 1){
+					location = this.file;
+				} else {
+					location = "level/" + args[1];
+				}
+				
+				file = location;
+				FileHandle file = Gdx.files.local("../core/assets/" + this.file);
+				file.writeString(level.writeString(), false);
+				log("Wrote level to " + file + " (" + file.length() + " bytes)");
+				
+			} else if (args[0].equals("open")){
+				String location = "level/" + args[1];
+				MoveX.GAME.editLevel(location);
+			} else if (args[0].equals("new")){
+				MoveX.GAME.editLevel("*new");
+			}
+			
+			else {
+				throw new IllegalArgumentException("Invalid command: " + command);
+			}
+		} catch (Exception e){
+			log("Invalid command: " + command);
+			e.printStackTrace();
 		}
 	}
 	

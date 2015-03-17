@@ -35,7 +35,7 @@ public class Level extends Box2dStage implements Stringable {
 		input.addProcessor(ui);
 		dialog = new Dialog(Gdx.graphics.getWidth());
 		textures = new TextureManager(MoveX.ATLAS, "");
-		tileset = "cave";
+		setTileset("cave");
 		addUIActor(dialog);
 		processNewActors();
 	}
