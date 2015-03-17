@@ -25,24 +25,22 @@ public class RectBlock extends LevelObject{
 	private float hwidth, hheight;
 	private Body body;
 
-	private String type;
 	private int[][] tiles;
 
-	public RectBlock(String type, Vector2 position, float hwidth, float hheight) {
-		this(type, position.x, position.y, hwidth, hheight);
+	public RectBlock(Vector2 position, float hwidth, float hheight) {
+		this(position.x, position.y, hwidth, hheight);
 	}
 
-	public RectBlock(String type, float x, float y, float hwidth, float hheight) {
+	public RectBlock(float x, float y, float hwidth, float hheight) {
 		this.position = new Vector2().set(x, y);
 		this.hwidth = hwidth;
 		this.hheight = hheight;
-		this.type = type;
 		this.tiles = new int[(int) (hheight * 2)][(int) (hwidth * 2)];
 		tileDefaults();
 	}
 	
 	public RectBlock(){
-		this("", 0, 0, 0, 0);
+		this(0, 0, 0, 0);
 	}
 	
 	public void tileDefaults(){
@@ -74,14 +72,13 @@ public class RectBlock extends LevelObject{
 
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		TextureManager textures = ((Level) stage).textures;
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
 		for(int y = 0; y < tiles.length; y++){
 			for(int x = 0; x < tiles[y].length; x++){
 				transform.position.set(pos.x - hwidth + x, pos.y + hheight - y - 1);
-				transform.texture = textures.get(type + "/square" + tiles[y][x]);
+				transform.texture = ((Level) stage).getTile("square" + tiles[y][x]);
 				transform.render(spriteRenderer);
 			}
 		}
@@ -149,7 +146,7 @@ public class RectBlock extends LevelObject{
 	@Override
 	public String writeString() {
 		StringBuilder ans = new StringBuilder("Rect;\n");
-		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + " " + hheight + ";\n");
+		ans.append("    " + position.x + " " + position.y + " " + hwidth + " " + hheight + ";\n");
 		for(int i = 0; i < tiles.length; i++){
 			ans.append("   ");
 			for(int j = 0; j < tiles[i].length; j++){
@@ -166,10 +163,9 @@ public class RectBlock extends LevelObject{
 	public void readString(String str) {
 		String[] lines = str.split(";\\s*");
 		String[] params = lines[1].trim().split("\\s+");
-		type = params[0];
-		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
-		hwidth = Float.parseFloat(params[3]);
-		hheight = Float.parseFloat(params[4]);
+		position.set(Float.parseFloat(params[0]), Float.parseFloat(params[1]));
+		hwidth = Float.parseFloat(params[2]);
+		hheight = Float.parseFloat(params[3]);
 		tiles = new int[(int) (hheight * 2)][(int) (hwidth * 2)];
 		String[] grid = lines[2].trim().split("\\s+");
 		

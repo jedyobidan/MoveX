@@ -31,21 +31,19 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 	private Vector2 position;
 	private Body body;
 	
-	private String type;
 	private int[] tiles;
 	
 	public StaticPlatform(){
-		this("", 0, 0, 0);
+		this(0, 0, 0);
 	}
 	
-	public StaticPlatform(String type, Vector2 position, float hwidth){
-		this(type, position.x, position.y, hwidth);
+	public StaticPlatform(Vector2 position, float hwidth){
+		this(position.x, position.y, hwidth);
 	}
 	
-	public StaticPlatform(String type, float x, float y, float hwidth){
+	public StaticPlatform(float x, float y, float hwidth){
 		this.position = new Vector2().set(x, y);
 		this.hwidth = hwidth;
-		this.type = type;
 		this.tiles = new int[(int) (hwidth * 2)];
 		tileDefaults();
 	}
@@ -58,13 +56,12 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		TextureManager textures = ((Level) stage).textures;
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
 		for(int x = 0; x < tiles.length; x++){
 			transform.position.set(pos.x - hwidth + x, pos.y - 0.5f);
-			transform.texture = textures.get(type + "/plat" + tiles[x]);
+			transform.texture = ((Level) stage).getTile("plat" + tiles[x]);
 			transform.render(spriteRenderer);			
 		}
 	}
@@ -138,7 +135,7 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 	@Override
 	public String writeString() {
 		StringBuilder ans = new StringBuilder("Plat;\n");
-		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + ";\n");
+		ans.append("    " + position.x + " " + position.y + " " + hwidth + ";\n");
 		ans.append("   ");
 		for(int tile: tiles){
 			ans.append(" " + tile);
@@ -151,9 +148,8 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 	public void readString(String str) {
 		String[] lines = str.split(";\\s*");
 		String[] params = lines[1].trim().split("\\s+");
-		type = params[0];
-		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
-		hwidth = Float.parseFloat(params[3]);
+		position.set(Float.parseFloat(params[0]), Float.parseFloat(params[1]));
+		hwidth = Float.parseFloat(params[2]);
 		tiles = new int[(int) (hwidth * 2)];
 		String[] tileString = lines[2].split("\\s+");
 		for(int i = 0; i < tiles.length; i++){

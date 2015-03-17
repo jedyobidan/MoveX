@@ -88,7 +88,7 @@ public class MoveX extends Game {
 
 	private Level constructLevel(String file) {
 		Level level = new Level(spriteRender, shapeRender);
-		level.setBackground("cave");
+		level.setTileset("cave");
 		String levelCode = Gdx.files.internal(file).readString();
 		levelCode = levelCode.replaceAll("\\#.*", "");
 		String[] in = levelCode.split("\\s*--\\s*");

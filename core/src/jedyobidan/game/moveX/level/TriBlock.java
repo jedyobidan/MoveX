@@ -28,15 +28,13 @@ public class TriBlock extends LevelObject{
 	private boolean ascending;
 	private Body body;
 	
-	private String type;
 	private int[][] tiles;
 	
 	public TriBlock(){
-		this("", 0,0,0,true);
+		this(0,0,0,true);
 	}
 	
-	public TriBlock(String type, float x, float y, float hwidth, boolean ascending){
-		this.type = type;
+	public TriBlock(float x, float y, float hwidth, boolean ascending){
 		this.position = new Vector2().set(x, y);
 		this.hwidth = hwidth;
 		this.ascending = ascending;
@@ -68,16 +66,15 @@ public class TriBlock extends LevelObject{
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		TextureManager textures = ((Level) stage).textures;
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		for(int y = 0; y < tiles.length; y++){
 			for(int x = 0; x < 3 + y * 2; x++){
 				int tile = tiles[y][x];
 				if(tile < 16){ // HARD CODED
-					transform.texture = textures.get(type + "/square" + tile);
+					transform.texture = ((Level) stage).getTile("square" + tile);
 				} else {
-					transform.texture = textures.get(type + "/triangle" + (tile-16));
+					transform.texture = ((Level) stage).getTile("triangle" + (tile-16));
 				}
 				transform.position.y = position.y + hwidth - y - 1	;
 				if(ascending){
@@ -138,7 +135,7 @@ public class TriBlock extends LevelObject{
 	@Override
 	public String writeString() {
 		StringBuilder ans = new StringBuilder("Tri;\n");
-		ans.append("    " + type + " " + position.x + " " + position.y + " " + hwidth + " ");
+		ans.append("    " + position.x + " " + position.y + " " + hwidth + " ");
 		ans.append(ascending? 0.5f: -0.5f);
 		ans.append(";\n");
 		
@@ -157,10 +154,9 @@ public class TriBlock extends LevelObject{
 	public void readString(String str) {
 		String[] lines = str.split(";\\s*");
 		String[] params = lines[1].split("\\s+");
-		type = params[0];
-		position.set(Float.parseFloat(params[1]), Float.parseFloat(params[2]));
-		hwidth = Float.parseFloat(params[3]);
-		ascending = Float.parseFloat(params[4]) > 0;
+		position.set(Float.parseFloat(params[0]), Float.parseFloat(params[1]));
+		hwidth = Float.parseFloat(params[2]);
+		ascending = Float.parseFloat(params[3]) > 0;
 		tiles = new int[(int) (hwidth)][(int) (hwidth * 2) + 1];
 		
 		String[] grid = lines[2].split("\\s+");

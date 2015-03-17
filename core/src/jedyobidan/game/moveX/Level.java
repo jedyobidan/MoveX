@@ -13,6 +13,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -22,6 +23,7 @@ public class Level extends Box2dStage {
 	private InputMultiplexer input;
 	private InputMultiplexer ui;
 	private Dialog dialog;
+	private String tileset;
 	public final TextureManager textures;
 
 	public Level(SpriteBatch sb, ShapeRenderer sr) {
@@ -44,8 +46,18 @@ public class Level extends Box2dStage {
 		p.moveToCheckpoint();
 	}
 	
-	public void setBackground(String texture){
-		background = textures.get(texture + "/bg");
+	
+	public void setTileset(String tileset){
+		this.tileset = tileset;
+		background = textures.get(tileset + "/bg");
+	}
+	
+	public TextureRegion getTile(String name){
+		return textures.get(tileset + "/" + name);
+	}
+	
+	public String getTileset(){
+		return tileset;
 	}
 
 	@Override
