@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
@@ -103,6 +104,7 @@ public class TriBlock extends LevelObject{
 		edge.setHasVertex3(true);
 		
 		ChainShape chain = new ChainShape();
+		PolygonShape poly = new PolygonShape();
 		Vector2[] vertices = new Vector2[4];
 		if(ascending){
 			vertices[0] = new Vector2(-hwidth + 0.5f, 0);
@@ -116,12 +118,17 @@ public class TriBlock extends LevelObject{
 			vertices[3] = new Vector2(-hwidth - 1f, hwidth);
 		}
 		chain.createLoop(vertices);
+		poly.set(vertices);
 		
 		FixtureDef fix = new FixtureDef();
 		fix.friction = 1;
 		fix.restitution = 0;
 		fix.filter.categoryBits = Const.CAT_ENVIRONMENT;
 		fix.shape = chain;
+		body.createFixture(fix);
+		
+		fix.filter.maskBits = 0;
+		fix.shape = poly;
 		body.createFixture(fix);
 		
 	}

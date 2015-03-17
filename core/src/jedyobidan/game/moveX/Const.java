@@ -63,17 +63,20 @@ public class Const {
 			SQ_R3 = 12,
 			SQ_SINGLE = 13,
 			SQ_ASC = 14,
-			SQ_DEC = 15;
+			SQ_DEC = 15,
+			SQ_MAX = 16;
 		
 		public static final int
 			PL_CENTER = 0,
 			PL_L = 1,
-			PL_R = 2;
+			PL_R = 2,
+			PL_MAX = 3;
 		
 		public static final int
 			TR_ASC_S = 16,
 			TR_ASC_L = 17,
 			TR_DEC_L = 18,
-			TR_DEC_S = 19;
+			TR_DEC_S = 19,
+			TR_MAX = 20;
 	}
 }

@@ -30,13 +30,13 @@ public class LevelEditor extends Actor implements InputProcessor{
 	private StringBuilder console;
 	private LinkedList<String> log;
 	
-	private Context context;
+	private Mode mode;
 	
 	public LevelEditor(String file){
 		mousePosition = new Vector2(0,0);
 		this.file = file;
 		this.log = new LinkedList<String>();
-		this.context = new NoneContext(this);
+		this.mode = new NoneMode(this);
 		this.gridOn = true;
 	}
 	
@@ -60,17 +60,12 @@ public class LevelEditor extends Actor implements InputProcessor{
 				shapeRenderer.line(-1000, i , 1000, i);
 			}
 		}
-		// Mouse position
-		if(context.roundMouse()){
-			shapeRenderer.setColor(1, 1, 0, 0.5f);
-			shapeRenderer.circle(Math.round(mousePosition.x), Math.round(mousePosition.y), 0.2f, 10);
-		}
 		
 		shapeRenderer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		
 		spriteRenderer.begin();
-		context.render(spriteRenderer, shapeRenderer);
+		mode.render(spriteRenderer, shapeRenderer);
 		
 		level.pushMatrix();
 		level.useCamera(0);
@@ -100,7 +95,8 @@ public class LevelEditor extends Actor implements InputProcessor{
 	public String getInfo(){
 		StringBuilder ans = new StringBuilder();
 		ans.append(file + "\n");
-		ans.append("Context: " + context.getName()+ "\n");
+		ans.append("Mode:" + mode.getName()+ "\n");
+		ans.append(mode.getInfo());
 		// Mouse information
 		ans.append(String.format("[%.2f:%.2f]\n", mousePosition.x, mousePosition.y));
 		return ans.toString();
@@ -128,10 +124,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 				MoveX.GAME.editLevel(location);
 			} else if (args[0].equals("new")){
 				MoveX.GAME.editLevel("*new");
-			} else if (args[0].equals("context")){
-				context = Context.construct(this, args[1]);
+			} else if (args[0].equals("mode")){
+				mode = Mode.construct(this, args[1]);
 				
-			}else if (!context.execCommand(args)){
+			}else if (!mode.execCommand(args)){
 				throw new IllegalArgumentException(command + " is not a command");
 			}
 		} catch (Exception e){
@@ -215,7 +211,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
 		Vector3 position = cam.unproject(new Vector3(screenX, screenY, 0));
-		context.mouseClicked(position.x, position.y);
+		mode.mouseClicked(position.x, position.y, button);
 		return true;
 	}
 
@@ -249,6 +245,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 	
 	public Level getLevel(){
 		return level;
+	}
+	
+	public Vector2 getMousePosition(){
+		return mousePosition;
 	}
 
 }

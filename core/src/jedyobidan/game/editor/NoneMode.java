@@ -1,8 +1,8 @@
 package jedyobidan.game.editor;
 
-public class NoneContext extends Context {
+public class NoneMode extends Mode {
 
-	public NoneContext(LevelEditor editor) {
+	public NoneMode(LevelEditor editor) {
 		super(editor);
 	}
 

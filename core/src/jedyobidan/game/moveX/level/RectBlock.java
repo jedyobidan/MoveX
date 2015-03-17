@@ -19,8 +19,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-public class RectBlock extends LevelObject{
+public class RectBlock extends LevelObject implements Tileable{
 	private Vector2 position;
 	private float hwidth, hheight;
 	private Body body;
@@ -43,6 +44,7 @@ public class RectBlock extends LevelObject{
 		this(0, 0, 0, 0);
 	}
 	
+	@Override
 	public void tileDefaults(){
 		if(tiles.length == 0) return;
 		for(int y = 1; y < tiles.length - 1; y++){
@@ -99,43 +101,28 @@ public class RectBlock extends LevelObject{
 		body = level.getPhysics().createBody(def);
 		body.setUserData(this);
 
-		ChainShape shape = new ChainShape();
-		FixtureDef fix = new FixtureDef();
-		fix.friction = 1;
-		fix.restitution = 0;
-		fix.filter.categoryBits = Const.CAT_ENVIRONMENT;
-		fix.shape = shape;
-
+		ChainShape outer = new ChainShape();
 		Vector2[] vertices = new Vector2[4];
 		vertices[0] = new Vector2(-hwidth, hheight);
 		vertices[1] = new Vector2(hwidth, hheight);
 		vertices[2] = new Vector2(hwidth, -hheight);
 		vertices[3] = new Vector2(-hwidth, -hheight);
-		shape.createLoop(vertices);
+		outer.createLoop(vertices);
+		
+		PolygonShape inner = new PolygonShape();
+		inner.setAsBox(hwidth, hheight);
 
-//		// Top Edge
-//		edge.set(-hwidth, hheight, hwidth, hheight);
-//		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, hheight);
-//		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, hheight);
-//		body.createFixture(fix);
-//
-//		// Bottom Edge
-//		edge.set(-hwidth, -hheight, hwidth, -hheight);
-//		edge.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, -hheight);
-//		edge.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, -hheight);
-//		body.createFixture(fix);
-//
-//		// Left Edge
-//		edge.set(-hwidth, -hheight, -hwidth, hheight);
-//		edge.setVertex0(-hwidth, -hheight - PlayerPhysics.GROUND * 3);
-//		edge.setVertex3(-hwidth, hheight + PlayerPhysics.GROUND * 3);
-//		body.createFixture(fix);
-//
-//		// Right Edge
-//		edge.set(hwidth, -hheight, hwidth, hheight);
-//		edge.setVertex0(hwidth, -hheight - PlayerPhysics.GROUND * 3);
-//		edge.setVertex3(hwidth, hheight + PlayerPhysics.GROUND * 3);
+		FixtureDef fix = new FixtureDef();
+		fix.friction = 1;
+		fix.restitution = 0;
+		fix.filter.categoryBits = Const.CAT_ENVIRONMENT;
+		fix.shape = outer;
 		body.createFixture(fix);
+		
+		fix.shape = inner;
+		fix.filter.maskBits = 0;
+		body.createFixture(fix);
+		
 	}
 
 	public void onRemove(Stage s) {
@@ -176,6 +163,28 @@ public class RectBlock extends LevelObject{
 				tiles[y][x] = Integer.parseInt(grid[i++]);
 			}
 		}
+	}
+
+	@Override
+	public int getTile(float x, float y) {
+		x -= (position.x - hwidth);
+		y = (position.y + hheight) - y;
+		if(y < tiles.length && x < tiles[(int) y].length){
+			return tiles[(int) y][(int) x];
+		} else {
+			return -1;
+		}
+	}
+
+	@Override
+	public int setTile(int tile, float x, float y) {
+		tile %= Const.Tiles.SQ_MAX;
+		x -= (position.x - hwidth);
+		y = (position.y + hheight) - y;
+		if(y < tiles.length && x < tiles[(int) y].length){
+			tiles[(int) y][(int) x] = tile;
+		}
+		return tile;
 	}
 
 }

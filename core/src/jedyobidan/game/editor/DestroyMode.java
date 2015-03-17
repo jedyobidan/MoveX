@@ -4,9 +4,9 @@ import java.util.Set;
 
 import jedyobidan.game.moveX.lib.Actor;
 
-public class DestroyContext extends Context {
+public class DestroyMode extends Mode {
 
-	public DestroyContext(LevelEditor editor) {
+	public DestroyMode(LevelEditor editor) {
 		super(editor);
 	}
 
@@ -21,7 +21,7 @@ public class DestroyContext extends Context {
 	}
 
 	@Override
-	public void mouseClicked(float x, float y) {
+	public void mouseClicked(float x, float y, int button) {
 		//FIXME: wont actually get interior of stuff
 		Set<Actor> actors = editor.getLevel().getActorsAt(x, y);
 		for(Actor a: actors){

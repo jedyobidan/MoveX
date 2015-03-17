@@ -3,27 +3,29 @@ package jedyobidan.game.editor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public abstract class Context {
+public abstract class Mode {
 	protected LevelEditor editor;
 	
-	public Context(LevelEditor editor){
+	public Mode(LevelEditor editor){
 		this.editor = editor;
 	}
 	
 	public abstract String getName();
 	public abstract boolean execCommand(String[] args);
 	
+	public String getInfo(){ return ""; }
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) { }
-	public void mouseClicked(float x, float y){ }
-	public boolean roundMouse(){ return false; }
+	public void mouseClicked(float x, float y, int button){ }
 	
-	public static Context construct(LevelEditor editor, String name){
+	public static Mode construct(LevelEditor editor, String name){
 		if(name.equals("none")){
-			return new NoneContext(editor);
+			return new NoneMode(editor);
 		} else if (name.equals("construct")){
-			return new ConstructContext(editor);
+			return new ConstructMode(editor);
 		} else if (name.equals("destroy")){
-			return new DestroyContext(editor);
+			return new DestroyMode(editor);
+		} else if (name.equals("tile")){
+			return new TileMode(editor);
 		}
 		throw new IllegalArgumentException("No such context: " + name);
 	}
