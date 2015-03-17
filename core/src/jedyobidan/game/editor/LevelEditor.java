@@ -22,6 +22,8 @@ public class LevelEditor extends Actor implements InputProcessor{
 	private Vector2 mousePosition;
 	private String file;
 	
+	private StringBuilder console;
+	
 	public LevelEditor(String file){
 		mousePosition = new Vector2(0,0);
 		this.file = file;
@@ -47,8 +49,12 @@ public class LevelEditor extends Actor implements InputProcessor{
 		level.useCamera(0);
 		BitmapFont font = Const.Fonts.PIXEL;
 		font.setScale(1);
-		TextBounds bounds = font.getBounds(getInfo());
 		font.drawMultiLine(spriteRenderer, getInfo(), -Gdx.graphics.getWidth()/2 + 4, Gdx.graphics.getHeight()/2 - 2);
+		if(console != null){
+			TextBounds bounds = font.getBounds(console);
+			font.draw(spriteRenderer, console, -Gdx.graphics.getWidth()/2, 
+					-Gdx.graphics.getHeight()/2 + bounds.height + 2);
+		}
 		level.popMatrix();
 	}
 	
@@ -82,15 +88,26 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
-		OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
-		if(keycode == Keys.A){
-			cam.translate(-5, 0);
-		} else if (keycode == Keys.S){
-			cam.translate(0, -5);
-		} else if (keycode == Keys.D){
-			cam.translate(5, 0);
-		} else if (keycode == Keys.W){
-			cam.translate(0, 5);
+		if(console != null){
+			if(keycode == Keys.BACKSPACE){
+				console.deleteCharAt(console.length() - 1);
+			} else if (keycode == Keys.ESCAPE){
+				console = null;
+			} else if (keycode == Keys.ENTER){
+				execCommand(console.substring(1).trim().toLowerCase());
+				console = null;
+			}
+		} else {
+			OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
+			if(keycode == Keys.A){
+				cam.translate(-5, 0);
+			} else if (keycode == Keys.S){
+				cam.translate(0, -5);
+			} else if (keycode == Keys.D){
+				cam.translate(5, 0);
+			} else if (keycode == Keys.W){
+				cam.translate(0, 5);
+			}
 		}
 		return true;
 	}
@@ -103,8 +120,12 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
+		if(character == ':' && console == null){
+			console = new StringBuilder(":");
+		} else if (console != null) {
+			console.append(character);
+		}
+		return true;
 	}
 
 	@Override
