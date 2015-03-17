@@ -123,6 +123,7 @@ public class Level extends Box2dStage implements Stringable {
 		for(Actor a: actors.get(Const.ACT_GROUP_GAME)){
 			if(a instanceof LevelObject){
 				ans.append(((LevelObject) a).writeString());
+				ans.append("--\n");
 			}
 		}
 		return ans.toString();
@@ -159,7 +160,9 @@ public class Level extends Box2dStage implements Stringable {
 	}
 	
 	public String writeMeta(){
-		return "$META;\n";
+		StringBuilder ans = new StringBuilder("$META;\n");
+		ans.append("tileset = " + tileset + "\n");
+		return ans.toString();
 	}
 	
 	public void removeUIInput(InputProcessor input){

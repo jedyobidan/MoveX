@@ -35,7 +35,8 @@ public class MoveX extends Game {
 	
 	private Player player;
 	
-	public MoveX(String[] args){
+	
+	public MoveX(String... args){
 		this.args = args;
 	}
 

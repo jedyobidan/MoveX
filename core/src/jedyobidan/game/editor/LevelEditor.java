@@ -3,6 +3,7 @@ package jedyobidan.game.editor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -68,6 +69,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 	
 	public void execCommand(String command){
 		System.out.println(command);
+		if(command.equals("write")){
+			FileHandle file = Gdx.files.local("../core/assets/" + this.file);
+			file.writeString(level.writeString(), false);
+		}
 	}
 	
 	@Override
