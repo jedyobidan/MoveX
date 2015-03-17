@@ -17,11 +17,12 @@ BASIC FUNCTIONS
 Checkpoints	Completed
 Dialogs		On hold (needs with icon)
 Game Menu	Not Started
-Control Rebind	Not Started
+Control Rebind  Not Started
+"Cutscenes"	Not Started
 Upgrades	Not Started
-Title Screen	Not Started
 Loading Zones	Not Started
 Saves		Not Started
+Title Screen	Not Started
 Timer		Not Started
 Begin Condition	Not Started
 End Condition	Not Started
@@ -35,14 +36,14 @@ Steel Surface	Not Started
 Sticky Surface	Not Started
 
 HAZARDS
-Blast Zones	Not Started
+Blast Zones	Completed
 Spikes		Not Started
 Turrets		Not Started
 
 DEV TOOLS
 Dev Sprites	Unneeded
-Level Loader	In Development
-Level Builder	Not Started
+Level Loader	On hold (need hazards and material blocks)
+Level Builder	In Development
 
 GRAPHICS
 UI Graphics 	In Development
@@ -55,7 +56,7 @@ Music		Delegated to Aaron
 SFX		Delegated to Aaron
 
 LEVELS
-Design		Not Started
+Design		Exploring
 
 EXTENSIONS
 Native JInput	Not Started

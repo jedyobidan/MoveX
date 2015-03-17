@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import com.badlogic.gdx.Gdx;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 public class Stage extends ScreenAdapter implements Comparator<Actor>{
@@ -26,7 +28,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	private List<Queue<Actor>> removeQueue;	
 
 	private List<OrthographicCamera> cameras;
-	private int defaultCamera;
+	private Stack<Matrix4> matrixStack;
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
 	protected TextureRegion background;
@@ -41,6 +43,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 
 		cameras = new ArrayList<OrthographicCamera>();
 		cameras.add(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		matrixStack = new Stack<Matrix4>();
 		spriteRender = sb;
 		shapeRender = sr;
 		
@@ -88,7 +91,7 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 	}
 	
 	protected int chooseCamera(int group){
-		return defaultCamera;
+		return 0;
 	}
 	
 	protected void render(){
@@ -125,13 +128,19 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		shapeRender.setProjectionMatrix(cameras.get(camID).combined);
 	}
 	
-	public void setDefaultCamera(int camID){
-		defaultCamera = camID;
-	}
-	
 	public int addCamera(OrthographicCamera cam){
 		cameras.add(cam);
 		return cameras.size() - 1;
+	}
+	
+	public void pushMatrix(){
+		matrixStack.push(spriteRender.getProjectionMatrix().cpy());
+	}
+	
+	public void popMatrix(){
+		Matrix4 last = matrixStack.pop();
+		spriteRender.setProjectionMatrix(last);
+		shapeRender.setProjectionMatrix(last);
 	}
 	
 	public OrthographicCamera getCamera(int camID){

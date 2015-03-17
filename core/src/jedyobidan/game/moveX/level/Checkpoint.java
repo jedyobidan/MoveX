@@ -47,6 +47,7 @@ public class Checkpoint extends LevelObject implements ContactListener{
 		def.type = BodyType.StaticBody;
 		def.position.set(position);
 		body = level.getPhysics().createBody(def);
+		body.setUserData(this);
 
 		CircleShape shape = new CircleShape();
 		shape.setRadius(0.2f);

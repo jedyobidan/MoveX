@@ -113,3 +113,6 @@ Checkpoint;
 --
 Checkpoint;
     14 17.75;
+--
+Blast;
+    0 -30 100 1;

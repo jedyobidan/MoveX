@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.width = 960;
 		config.height = 640;
 		config.title = "Move X";
-		new LwjglApplication(new MoveX(), config);
+		MoveX game = new MoveX(arg);
+		new LwjglApplication(game, config);
 	}
 }

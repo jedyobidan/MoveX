@@ -28,6 +28,7 @@ public class Player extends Actor {
 	private TextureManager textures;
 	private PlayerProfile profile;
 	private Checkpoint lastCheckpoint;
+	private Vector2 movePosition;
 
 	// Player Physics
 	private PlayerPhysics physics;
@@ -40,6 +41,10 @@ public class Player extends Actor {
 
 	@Override
 	public void step(float timeDelta) {
+		if(movePosition != null){
+			physics.move(movePosition.x, movePosition.y);
+			movePosition = null;
+		}
 		if (nextState != null) {
 			state = nextState;
 		}
@@ -100,7 +105,7 @@ public class Player extends Actor {
 	}
 	
 	public void moveToCheckpoint(){
-		physics.move(lastCheckpoint.getPosition().x, lastCheckpoint.getPosition().y - 0.2f);
+		movePosition = new Vector2().set(lastCheckpoint.getPosition()).add(0, -0.2f);
 	}
 	
 	// Physics Delegations

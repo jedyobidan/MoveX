@@ -157,13 +157,6 @@ cave/square0
   orig: 20, 20
   offset: 0, 0
   index: -1
-cave/square7
-  rotate: false
-  xy: 52, 42
-  size: 20, 20
-  orig: 20, 20
-  offset: 0, 0
-  index: -1
 cave/square4
   rotate: false
   xy: 52, 42
@@ -172,6 +165,13 @@ cave/square4
   offset: 0, 0
   index: -1
 cave/square5
+  rotate: false
+  xy: 52, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square7
   rotate: false
   xy: 52, 42
   size: 20, 20

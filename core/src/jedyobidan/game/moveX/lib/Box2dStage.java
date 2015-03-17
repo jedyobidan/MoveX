@@ -44,11 +44,13 @@ public class Box2dStage extends Stage implements ContactListener{
 		physicsCam.setToOrtho(false, Gdx.graphics.getWidth() / Const.PIXELS_PER_METER, Gdx.graphics.getHeight() / Const.PIXELS_PER_METER);
 		physicsCam.position.set(0, 0, 0);
 		physicsCamera = addCamera(physicsCam);
-		
-		setDefaultCamera(physicsCamera);
 	}
 	
 	protected int getPhysicsCamera(){
+		return physicsCamera;
+	}
+	
+	protected int chooseCamera(int group){
 		return physicsCamera;
 	}
 	

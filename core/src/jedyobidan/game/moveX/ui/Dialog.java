@@ -1,6 +1,8 @@
 package jedyobidan.game.moveX.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,7 +23,7 @@ import jedyobidan.game.moveX.lib.Box2dStage;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 
-public class Dialog extends Actor {
+public class Dialog extends Actor implements InputProcessor{
 	private float da;
 	private float alpha;
 	private float width;
@@ -55,7 +57,7 @@ public class Dialog extends Actor {
 		bl = level.textures.get("ui/frame-botleft");
 		br = level.textures.get("ui/frame-botright");
 		arrow = level.textures.get("ui/arrow-down");
-		square = level.textures.get("ui/square");
+		square = level.textures.get("ui/square");		
 	}
 
 	@Override
@@ -76,24 +78,27 @@ public class Dialog extends Actor {
 		}
 		da = SPEED;
 		((Level) stage).setPaused(true);
+		((Level) stage).addUIInput(this, true);
 	}
 
 	public void hide() {
 		da = -SPEED;
+		((Level) stage).removeUIInput(this);
 	}
 
 	public boolean isOpen() {
 		return da > 0;
 	}
 
-	public void keyPressed() {
-		if(alpha != 1) return;
+	public boolean keyDown(int keyCode) {
+		if(alpha != 1) return true;
 		if (currentText >= text.length - 1) {
 			hide();
 			((Level) stage).setPaused(false);
 		} else {
 			currentText++;
 		}
+		return true;
 	}
 
 	@Override
@@ -157,4 +162,25 @@ public class Dialog extends Actor {
 		spriteRenderer.setColor(1, 1, 1, 1);
 
 	}
+
+	@Override
+	public boolean keyUp(int keycode) { return false; }
+
+	@Override
+	public boolean keyTyped(char character) { return false; }
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) { return false; }
+
+	@Override
+	public boolean scrolled(int amount) { return false; }
 }

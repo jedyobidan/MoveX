@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jedyobidan.game.moveX.level.Blastzone;
 import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.level.LevelObject;
 import jedyobidan.game.moveX.level.RectBlock;
@@ -22,22 +23,47 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-
 public class MoveX extends Game {
+	private String[] args;
+	
 	private SpriteBatch spriteRender;	
 	private BitmapFont font;
 	private ShapeRenderer shapeRender;
 
 	public static TextureAtlas ATLAS;
+	
+	private Player player;
+	
+	public MoveX(String[] args){
+		this.args = args;
+	}
 
 	@Override
 	public void create() {
 		initRes();
-		Level test = constructLevel("level/test.dat");
-		test.setPlayer(new Player(), new Vector2(0,15));
-		test.setDebug(false);
-		setScreen(test);
-		test.showDialog("Welcome to Move X!", "Press w/a/s/d to move\nPress k to jump\nPress l to dash");
+		player = new Player();
+		if(args.length > 0){
+			editLevel(args[0]);
+		} else {
+			// TODO replace with title
+			playLevel("level/test.dat", new Vector2(0, 10), true);
+		}
+	}
+	
+	public void playLevel(String file, Vector2 start, boolean dev){
+		Level level = constructLevel(file);
+		level.setPlayer(player, start.cpy());
+		if(dev){
+			level.addUIInput(new DevUIProcessor(level), true);
+		}
+		setScreen(level);
+		//TODO replace with "cutscene"
+		level.showDialog("Welcome to Move X!", "Press w/a/s/d to move\nPress k to jump\nPress l to dash");
+	}
+	
+	public void editLevel(String file){
+		Level level = constructLevel(file);
+		setScreen(level);
 	}
 
 	private void initRes() {
