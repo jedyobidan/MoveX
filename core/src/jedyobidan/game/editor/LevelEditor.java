@@ -25,6 +25,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 	private Level level;
 	private Vector2 mousePosition;
 	private String file;
+	private boolean gridOn;
 	
 	private StringBuilder console;
 	private LinkedList<String> log;
@@ -36,6 +37,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 		this.file = file;
 		this.log = new LinkedList<String>();
 		this.context = new NoneContext(this);
+		this.gridOn = true;
 	}
 	
 	@Override
@@ -46,16 +48,24 @@ public class LevelEditor extends Actor implements InputProcessor{
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		shapeRenderer.begin();
-		shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
-		for(int i = -1000; i <= 1000; i++){
-			if(i == 0){
-				shapeRenderer.setColor(1, 1, 0, 0.5f);
-			} else if (i == 1){
-				shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
+		if(gridOn){
+			shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
+			for(int i = -1000; i <= 1000; i++){
+				if(i == 0){
+					shapeRenderer.setColor(1, 1, 0, 0.5f);
+				} else if (i == 1){
+					shapeRenderer.setColor(0.75f, 0.75f, 0.75f, 0.1f);
+				}
+				shapeRenderer.line(i, -1000, i, 1000);
+				shapeRenderer.line(-1000, i , 1000, i);
 			}
-			shapeRenderer.line(i, -1000, i, 1000);
-			shapeRenderer.line(-1000, i , 1000, i);
 		}
+		// Mouse position
+		if(context.roundMouse()){
+			shapeRenderer.setColor(1, 1, 0, 0.5f);
+			shapeRenderer.circle(Math.round(mousePosition.x), Math.round(mousePosition.y), 0.2f, 10);
+		}
+		
 		shapeRenderer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		
@@ -122,10 +132,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 				context = Context.construct(this, args[1]);
 				
 			}else if (!context.execCommand(args)){
-				throw new IllegalArgumentException("Invalid command: " + command);
+				throw new IllegalArgumentException(command + " is not a command");
 			}
 		} catch (Exception e){
-			log("Invalid command: " + command);
+			log("Error: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}
@@ -155,6 +165,10 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode == Keys.TAB){
+			gridOn = !gridOn;
+			level.setDebug(!level.isDebug());
+		}
 		if(console != null){
 			if(keycode == Keys.BACKSPACE){
 				console.setLength(console.length() - 1);
@@ -184,7 +198,6 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -208,13 +221,11 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

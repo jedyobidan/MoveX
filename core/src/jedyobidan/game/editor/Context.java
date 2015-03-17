@@ -15,12 +15,15 @@ public abstract class Context {
 	
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) { }
 	public void mouseClicked(float x, float y){ }
+	public boolean roundMouse(){ return false; }
 	
 	public static Context construct(LevelEditor editor, String name){
 		if(name.equals("none")){
 			return new NoneContext(editor);
 		} else if (name.equals("construct")){
 			return new ConstructContext(editor);
+		} else if (name.equals("destroy")){
+			return new DestroyContext(editor);
 		}
 		throw new IllegalArgumentException("No such context: " + name);
 	}

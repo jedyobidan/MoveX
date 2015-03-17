@@ -1,5 +1,7 @@
 package jedyobidan.game.moveX;
 
+import java.util.Set;
+
 import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.level.LevelObject;
 import jedyobidan.game.moveX.lib.Actor;
@@ -47,20 +49,6 @@ public class Level extends Box2dStage implements Stringable {
 		p.setCheckpoint(new Checkpoint(start.x, start.y));
 		p.moveToCheckpoint();
 	}
-	
-	
-	public void setTileset(String tileset){
-		this.tileset = tileset;
-		background = textures.get(tileset + "/bg");
-	}
-	
-	public TextureRegion getTile(String name){
-		return textures.get(tileset + "/" + name);
-	}
-	
-	public String getTileset(){
-		return tileset;
-	}
 
 	@Override
 	protected void render() {
@@ -70,15 +58,6 @@ public class Level extends Box2dStage implements Stringable {
 					body.getPosition().y, 0);
 		}
 		super.render();
-	}
-
-	@Override
-	protected int chooseCamera(int group) {
-		if (group == Const.ACT_GROUP_GAME) {
-			return getPhysicsCamera();
-		} else {
-			return 0;
-		}
 	}
 
 	@Override
@@ -187,7 +166,28 @@ public class Level extends Box2dStage implements Stringable {
 	
 	public Player getPlayer(){
 		return player;
+	}	
+	
+	public void setTileset(String tileset){
+		this.tileset = tileset;
+		background = textures.get(tileset + "/bg");
 	}
 	
+	public TextureRegion getTile(String name){
+		return textures.get(tileset + "/" + name);
+	}
+	
+	public String getTileset(){
+		return tileset;
+	}
+
+	@Override
+	protected int chooseCamera(int group) {
+		if (group == Const.ACT_GROUP_GAME) {
+			return getPhysicsCamera();
+		} else {
+			return 0;
+		}
+	}
 
 }

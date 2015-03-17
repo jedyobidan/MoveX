@@ -1,6 +1,8 @@
 package jedyobidan.game.editor;
 
 import jedyobidan.game.moveX.level.RectBlock;
+import jedyobidan.game.moveX.level.StaticPlatform;
+import jedyobidan.game.moveX.level.TriBlock;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,6 +28,7 @@ public class ConstructContext extends Context {
 		if(args[0].equals("type")){
 			if(isValidType(type)){
 				type = args[1];
+				editor.log("Type set to " + type);
 				return true;
 			} else {
 				return false;
@@ -48,8 +51,34 @@ public class ConstructContext extends Context {
 		if(type.equals("rect")){
 			float cx = (p1.x + p2.x)/2;
 			float cy = (p1.y + p2.y)/2;
+			float w = Math.abs(p1.x - cx);
+			float h = Math.abs(p1.y - cy);
 			RectBlock rect = new RectBlock(cx, cy, Math.abs(p1.x - cx), Math.abs(p1.y - cy));
+			editor.log(String.format("rect %.1f, %.1f, %.1f, %.1f", cx, cy, w, h));
 			editor.getLevel().addGameActor(rect);
+		} else if (type.equals("plat")){
+			if(p1.y != p2.y){
+				editor.log("Error: Platform must be straight");
+			} else {
+				float cx = (p1.x+p2.x)/2;
+				float hw = Math.abs(p1.x - cx);
+				StaticPlatform plat = new StaticPlatform(cx, p1.y, hw);
+				editor.log(String.format("plat %.1f, %.1f, %.1f", cx, p1.y, hw));
+				editor.getLevel().addGameActor(plat);
+			}
+		} else if (type.equals("tri")){
+			if(p1.y != p2.y){
+				editor.log("Error: Triangle must be straight");
+			} else if (Math.abs(p1.x -p2.x) % 2 != 0){
+				editor.log("Error: Triangle must have even width");
+			} else {
+				float cx = (p1.x+p2.x)/2;
+				float hw = Math.abs(p1.x - cx);
+				boolean asc = p1.x < p2.x;
+				TriBlock tri = new TriBlock(cx, p1.y, hw, asc);
+				editor.log(String.format("tri %.1f, %.1f, %.1f, %s", cx, p1.y, hw, asc));
+				editor.getLevel().addGameActor(tri);
+			}
 		}
 	}
 	
@@ -57,11 +86,16 @@ public class ConstructContext extends Context {
 		return type.equals("rect") || type.equals("tri") || type.equals("plat");
 	}
 	
+	public boolean roundMouse(){
+		return true;
+	}
+	
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer){
 		if(point1 == null) return;
 		spriteRenderer.end();
 		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.circle(point1.x, point1.y, 0.2f, 10);
+		shapeRenderer.setColor(1, 1, 0, 0.5f);
+		shapeRenderer.x(point1.x, point1.y, 0.2f);
 		shapeRenderer.end();
 		spriteRenderer.begin();
 	}

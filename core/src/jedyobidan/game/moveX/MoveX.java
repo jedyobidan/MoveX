@@ -50,7 +50,7 @@ public class MoveX extends Game {
 			editLevel(args[0]);
 		} else {
 			// TODO replace with title
-			playLevel("level/test.dat", new Vector2(0, 10), true);
+			playLevel("level/test3.dat", new Vector2(0, 10), true);
 		}
 	}
 	

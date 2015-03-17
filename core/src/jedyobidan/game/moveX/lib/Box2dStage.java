@@ -14,7 +14,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Box2dStage extends Stage implements ContactListener{
@@ -105,6 +107,19 @@ public class Box2dStage extends Stage implements ContactListener{
 	
 	public void removeContactListener(ContactListener listener){
 		contactListeners.remove(listener);
+	}
+	
+	public Set<Actor> getActorsAt(float x, float y){
+		final Set<Actor> actors = new HashSet<Actor>();
+		QueryCallback callback = new QueryCallback(){
+			@Override
+			public boolean reportFixture(Fixture fixture) {
+				actors.add((Actor) fixture.getBody().getUserData());
+				return true;
+			}	
+		};
+		physics.QueryAABB(callback, x - 0.01f, y - 0.01f, x + 0.01f, y + 0.01f);
+		return actors;
 	}
 
 
