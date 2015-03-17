@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jedyobidan.game.editor.LevelEditor;
 import jedyobidan.game.moveX.level.Blastzone;
 import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.level.LevelObject;
@@ -63,6 +64,7 @@ public class MoveX extends Game {
 	
 	public void editLevel(String file){
 		Level level = constructLevel(file);
+		level.addGameActor(new LevelEditor());
 		setScreen(level);
 	}
 
