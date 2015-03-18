@@ -31,6 +31,7 @@ LEVEL OBJECTS
 Rect. Surface	Completed
 Slopes		Completed (possibly glitchy)
 Platforms	Completed (also possible glitchy, but less than slopes)
+Camera Lock	Not Started
 Dash Blocks	Not Started
 Steel Surface	Not Started
 Sticky Surface	Not Started
@@ -42,8 +43,8 @@ Turrets		Not Started
 
 DEV TOOLS
 Dev Sprites	Unneeded
-Level Loader	On hold (need hazards and material blocks)
-Level Builder	In Development
+Level Loader	On hold (level objects)
+Level Builder	On hold (level objects)
 
 GRAPHICS
 UI Graphics 	In Development
