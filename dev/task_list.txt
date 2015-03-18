@@ -18,8 +18,8 @@ Checkpoints	Completed
 Dialogs		On hold (needs with icon)
 Game Menu	Not Started
 Control Rebind  Not Started
-"Cutscenes"	Not Started
 Upgrades	Not Started
+"Cutscenes"	Not Started
 Loading Zones	Not Started
 Saves		Not Started
 Title Screen	Not Started

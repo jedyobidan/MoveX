@@ -1,4 +1,4 @@
-package jedyobidan.game.editor;
+package jedyobidan.game.moveX.editor;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,6 +16,7 @@ public abstract class Mode {
 	public String getInfo(){ return ""; }
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) { }
 	public void mouseClicked(float x, float y, int button){ }
+	public void keyPressed(int key) { }
 	
 	public static Mode construct(LevelEditor editor, String name){
 		if(name.equals("none")){

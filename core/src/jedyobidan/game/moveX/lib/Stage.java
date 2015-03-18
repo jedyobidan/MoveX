@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 public class Stage extends ScreenAdapter implements Comparator<Actor>{
+
 	protected List<Collection<Actor>> actors;
 	
 	private List<Queue<Actor>> addQueue;
@@ -178,6 +179,13 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		float zDiff = o1.getZIndex() - o2.getZIndex();
 		if(zDiff != 0) return (int) Math.signum(zDiff);
 		else return o1.hashCode() - o2.hashCode();
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		cameras.get(0).viewportWidth = width;
+		cameras.get(0).viewportHeight = height;
 	}
 
 }

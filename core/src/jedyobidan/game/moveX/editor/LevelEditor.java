@@ -1,4 +1,4 @@
-package jedyobidan.game.editor;
+package jedyobidan.game.moveX.editor;
 
 import java.util.LinkedList;
 
@@ -188,6 +188,8 @@ public class LevelEditor extends Actor implements InputProcessor{
 				cam.translate(5, 0);
 			} else if (keycode == Keys.W){
 				cam.translate(0, 5);
+			} else {
+				mode.keyPressed(keycode);
 			}
 		}
 		return true;

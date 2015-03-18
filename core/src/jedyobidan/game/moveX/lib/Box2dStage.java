@@ -153,4 +153,14 @@ public class Box2dStage extends Stage implements ContactListener{
 			c.postSolve(contact, impulse);
 		}
 	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		OrthographicCamera pCam = getCamera(physicsCamera);
+		pCam.viewportWidth = width / Const.PIXELS_PER_METER;
+		pCam.viewportHeight = height / Const.PIXELS_PER_METER;
+	}
+	
+	
 }

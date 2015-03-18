@@ -1,4 +1,4 @@
-package jedyobidan.game.editor;
+package jedyobidan.game.moveX.editor;
 
 import java.util.Set;
 
@@ -22,7 +22,6 @@ public class DestroyMode extends Mode {
 
 	@Override
 	public void mouseClicked(float x, float y, int button) {
-		//FIXME: wont actually get interior of stuff
 		Set<Actor> actors = editor.getLevel().getActorsAt(x, y);
 		for(Actor a: actors){
 			editor.getLevel().removeGameActor(a);

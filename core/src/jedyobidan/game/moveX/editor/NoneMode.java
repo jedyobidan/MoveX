@@ -1,4 +1,4 @@
-package jedyobidan.game.editor;
+package jedyobidan.game.moveX.editor;
 
 public class NoneMode extends Mode {
 
