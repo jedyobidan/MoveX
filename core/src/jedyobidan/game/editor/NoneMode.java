@@ -12,7 +12,7 @@ public class NoneMode extends Mode {
 	}
 
 	@Override
-	public boolean execCommand(String[] args) {
+	public boolean execCommand(String... args) {
 		return false;
 	}
 

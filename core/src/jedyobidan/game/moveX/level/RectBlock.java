@@ -180,7 +180,7 @@ public class RectBlock extends LevelObject implements Tileable{
 	@Override
 	public int setTile(int tile, float x, float y) {
 		tile %= Const.Tiles.SQ_MAX;
-		if(tile < Const.Tiles.SQ_MAX){
+		if(tile < 0){
 			tile += Const.Tiles.SQ_MAX;
 		}
 		x -= (position.x - hwidth);

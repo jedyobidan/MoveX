@@ -46,7 +46,12 @@ public class TileMode extends Mode{
 				Tileable t = (Tileable) a;
 				int tile = t.getTile(x, y);
 				if(tile == -1) continue;
-				int newTile = tile + (button == Input.Buttons.LEFT ? 1 : -1);
+				
+				int delta = 0;
+				if(button == Input.Buttons.LEFT) delta = 1;
+				else if (button == Input.Buttons.RIGHT) delta = -1;
+				
+				int newTile = tile + delta;
 				newTile = t.setTile(newTile, x, y);
 				editor.log("Tile change " + tile + "->" + newTile);
 			}
@@ -54,7 +59,7 @@ public class TileMode extends Mode{
 	}
 
 	@Override
-	public boolean execCommand(String[] args) {
+	public boolean execCommand(String... args) {
 		return false;
 	}
 

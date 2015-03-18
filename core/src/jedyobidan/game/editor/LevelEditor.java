@@ -3,6 +3,7 @@ package jedyobidan.game.editor;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
@@ -106,7 +107,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 		command = command.trim();
 		String[] args = command.split("\\s+");
 		try{
-			if(args[0].equals("write")){
+			if(args[0].equals("write") || args[0].equals("w")){
 				String location;
 				if(args.length == 1){
 					location = this.file;
@@ -124,7 +125,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 				MoveX.GAME.editLevel(location);
 			} else if (args[0].equals("new")){
 				MoveX.GAME.editLevel("*new");
-			} else if (args[0].equals("mode")){
+			} else if (args[0].equals("mode") || args[0].equals("m")){
 				mode = Mode.construct(this, args[1]);
 				
 			}else if (!mode.execCommand(args)){
@@ -209,9 +210,17 @@ public class LevelEditor extends Actor implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
-		Vector3 position = cam.unproject(new Vector3(screenX, screenY, 0));
-		mode.mouseClicked(position.x, position.y, button);
+		if(button == Input.Buttons.BACK){
+			execCommand("m c");
+		} else if (button == Input.Buttons.FORWARD){
+			execCommand("m d");
+		} else if (button == Input.Buttons.MIDDLE){
+			execCommand("m t");
+		} else {
+			OrthographicCamera cam = level.getCamera(level.getPhysicsCamera());
+			Vector3 position = cam.unproject(new Vector3(screenX, screenY, 0));
+			mode.mouseClicked(position.x, position.y, button);
+		}
 		return true;
 	}
 

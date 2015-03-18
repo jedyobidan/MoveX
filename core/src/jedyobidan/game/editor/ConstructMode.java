@@ -27,9 +27,9 @@ public class ConstructMode extends Mode {
 	}
 
 	@Override
-	public boolean execCommand(String[] args) {
-		if(args[0].equals("type")){
-			if(isValidType(type)){
+	public boolean execCommand(String... args) {
+		if(args[0].equals("type") || args[0].equals("t")){
+			if(isValidType(args[1])){
 				type = args[1];
 				editor.log("Type set to " + type);
 				return true;
@@ -55,9 +55,9 @@ public class ConstructMode extends Mode {
 				construct(point1, new Vector2(Math.round(x), Math.round(y)));
 				point1 = null;
 			}
-		} else {
+		} else if (button == Input.Buttons.RIGHT){
 			point1 = null;
-		}
+		} 
 	}
 	
 	private void construct(Vector2 p1, Vector2 p2){

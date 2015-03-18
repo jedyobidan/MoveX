@@ -78,8 +78,6 @@ public class StaticPlatform extends LevelObject implements ContactListener, Tile
 		shape.setHasVertex0(true);
 		shape.setHasVertex3(true);
 		shape.set(- hwidth, 0, hwidth, 0);
-//		shape.setVertex0(-hwidth - PlayerPhysics.WIDTH * 3, 0);
-//		shape.setVertex3(hwidth + PlayerPhysics.WIDTH * 3, 0);
 		
 		
 		FixtureDef fix = new FixtureDef();
@@ -174,7 +172,7 @@ public class StaticPlatform extends LevelObject implements ContactListener, Tile
 	@Override
 	public int setTile(int tile, float x, float y) {
 		tile %= Const.Tiles.PL_MAX;
-		if(tile < Const.Tiles.PL_MAX){
+		if(tile < 0){
 			tile += Const.Tiles.PL_MAX;
 		}
 		x -= (position.x - hwidth);

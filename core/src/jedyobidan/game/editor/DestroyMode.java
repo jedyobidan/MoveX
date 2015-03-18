@@ -16,7 +16,7 @@ public class DestroyMode extends Mode {
 	}
 
 	@Override
-	public boolean execCommand(String[] args) {
+	public boolean execCommand(String... args) {
 		return false;
 	}
 

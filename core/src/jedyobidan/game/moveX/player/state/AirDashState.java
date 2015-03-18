@@ -87,7 +87,10 @@ public class AirDashState extends PlayerState {
 		exitImpulse.x = body.getMass() * (dir.x * profile.getStat("walk_speed") - velocity.x);
 		exitImpulse.y = body.getMass() * - velocity.y;
 		
-		if(clearHeight() < PlayerPhysics.GROUND + PlayerPhysics.HEAD) return; //WARNING: Possible softlock here
+		if(clearHeight() < PlayerPhysics.GROUND + PlayerPhysics.HEAD){
+			System.out.println(clearHeight());
+			return; //WARNING: Possible softlock here
+		}
 		
 		if (controller.getWaveform(Input.JUMP).posEdge()){
 			if(physics.facingWall()){
@@ -125,10 +128,12 @@ public class AirDashState extends PlayerState {
 			}			
 		};
 		
-		world.rayCast(groundFind, l, l.cpy().add(0, -PlayerPhysics.GROUND * 2));
-		world.rayCast(groundFind, c, c.cpy().add(0, -PlayerPhysics.GROUND * 2));
-		world.rayCast(groundFind, r, r.cpy().add(0, -PlayerPhysics.GROUND * 2));
-		toGround = groundFind.fraction * PlayerPhysics.GROUND * 2;
+		float scalar = PlayerPhysics.GROUND * PlayerPhysics.HEAD + 1;
+		
+		world.rayCast(groundFind, l, l.cpy().add(0, -scalar));
+		world.rayCast(groundFind, c, c.cpy().add(0, -scalar));
+		world.rayCast(groundFind, r, r.cpy().add(0, -scalar));
+		toGround = groundFind.fraction * scalar;
 		
 		ShortestRaycast ceilFind = new ShortestRaycast(){
 			@Override
@@ -136,10 +141,10 @@ public class AirDashState extends PlayerState {
 				return Const.isCeil((Actor) fix.getBody().getUserData());
 			}
 		};
-		world.rayCast(ceilFind, l, l.cpy().add(0, PlayerPhysics.HEAD * 2));
-		world.rayCast(ceilFind, c, c.cpy().add(0, PlayerPhysics.HEAD * 2));
-		world.rayCast(ceilFind, r, r.cpy().add(0, PlayerPhysics.HEAD * 2));
-		toCeil = ceilFind.fraction * PlayerPhysics.HEAD * 2;
+		world.rayCast(ceilFind, l, l.cpy().add(0, scalar));
+		world.rayCast(ceilFind, c, c.cpy().add(0, scalar));
+		world.rayCast(ceilFind, r, r.cpy().add(0, scalar));
+		toCeil = ceilFind.fraction * scalar;
 		
 		return toGround + toCeil;
 	}
