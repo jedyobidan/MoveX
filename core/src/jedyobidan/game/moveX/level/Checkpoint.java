@@ -37,6 +37,10 @@ public class Checkpoint extends LevelObject implements ContactListener{
 		this(0,0);
 	}
 
+	public Checkpoint(Vector2 pos) {
+		this(pos.x, pos.y);
+	}
+
 	public void onAdd(Stage s) {
 		super.onAdd(s);
 		Level level = (Level) s;

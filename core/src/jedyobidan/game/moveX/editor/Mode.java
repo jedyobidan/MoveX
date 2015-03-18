@@ -27,6 +27,10 @@ public abstract class Mode {
 			return new DestroyMode(editor);
 		} else if (name.equals("tile") || name.equals("t")){
 			return new TileMode(editor);
+		} else if (name.equals("hazard") || name.equals("h")){
+			return new HazardMode(editor);
+		} else if (name.equals("object") || name.equals("o")){
+			return new ObjectMode(editor);
 		}
 		throw new IllegalArgumentException("No such context: " + name);
 	}

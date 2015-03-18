@@ -61,6 +61,7 @@ public abstract class PointSelection extends Mode {
 			if(types.contains(args[1])){
 				type = args[1];
 				editor.log("Type set to " + type);
+				points.clear();
 				return true;
 			} else {
 				return false;

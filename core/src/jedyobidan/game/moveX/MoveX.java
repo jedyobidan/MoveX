@@ -58,7 +58,7 @@ public class MoveX extends Game {
 		Level level = constructLevel(file);
 		level.setPlayer(player, start.cpy());
 		if(dev){
-			level.addUIInput(new DevUIProcessor(level), true);
+			level.addUIInput(new DevUIProcessor(level, file), true);
 		}
 		setScreen(level);
 		//TODO replace with "cutscene"

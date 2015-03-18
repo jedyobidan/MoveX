@@ -127,8 +127,13 @@ public class LevelEditor extends Actor implements InputProcessor{
 				MoveX.GAME.editLevel("*new");
 			} else if (args[0].equals("mode") || args[0].equals("m")){
 				mode = Mode.construct(this, args[1]);
-				
-			}else if (!mode.execCommand(args)){
+				log("Mode set to " + mode.getName());
+			} else if (args[0].equals("test")){
+				execCommand("w");
+				MoveX.GAME.playLevel(file, new Vector2(Float.parseFloat(args[1]), Float.parseFloat(args[2])), true);
+			}
+			
+			else if (!mode.execCommand(args)){
 				throw new IllegalArgumentException(command + " is not a command");
 			}
 		} catch (Exception e){
