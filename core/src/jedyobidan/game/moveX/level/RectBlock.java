@@ -78,10 +78,11 @@ public class RectBlock extends LevelObject implements Tileable{
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
-		for(int y = 0; y < tiles.length; y++){
-			for(int x = 0; x < tiles[y].length; x++){
-				transform.position.set(pos.x - hwidth + x, pos.y + hheight - y - 1);
-				transform.texture = ((Level) stage).getTile("square" + tiles[y][x]);
+		for(float y = pos.y - hheight; y < pos.y + hheight; y++){
+			for(float x = pos.x - hwidth; x < pos.x + hwidth; x++){
+				transform.position.set(x, y);
+				int tile = getTile(x, y + 1);
+				transform.texture = ((Level) stage).getTile("square" + tile);
 				transform.render(spriteRenderer);
 			}
 		}
@@ -179,6 +180,9 @@ public class RectBlock extends LevelObject implements Tileable{
 	@Override
 	public int setTile(int tile, float x, float y) {
 		tile %= Const.Tiles.SQ_MAX;
+		if(tile < Const.Tiles.SQ_MAX){
+			tile += Const.Tiles.SQ_MAX;
+		}
 		x -= (position.x - hwidth);
 		y = (position.y + hheight) - y;
 		if(y < tiles.length && x < tiles[(int) y].length){

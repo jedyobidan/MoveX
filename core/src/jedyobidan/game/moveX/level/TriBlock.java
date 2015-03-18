@@ -23,7 +23,7 @@ import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
 
-public class TriBlock extends LevelObject{
+public class TriBlock extends LevelObject implements Tileable{
 	private Vector2 position;
 	private float hwidth;
 	private boolean ascending;
@@ -43,46 +43,27 @@ public class TriBlock extends LevelObject{
 		tileDefaults();
 	}
 	
-	public void tileDefaults(){
-		if(tiles.length == 0) return;
-		for(int y = 0; y < tiles.length; y++){
-			if(ascending){
-				tiles[y][0] = Const.Tiles.TR_ASC_S;
-				tiles[y][1] = Const.Tiles.TR_ASC_L;
-				tiles[y][2] = Const.Tiles.SQ_ASC;
-				tiles[y][2 + 2 * y] = Const.Tiles.SQ_R;
-			} else {
-				tiles[y][0] = Const.Tiles.SQ_L;
-				tiles[y][2 * y] = Const.Tiles.SQ_DEC;
-				tiles[y][1 + 2 * y] = Const.Tiles.TR_DEC_L;
-				tiles[y][2 + 2 * y] = Const.Tiles.TR_DEC_S;
-			}
-		}
-		if(ascending){
-			tiles[0][2] = Const.Tiles.SQ_TR;
-		} else {
-			tiles[0][0] = Const.Tiles.SQ_TL;
-		}
-	}
-	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
-		for(int y = 0; y < tiles.length; y++){
-			for(int x = 0; x < 3 + y * 2; x++){
-				int tile = tiles[y][x];
-				if(tile < 16){ // HARD CODED
+		for(float y = position.y; y < position.y + hwidth; y++){
+			float x0, xf;
+			if(ascending){
+				x0 = position.x - hwidth + 2 * (y - position.y);
+				xf = position.x + hwidth + 1;
+			} else {
+				x0 = position.x - hwidth - 1;
+				xf = position.x + hwidth - 2 * (y - position.y);
+			}
+			for(float x = x0; x < xf; x++){
+				int tile = getTile(x, y + 1);
+				if(tile < Const.Tiles.SQ_MAX){ 
 					transform.texture = ((Level) stage).getTile("square" + tile);
 				} else {
-					transform.texture = ((Level) stage).getTile("triangle" + (tile-16));
+					transform.texture = ((Level) stage).getTile("triangle" + (tile-Const.Tiles.SQ_MAX));
 				}
-				transform.position.y = position.y + hwidth - y - 1	;
-				if(ascending){
-					transform.position.x = (position.x + hwidth + 1) - (3 + y * 2) + x;
-				} else {
-					transform.position.x = (position.x - hwidth - 1) + x;
-				}
+				transform.position.set(x, y);
 				transform.render(spriteRenderer);
 			}
 		}
@@ -173,6 +154,60 @@ public class TriBlock extends LevelObject{
 				tiles[y][x] = Integer.parseInt(grid[i++]);
 			}
 		}
+	}
+	
+	public void tileDefaults(){
+		if(tiles.length == 0) return;
+		for(int y = 0; y < tiles.length; y++){
+			if(ascending){
+				tiles[y][0] = Const.Tiles.TR_ASC_S;
+				tiles[y][1] = Const.Tiles.TR_ASC_L;
+				tiles[y][2] = Const.Tiles.SQ_ASC;
+				tiles[y][2 + 2 * y] = Const.Tiles.SQ_R;
+			} else {
+				tiles[y][0] = Const.Tiles.SQ_L;
+				tiles[y][2 * y] = Const.Tiles.SQ_DEC;
+				tiles[y][1 + 2 * y] = Const.Tiles.TR_DEC_L;
+				tiles[y][2 + 2 * y] = Const.Tiles.TR_DEC_S;
+			}
+		}
+		if(ascending){
+			tiles[0][2] = Const.Tiles.SQ_TR;
+		} else {
+			tiles[0][0] = Const.Tiles.SQ_TL;
+		}
+	}
+
+	@Override
+	public int getTile(float x, float y) {
+		y = (float) Math.floor(position.y + hwidth - y);
+		if(ascending){
+			x = x - (position.x - hwidth) + (2 * y - (hwidth - 1) * 2);
+		} else {
+			x = x - (position.x - hwidth - 1);
+		}
+		if(y < tiles.length && x < 3 + 2 * y)
+			return tiles[(int) y][(int) x];
+		else 
+			return -1;
+	}
+
+	@Override
+	public int setTile(int tile, float x, float y) {
+		tile %= Const.Tiles.TR_MAX;
+		if(tile < 0) {
+			tile += Const.Tiles.TR_MAX;
+		}
+		y = (float) Math.floor(position.y + hwidth - y);
+		if(ascending){
+			x = x - (position.x - hwidth) + (2 * y - (hwidth - 1) * 2);
+		} else {
+			x = x - (position.x - hwidth - 1);
+		}
+		if(y < tiles.length && x < 3 + 2 * y)
+			return tiles[(int) y][(int) x] = tile;
+		else 
+			return -1;
 	}
 
 }

@@ -26,7 +26,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-public class StaticPlatform extends LevelObject implements ContactListener{
+public class StaticPlatform extends LevelObject implements ContactListener, Tileable{
 	private float hwidth;
 	private Vector2 position;
 	private Body body;
@@ -48,20 +48,16 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 		tileDefaults();
 	}
 	
-	public void tileDefaults(){
-		if(tiles.length == 0) return;
-		tiles[0] = Const.Tiles.PL_L;
-		tiles[tiles.length - 1] = Const.Tiles.PL_R;
-	}
+	
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
 		SpriteTransform transform = new SpriteTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
-		for(int x = 0; x < tiles.length; x++){
-			transform.position.set(pos.x - hwidth + x, pos.y - 0.5f);
-			transform.texture = ((Level) stage).getTile("plat" + tiles[x]);
+		for(float x = pos.x - hwidth; x < pos.x + hwidth; x++){
+			transform.position.set(x, pos.y - 0.5f);
+			transform.texture = ((Level) stage).getTile("plat" + getTile(x, pos.y));
 			transform.render(spriteRenderer);			
 		}
 	}
@@ -156,5 +152,36 @@ public class StaticPlatform extends LevelObject implements ContactListener{
 			tiles[i] = Integer.parseInt(tileString[i]);
 		}
 	}
+	
+	@Override
+	public void tileDefaults(){
+		if(tiles.length == 0) return;
+		tiles[0] = Const.Tiles.PL_L;
+		tiles[tiles.length - 1] = Const.Tiles.PL_R;
+	}
 
+	@Override
+	public int getTile(float x, float y) {
+		x -= (position.x - hwidth);
+		y = (position.y) - y;
+		if((int) y == 0 && x < tiles.length){
+			return tiles[(int) x];
+		} else {
+			return -1;
+		}
+	}
+
+	@Override
+	public int setTile(int tile, float x, float y) {
+		tile %= Const.Tiles.PL_MAX;
+		if(tile < Const.Tiles.PL_MAX){
+			tile += Const.Tiles.PL_MAX;
+		}
+		x -= (position.x - hwidth);
+		y = (position.y) - y;
+		if((int) y == 0 && x < tiles.length){
+			tiles[(int) x] = tile;
+		}
+		return tile;
+	}
 }

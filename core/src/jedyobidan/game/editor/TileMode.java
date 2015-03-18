@@ -45,6 +45,7 @@ public class TileMode extends Mode{
 			if(a instanceof Tileable){
 				Tileable t = (Tileable) a;
 				int tile = t.getTile(x, y);
+				if(tile == -1) continue;
 				int newTile = tile + (button == Input.Buttons.LEFT ? 1 : -1);
 				newTile = t.setTile(newTile, x, y);
 				editor.log("Tile change " + tile + "->" + newTile);
