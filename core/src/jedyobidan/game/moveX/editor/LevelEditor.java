@@ -128,7 +128,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 			} else if (args[0].equals("mode") || args[0].equals("m")){
 				mode = Mode.construct(this, args[1]);
 				log("Mode set to " + mode.getName());
-			} else if (args[0].equals("test")){
+			} else if (args[0].equals("test") || args[0].equals("t")){
 				execCommand("w");
 				MoveX.GAME.playLevel(file, new Vector2(Float.parseFloat(args[1]), Float.parseFloat(args[2])), true);
 			}
@@ -152,12 +152,12 @@ public class LevelEditor extends Actor implements InputProcessor{
 	@Override
 	public void onAdd(Stage s){
 		level = (Level) s;
-		level.addUIInput(this, true);
+		level.addInput(this, true);
 	}
 	
 	@Override
 	public void onRemove(Stage s){
-		level.removeUIInput(this);
+		level.removeInput(this);
 	}
 	
 	@Override

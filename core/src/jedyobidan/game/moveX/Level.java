@@ -1,20 +1,13 @@
 package jedyobidan.game.moveX;
 
-import java.util.Set;
-
 import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.level.LevelObject;
 import jedyobidan.game.moveX.lib.Actor;
 import jedyobidan.game.moveX.lib.Box2dStage;
-import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.ui.Dialog;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -23,20 +16,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class Level extends Box2dStage implements Stringable {
 	private Player player;
-	private InputMultiplexer input;
-	private InputMultiplexer ui;
+//	private InputMultiplexer ui;
+	private Controller controller;
 	private Dialog dialog;
 	private String tileset;
-	public final TextureManager textures;
 
 	public Level(SpriteBatch sb, ShapeRenderer sr) {
-		super(sb, sr, 2);
+		super(sb, sr, 2, MoveX.ATLAS);
 		physics.setGravity(new Vector2(0, Const.GRAVITY));
-		input = new InputMultiplexer();
-		ui = new InputMultiplexer();
-		input.addProcessor(ui);
+//		ui = new InputMultiplexer();
+//		addInput(ui, true);
 		dialog = new Dialog(Gdx.graphics.getWidth());
-		textures = new TextureManager(MoveX.ATLAS, "");
 		setTileset("cave");
 		addUIActor(dialog);
 		processNewActors();
@@ -49,6 +39,13 @@ public class Level extends Box2dStage implements Stringable {
 		p.setCheckpoint(new Checkpoint(start.x, start.y));
 		p.moveToCheckpoint();
 	}
+	
+	
+
+	@Override
+	public void setPaused(boolean paused) {
+		super.setPaused(paused);
+	}
 
 	@Override
 	protected void render() {
@@ -60,40 +57,27 @@ public class Level extends Box2dStage implements Stringable {
 		super.render();
 	}
 
-	@Override
-	public void show() {
-		super.show();
-		Gdx.input.setInputProcessor(input);
-	}
-
-	@Override
-	public void hide() {
-		super.hide();
-		textures.release();
-		Gdx.input.setInputProcessor(null);
-	}
-
 	public void showDialog(String... text) {
 		dialog.show(text);
 	}
 
 	public void setController(Controller c) {
-		if (input.size() < 2) {
-			input.addProcessor(c);
-		} else {
-			input.removeProcessor(1);
-			input.addProcessor(c);
-		}
+		if(controller != null)
+			removeInput(controller);
+		addInput(controller = c, false);
 	}
 	
-	public void addUIInput(InputProcessor input, boolean priority){
-		if(priority){
-			ui.addProcessor(0, input);
-		} else {
-			ui.addProcessor(input);
-		}
-	}
+//	public void addUIInput(InputProcessor input, boolean priority){
+//		if(priority){
+//			ui.addProcessor(0, input);
+//		} else {
+//			ui.addProcessor(input);
+//		}
+//	}
 
+//	public void removeUIInput(InputProcessor input){
+//		ui.removeProcessor(input);
+//	}
 
 	@Override
 	public String writeString() {
@@ -144,9 +128,6 @@ public class Level extends Box2dStage implements Stringable {
 		return ans.toString();
 	}
 	
-	public void removeUIInput(InputProcessor input){
-		ui.removeProcessor(input);
-	}
 
 	public void addGameActor(Actor a) {
 		addActor(Const.ACT_GROUP_GAME, a);
@@ -188,6 +169,12 @@ public class Level extends Box2dStage implements Stringable {
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public void hide() {
+		super.hide();
+		textures.release();
 	}
 
 }

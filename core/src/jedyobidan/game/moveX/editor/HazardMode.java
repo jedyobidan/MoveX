@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 public class HazardMode extends PointSelection{
 	public HazardMode(LevelEditor editor) {
 		super(editor, "blast");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

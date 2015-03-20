@@ -28,7 +28,6 @@ public class MoveX extends Game {
 	private String[] args;
 	
 	private SpriteBatch spriteRender;	
-	private BitmapFont font;
 	private ShapeRenderer shapeRender;
 
 	public static TextureAtlas ATLAS;
@@ -58,7 +57,7 @@ public class MoveX extends Game {
 		Level level = constructLevel(file);
 		level.setPlayer(player, start.cpy());
 		if(dev){
-			level.addUIInput(new DevUIProcessor(level, file), true);
+			level.addInput(new DevUIProcessor(level, file), true);
 		}
 		setScreen(level);
 		//TODO replace with "cutscene"
@@ -79,7 +78,6 @@ public class MoveX extends Game {
 
 	private void initRes() {
 		spriteRender = new SpriteBatch();
-		font = new BitmapFont();
 		shapeRender = new ShapeRenderer();
 		shapeRender.setAutoShapeType(true);
 		ATLAS = new TextureAtlas("img-packed/pack.atlas");
@@ -89,7 +87,7 @@ public class MoveX extends Game {
 		super.dispose();
 		spriteRender.dispose();
 		shapeRender.dispose();
-		font.dispose();
+		Const.Fonts.dispose();
 		ATLAS.dispose();
 		getScreen().dispose();
 	}

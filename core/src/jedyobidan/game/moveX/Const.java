@@ -38,11 +38,17 @@ public class Const {
 	}
 	
 	public static class Fonts {
-		public static final BitmapFont PIXEL;
-		public static final BitmapFont UI;
+		public static final BitmapFont PIXEL, UI, UI_LARGE;
 		static {
 			PIXEL = new BitmapFont(Gdx.files.internal("fonts/pixel.fnt"));
 			UI = new BitmapFont(Gdx.files.internal("fonts/ui.fnt"));
+			UI_LARGE = new BitmapFont(Gdx.files.internal("fonts/ui_large.fnt"));
+		}
+		
+		public static void dispose(){
+			PIXEL.dispose();
+			UI.dispose();
+			UI_LARGE.dispose();
 		}
 	}
 	

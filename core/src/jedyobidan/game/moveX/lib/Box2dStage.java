@@ -8,6 +8,7 @@ import jedyobidan.game.moveX.Const;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -30,8 +31,8 @@ public class Box2dStage extends Stage implements ContactListener{
 	
 	private boolean physicsPaused;
 	
-	public Box2dStage(SpriteBatch sb, ShapeRenderer sr, int groups){
-		super(sb, sr, groups);
+	public Box2dStage(SpriteBatch sb, ShapeRenderer sr, int groups, TextureAtlas atlas){
+		super(sb, sr, groups, atlas);
 		velocityIterations = 6;
 		positionIterations = 3;
 		contactListeners = new HashSet<ContactListener>();

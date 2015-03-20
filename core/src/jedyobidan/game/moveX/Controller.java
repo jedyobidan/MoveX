@@ -68,4 +68,8 @@ public class Controller extends InputAdapter{
 		}
 		return ans;
 	}
+	
+	public void configure(Input input, int keycode){
+		graphs.get(input).setKey(keycode);
+	}
 }

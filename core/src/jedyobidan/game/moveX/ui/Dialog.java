@@ -78,12 +78,12 @@ public class Dialog extends Actor implements InputProcessor{
 		}
 		da = SPEED;
 		((Level) stage).setPaused(true);
-		((Level) stage).addUIInput(this, true);
+		((Level) stage).addInput(this, true);
 	}
 
 	public void hide() {
 		da = -SPEED;
-		((Level) stage).removeUIInput(this);
+		((Level) stage).removeInput(this);
 	}
 
 	public boolean isOpen() {

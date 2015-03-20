@@ -9,13 +9,18 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeSet;
 
+import jedyobidan.game.moveX.MoveX;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
@@ -30,13 +35,18 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 
 	private List<OrthographicCamera> cameras;
 	private Stack<Matrix4> matrixStack;
+	private InputMultiplexer input;
+	
 	protected SpriteBatch spriteRender;
 	protected ShapeRenderer shapeRender;
 	protected TextureRegion background;
 	
+
+	public final TextureManager textures;
+	
 	private float speed;
 	
-	public Stage(SpriteBatch sb, ShapeRenderer sr, int groups){
+	public Stage(SpriteBatch sb, ShapeRenderer sr, int groups, TextureAtlas atlas){
 		actors = new ArrayList<Collection<Actor>>();
 		addQueue = new ArrayList<Queue<Actor>>();
 		removeQueue = new ArrayList<Queue<Actor>>();
@@ -45,6 +55,8 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		cameras = new ArrayList<OrthographicCamera>();
 		cameras.add(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		matrixStack = new Stack<Matrix4>();
+		input = new InputMultiplexer();
+		
 		spriteRender = sb;
 		shapeRender = sr;
 		
@@ -55,6 +67,8 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		}
 		
 		speed = 1;
+
+		textures = new TextureManager(atlas, "");
 	}
 	
 	public int getNumGroups(){
@@ -149,6 +163,18 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		return cameras.get(camID);
 	}
 	
+	public void addInput(InputProcessor input, boolean priority){
+		if(priority){
+			this.input.addProcessor(0, input);
+		} else {
+			this.input.addProcessor(input);
+		}
+	}
+	
+	public void removeInput(InputProcessor input){
+		this.input.removeProcessor(input);
+	}
+	
 	public void addActor(int group, Actor a){
 		addQueue.get(group).add(a);
 	}
@@ -166,6 +192,18 @@ public class Stage extends ScreenAdapter implements Comparator<Actor>{
 		gameLoop(delta);
 	}
 	
+	@Override
+	public void show() {
+		super.show();
+		Gdx.input.setInputProcessor(input);
+	}
+
+	@Override
+	public void hide() {
+		super.hide();
+		Gdx.input.setInputProcessor(null);
+	}
+
 	public float getSpeed(){
 		return speed;
 	}

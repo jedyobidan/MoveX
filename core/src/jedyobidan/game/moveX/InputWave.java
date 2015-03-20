@@ -33,6 +33,13 @@ public class InputWave extends InputAdapter {
 	public boolean low() {
 		return !wave;
 	}
+	
+	public void setKey(int key){
+		this.key = key;
+		posEdge = 0;
+		negEdge = 0;
+		wave = false;
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -53,6 +60,7 @@ public class InputWave extends InputAdapter {
 		}
 		return false;
 	}
+	
 
 
 }
