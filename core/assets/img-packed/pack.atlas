@@ -132,15 +132,15 @@ sign
   index: -1
 
 pack2.png
-size: 256,64
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 cave/bg
   rotate: false
-  xy: 2, 14
-  size: 48, 48
-  orig: 48, 48
+  xy: 2, 58
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 cave/plat0
@@ -152,154 +152,154 @@ cave/plat0
   index: -1
 cave/plat1
   rotate: false
-  xy: 24, 2
+  xy: 90, 46
   size: 20, 10
   orig: 20, 10
   offset: 0, 0
   index: -1
 cave/plat2
   rotate: false
-  xy: 46, 2
+  xy: 112, 68
   size: 20, 10
   orig: 20, 10
   offset: 0, 0
   index: -1
 cave/square0
   rotate: false
-  xy: 52, 42
+  xy: 2, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square4
   rotate: false
-  xy: 52, 42
-  size: 20, 20
-  orig: 20, 20
-  offset: 0, 0
-  index: -1
-cave/square7
-  rotate: false
-  xy: 52, 42
+  xy: 2, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square5
   rotate: false
-  xy: 52, 42
+  xy: 2, 36
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+cave/square7
+  rotate: false
+  xy: 2, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square1
   rotate: false
-  xy: 52, 20
+  xy: 68, 102
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square10
   rotate: false
-  xy: 118, 20
+  xy: 46, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square11
   rotate: false
-  xy: 140, 42
+  xy: 68, 58
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square12
   rotate: false
-  xy: 140, 20
+  xy: 90, 80
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square13
   rotate: false
-  xy: 162, 42
+  xy: 112, 102
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square14
   rotate: false
-  xy: 162, 20
+  xy: 46, 14
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square15
   rotate: false
-  xy: 184, 42
+  xy: 68, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square2
   rotate: false
-  xy: 74, 42
+  xy: 2, 14
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square3
   rotate: false
-  xy: 74, 20
+  xy: 24, 36
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square6
   rotate: false
-  xy: 96, 42
+  xy: 68, 80
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square8
   rotate: false
-  xy: 96, 20
+  xy: 90, 102
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/square9
   rotate: false
-  xy: 118, 42
+  xy: 24, 14
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/triangle0
   rotate: false
-  xy: 184, 20
+  xy: 90, 58
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/triangle1
   rotate: false
-  xy: 206, 42
+  xy: 112, 80
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/triangle2
   rotate: false
-  xy: 206, 20
+  xy: 134, 102
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 cave/triangle3
   rotate: false
-  xy: 228, 42
+  xy: 68, 14
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
