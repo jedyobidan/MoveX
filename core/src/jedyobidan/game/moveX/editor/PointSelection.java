@@ -63,8 +63,6 @@ public abstract class PointSelection extends Mode {
 				editor.log("Type set to " + type);
 				points.clear();
 				return true;
-			} else {
-				return false;
 			}
 		}
 		

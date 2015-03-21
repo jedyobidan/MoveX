@@ -8,28 +8,32 @@ import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.ui.Dialog;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class Level extends Box2dStage implements Stringable {
 	private Player player;
-//	private InputMultiplexer ui;
 	private Controller controller;
 	private Dialog dialog;
 	private String tileset;
+	
+	private float lockLeft, lockRight, lockTop, lockBottom;
 
 	public Level(SpriteBatch sb, ShapeRenderer sr) {
 		super(sb, sr, 2, MoveX.ATLAS);
 		physics.setGravity(new Vector2(0, Const.GRAVITY));
-//		ui = new InputMultiplexer();
-//		addInput(ui, true);
 		dialog = new Dialog(Gdx.graphics.getWidth());
 		setTileset("cave");
 		addUIActor(dialog);
 		processNewActors();
+		lockLeft = lockBottom = 1000;
+		lockRight = lockTop = -1000;
 	}
 
 	public void setPlayer(Player p, Vector2 start) {
@@ -51,10 +55,25 @@ public class Level extends Box2dStage implements Stringable {
 	protected void render() {
 		if(player != null){
 			Body body = player.getPhysics().getBody();
-			getCamera(getPhysicsCamera()).position.set(body.getPosition().x,
-					body.getPosition().y, 0);
+			OrthographicCamera cam = getCamera(getPhysicsCamera());
+			cam.position.x = Math.max(lockLeft + cam.viewportWidth/2,
+							 Math.min(lockRight - cam.viewportWidth/2,
+							 body.getPosition().x));
+			cam.position.y = Math.max(lockBottom + cam.viewportHeight/2,
+					 Math.min(lockTop - cam.viewportHeight/2,
+					 body.getPosition().y));
 		}
 		super.render();
+		if(isDebug()){
+			useCamera(getPhysicsCamera());
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+		    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			shapeRender.begin(ShapeType.Line);
+			shapeRender.setColor(1, 0, 1, 0.5f);
+			shapeRender.rect(lockLeft, lockBottom, lockRight - lockLeft, lockTop - lockBottom);
+			shapeRender.end();
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+		}
 	}
 
 	public void showDialog(String... text) {
@@ -66,18 +85,6 @@ public class Level extends Box2dStage implements Stringable {
 			removeInput(controller);
 		addInput(controller = c, false);
 	}
-	
-//	public void addUIInput(InputProcessor input, boolean priority){
-//		if(priority){
-//			ui.addProcessor(0, input);
-//		} else {
-//			ui.addProcessor(input);
-//		}
-//	}
-
-//	public void removeUIInput(InputProcessor input){
-//		ui.removeProcessor(input);
-//	}
 
 	@Override
 	public String writeString() {
@@ -112,22 +119,52 @@ public class Level extends Box2dStage implements Stringable {
 		}
 	}
 	
-	public void readMetaData(String meta){
+	private String writeMeta(){
+		StringBuilder ans = new StringBuilder("$META;\n");
+		ans.append("tileset = " + tileset + ";\n");
+		ans.append(String.format("camlock = %.2f %.2f %.2f %.2f;\n", lockTop, lockLeft, lockRight, lockBottom));
+		return ans.toString();
+	}
+	
+	private void readMetaData(String meta){
 		String[] lines = meta.split(";\\s*");
 		for(int i = 1; i < lines.length; i++){
 			String[] arg = lines[i].split("\\s*=\\s*");
 			if(arg[0].equals("tileset")){
 				setTileset(arg[1]);
+			} else if (arg[0].equals("camlock")){
+				String[] params = arg[1].split("\\s+");
+				lockTop = Float.parseFloat(params[0]);
+				lockLeft = Float.parseFloat(params[1]);
+				lockRight = Float.parseFloat(params[2]);
+				lockBottom = Float.parseFloat(params[3]);
 			}
 		}
 	}
 	
-	public String writeMeta(){
-		StringBuilder ans = new StringBuilder("$META;\n");
-		ans.append("tileset = " + tileset + "\n");
-		return ans.toString();
+	public void setCamlock(float lockTop, float lockLeft, float lockRight, float lockBottom){
+		this.lockLeft = lockLeft;
+		this.lockRight = lockRight;
+		this.lockTop = lockTop;
+		this.lockBottom = lockBottom;
 	}
 	
+
+	public void lockLeft(float lockLeft) {
+		this.lockLeft = lockLeft;
+	}
+
+	public void lockRight(float lockRight) {
+		this.lockRight = lockRight;
+	}
+
+	public void lockTop(float lockTop) {
+		this.lockTop = lockTop;
+	}
+
+	public void lockBottom(float lockBottom) {
+		this.lockBottom = lockBottom;
+	}
 
 	public void addGameActor(Actor a) {
 		addActor(Const.ACT_GROUP_GAME, a);

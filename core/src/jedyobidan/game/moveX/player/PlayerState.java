@@ -2,7 +2,7 @@ package jedyobidan.game.moveX.player;
 
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Controller;
-import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureTransform;
 import jedyobidan.game.moveX.lib.TextureManager;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -19,7 +19,7 @@ public abstract class PlayerState {
 	
 	
 	private Animation current;
-	protected SpriteTransform transform;
+	protected TextureTransform transform;
 	private float time;
 	
 	public PlayerState(Player p){
@@ -29,7 +29,7 @@ public abstract class PlayerState {
 		this.textures = p.getTextures();
 		this.controller = p.getController();
 		
-		transform = new SpriteTransform();
+		transform = new TextureTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 	}
 

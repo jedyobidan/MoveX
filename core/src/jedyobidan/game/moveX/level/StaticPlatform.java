@@ -3,7 +3,7 @@ package jedyobidan.game.moveX.level;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.lib.Actor;
-import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureTransform;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.Player;
@@ -52,7 +52,7 @@ public class StaticPlatform extends LevelObject implements ContactListener, Tile
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		SpriteTransform transform = new SpriteTransform();
+		TextureTransform transform = new TextureTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
 		for(float x = pos.x - hwidth; x < pos.x + hwidth; x++){

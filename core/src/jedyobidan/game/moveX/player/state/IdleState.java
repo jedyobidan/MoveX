@@ -2,6 +2,7 @@ package jedyobidan.game.moveX.player.state;
 
 import jedyobidan.game.moveX.Controller;
 import jedyobidan.game.moveX.Input;
+import jedyobidan.game.moveX.level.DownInteract;
 import jedyobidan.game.moveX.lib.JUtil;
 import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.player.PlayerPhysics;
@@ -11,6 +12,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class IdleState extends PlayerState {
 	private Animation main;
@@ -57,6 +61,23 @@ public class IdleState extends PlayerState {
 				
 		if(controller.getDI().x != 0){
 			physics.setFacing(controller.getDI().x < 0);
+		}
+		
+		if(controller.getWaveform(Input.DOWN).posEdge()){
+			World world = body.getWorld();
+			QueryCallback callback = new QueryCallback(){
+				public boolean reportFixture(Fixture fixture) {
+					if(fixture.getBody().getUserData() instanceof DownInteract){
+						((DownInteract) fixture.getBody().getUserData()).onInteract(player);;
+						return false;
+					}
+					return true;
+				}
+			};
+			world.QueryAABB(callback, body.getPosition().x - PlayerPhysics.WIDTH, 
+					body.getPosition().y - PlayerPhysics.GROUND,
+					body.getPosition().x + PlayerPhysics.WIDTH,
+					body.getPosition().y + PlayerPhysics.HEAD);
 		}
 		
 		if(!player.getPhysics().onGround()){

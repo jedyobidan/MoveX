@@ -17,6 +17,8 @@ public abstract class LevelObject extends Actor implements Stringable{
 			object = new TriBlock();
 		} else if (objType.equals("Blast")){
 			object = new Blastzone();
+		} else if (objType.equals("Sign")){
+			object = new Sign();
 		}
 		
 		else {

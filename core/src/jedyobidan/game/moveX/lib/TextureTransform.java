@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class SpriteTransform {
+public class TextureTransform {
 	public Vector2 origin = new Vector2(0, 0); // origin relative to lower-left
 												// corner of texture
 	public Vector2 position = new Vector2(0, 0); // location to render in world space

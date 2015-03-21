@@ -18,7 +18,7 @@ import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.MoveX;
 import jedyobidan.game.moveX.lib.Actor;
-import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureTransform;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.player.Player;
 import jedyobidan.game.moveX.ui.FlyingText;
@@ -58,7 +58,7 @@ public class Checkpoint extends LevelObject implements ContactListener{
 
 		FixtureDef fix = new FixtureDef();
 		fix.isSensor = true;
-		fix.filter.categoryBits = Const.CAT_ENVIRONMENT;
+		fix.filter.categoryBits = Const.CAT_NODE;
 		fix.filter.maskBits = Const.CAT_PLAYER;
 		fix.shape = shape;
 		body.createFixture(fix);
@@ -76,7 +76,7 @@ public class Checkpoint extends LevelObject implements ContactListener{
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
 		TextureRegion texture = on ? txOn : txOff;
-		SpriteTransform transform = new SpriteTransform();
+		TextureTransform transform = new TextureTransform();
 		transform.origin.set(4, 15);
 		transform.scale.set(1 / Const.PIXELS_PER_METER,
 				1 / Const.PIXELS_PER_METER);

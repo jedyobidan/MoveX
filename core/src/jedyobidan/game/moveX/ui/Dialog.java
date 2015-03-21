@@ -71,6 +71,7 @@ public class Dialog extends Actor implements InputProcessor{
 		this.text = str;
 		this.currentText = 0;
 		FONT.setScale(1);
+		height = 0;
 		for (int i = 0; i < str.length; i++) {
 			TextBounds bounds = FONT.getWrappedBounds(str[i], width - H_PADDING
 					* 2);

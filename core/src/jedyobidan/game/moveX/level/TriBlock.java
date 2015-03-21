@@ -18,7 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.lib.Actor;
-import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureTransform;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
@@ -45,7 +45,7 @@ public class TriBlock extends LevelObject implements Tileable{
 	
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		SpriteTransform transform = new SpriteTransform();
+		TextureTransform transform = new TextureTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		for(float y = position.y; y < position.y + hwidth; y++){
 			float x0, xf;

@@ -73,6 +73,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 		
 		// Info
 		font.setScale(1);
+		font.setColor(1, 1, 1, 1);
 		font.drawMultiLine(spriteRenderer, getInfo(), -Gdx.graphics.getWidth()/2 + 4, Gdx.graphics.getHeight()/2 - 2);
 		
 		// Console
@@ -107,22 +108,16 @@ public class LevelEditor extends Actor implements InputProcessor{
 		command = command.trim();
 		String[] args = command.split("\\s+");
 		try{
+			// File Commands
 			if(args[0].equals("write") || args[0].equals("w")){
-				String location;
-				if(args.length == 1){
-					location = this.file;
-				} else {
-					location = "level/" + args[1];
+				if(args.length == 2){
+					file = "level/" + args[1];
 				}
-				
-				file = location;
 				FileHandle file = Gdx.files.local("../core/assets/" + this.file);
 				file.writeString(level.writeString(), false);
 				log("Wrote level to " + file + " (" + file.length() + " bytes)");
-				
 			} else if (args[0].equals("open")){
-				String location = "level/" + args[1];
-				MoveX.GAME.editLevel(location);
+				MoveX.GAME.editLevel("level/" + args[1]);
 			} else if (args[0].equals("new")){
 				MoveX.GAME.editLevel("*new");
 			} else if (args[0].equals("mode") || args[0].equals("m")){
@@ -131,8 +126,26 @@ public class LevelEditor extends Actor implements InputProcessor{
 			} else if (args[0].equals("test") || args[0].equals("t")){
 				execCommand("w");
 				MoveX.GAME.playLevel(file, new Vector2(Float.parseFloat(args[1]), Float.parseFloat(args[2])), true);
-			}
+			} 
 			
+			// Metadata Commands
+			else if (args[0].equals("camlock")){
+				if (args[1].equals("top")){
+					level.lockTop(Float.parseFloat(args[2]));
+					log("Locked top to " + Float.parseFloat(args[2]));
+				} else if (args[1].equals("left")){
+					level.lockLeft(Float.parseFloat(args[2]));
+					log("Locked left to " + Float.parseFloat(args[2]));
+				} else if (args[1].equals("right")){
+					level.lockRight(Float.parseFloat(args[2]));
+					log("Locked right to " + Float.parseFloat(args[2]));
+				} else if (args[1].equals("bottom")){
+					level.lockBottom(Float.parseFloat(args[2]));
+					log("Locked bottom to " + Float.parseFloat(args[2]));
+				}
+			} 
+			
+			// Mode commands
 			else if (!mode.execCommand(args)){
 				throw new IllegalArgumentException(command + " is not a command");
 			}
@@ -141,6 +154,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public void log(String msg){
 		log.addLast(msg);
@@ -162,7 +176,7 @@ public class LevelEditor extends Actor implements InputProcessor{
 	
 	@Override
 	public float getZIndex(){
-		return 1000;
+		return 2000;
 	}
 
 	@Override

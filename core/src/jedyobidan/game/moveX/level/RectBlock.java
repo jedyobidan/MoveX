@@ -5,7 +5,7 @@ import java.util.Arrays;
 import jedyobidan.game.moveX.Const;
 import jedyobidan.game.moveX.Level;
 import jedyobidan.game.moveX.lib.Actor;
-import jedyobidan.game.moveX.lib.SpriteTransform;
+import jedyobidan.game.moveX.lib.TextureTransform;
 import jedyobidan.game.moveX.lib.Stage;
 import jedyobidan.game.moveX.lib.TextureManager;
 import jedyobidan.game.moveX.player.PlayerPhysics;
@@ -75,7 +75,7 @@ public class RectBlock extends LevelObject implements Tileable{
 
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
-		SpriteTransform transform = new SpriteTransform();
+		TextureTransform transform = new TextureTransform();
 		transform.scale.set(1/Const.PIXELS_PER_METER, 1/Const.PIXELS_PER_METER);
 		Vector2 pos = body.getPosition();
 		for(float y = pos.y - hheight; y < pos.y + hheight; y++){

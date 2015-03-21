@@ -10,19 +10,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
 
-public class DevUIProcessor extends InputAdapter {
-	private Level level;
+public class DevUIProcessor extends DistUIProcessor {
 	private String file;
 	public DevUIProcessor(Level level, String file){
-		this.level = level;
+		super(level);
 		this.file = file;
 	}
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.ESCAPE) {
-			level.addUIActor(new PauseMenu(level));
+		if(super.keyDown(keycode)){
 			return true;
-		} else if (keycode == Keys.TAB) {
+		}
+		
+		if (keycode == Keys.TAB) {
 			level.setDebug(!level.isDebug());
 			return true;
 		} else if (keycode == Keys.LEFT) {

@@ -9,6 +9,7 @@ import jedyobidan.game.moveX.level.Blastzone;
 import jedyobidan.game.moveX.level.Checkpoint;
 import jedyobidan.game.moveX.level.LevelObject;
 import jedyobidan.game.moveX.level.RectBlock;
+import jedyobidan.game.moveX.level.Sign;
 import jedyobidan.game.moveX.level.StaticPlatform;
 import jedyobidan.game.moveX.level.TriBlock;
 import jedyobidan.game.moveX.lib.Actor;
@@ -58,6 +59,8 @@ public class MoveX extends Game {
 		level.setPlayer(player, start.cpy());
 		if(dev){
 			level.addInput(new DevUIProcessor(level, file), true);
+		} else {
+			level.addInput(new DistUIProcessor(level), true);
 		}
 		setScreen(level);
 		//TODO replace with "cutscene"

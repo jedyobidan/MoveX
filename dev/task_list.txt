@@ -17,7 +17,7 @@ BASIC FUNCTIONS
 Dialogs		On hold (needs with icon)
 Game Menu	Completed
 Control Rebind  Completed
-Camera Lock	Not Started
+Camera Lock	Completed
 Saves		Not Started
 Title Screen	Not Started
 Timer		Not Started
@@ -29,7 +29,7 @@ Rect. Surface	Completed
 Slopes		Completed (possibly glitchy)
 Platforms	Completed (also possible glitchy, but less than slopes)
 Checkpoints	Completed
-Signs		Not Started
+Signs		Completed
 Upgrades	Not Started
 Loading Zones	Not Started
 Dash Blocks	Not Started
