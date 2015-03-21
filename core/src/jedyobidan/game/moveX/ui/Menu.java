@@ -219,7 +219,7 @@ public class Menu extends Actor implements InputProcessor {
 	public boolean keyDown(int keycode) { return true; }
 
 	@Override
-	public boolean keyUp(int keycode) {	return false; }
+	public boolean keyUp(int keycode) {	return false;}
 
 	@Override
 	public boolean keyTyped(char character) { return false; }

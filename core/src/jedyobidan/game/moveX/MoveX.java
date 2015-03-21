@@ -61,7 +61,7 @@ public class MoveX extends Game {
 		}
 		setScreen(level);
 		//TODO replace with "cutscene"
-		level.showDialog("Welcome to Move X!", "Press w/a/s/d to move\nPress k to jump\nPress l to dash");
+		level.showDialog("Welcome to Move X!", "Press w/a/s/d to move\nPress k to jump\nPress l to dash\nPress Esc to go to the menu");
 	}
 	
 	public void editLevel(String file){

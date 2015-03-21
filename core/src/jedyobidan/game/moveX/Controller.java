@@ -72,4 +72,8 @@ public class Controller extends InputAdapter{
 	public void configure(Input input, int keycode){
 		graphs.get(input).setKey(keycode);
 	}
+	
+	public int getKey(Input input){
+		return graphs.get(input).getKey();
+	}
 }

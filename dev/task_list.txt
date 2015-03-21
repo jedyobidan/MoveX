@@ -14,13 +14,10 @@ Grapple Hook	Not Started
 Hookshot	Not Started
 
 BASIC FUNCTIONS
-Checkpoints	Completed
 Dialogs		On hold (needs with icon)
 Game Menu	Completed
-Control Rebind  Not Started
-Signs		Not Started
-Upgrades	Not Started
-Loading Zones	Not Started
+Control Rebind  Completed
+Camera Lock	Not Started
 Saves		Not Started
 Title Screen	Not Started
 Timer		Not Started
@@ -31,7 +28,10 @@ LEVEL OBJECTS
 Rect. Surface	Completed
 Slopes		Completed (possibly glitchy)
 Platforms	Completed (also possible glitchy, but less than slopes)
-Camera Lock	Not Started
+Checkpoints	Completed
+Signs		Not Started
+Upgrades	Not Started
+Loading Zones	Not Started
 Dash Blocks	Not Started
 Steel Surface	Not Started
 Sticky Surface	Not Started
@@ -39,6 +39,7 @@ Sticky Surface	Not Started
 HAZARDS
 Blast Zones	Completed
 Spikes		Not Started
+Lasers		Not Started
 Turrets		Not Started
 
 DEV TOOLS

@@ -20,6 +20,7 @@ public class Button extends Actor {
 	private int state;
 	private int x, y;
 	private String text;
+	private boolean disabled;
 	TextureManager textures;
 	
 	private static final int NONE = 0, HOVER = 1, ACTIVE = 2;
@@ -52,7 +53,9 @@ public class Button extends Actor {
 	@Override
 	public void render(SpriteBatch spriteRenderer, ShapeRenderer shapeRenderer) {
 		TextureRegion texture;
-		if(state == NONE){
+		if(disabled){
+			texture = textures.get("ui/button-disable");
+		} else if(state == NONE){
 			texture = textures.get("ui/button");
 		} else if (state == HOVER){
 			texture = textures.get("ui/button-hover"); 
@@ -69,20 +72,24 @@ public class Button extends Actor {
 	}
 	
 	public void mouseEnter(){
+		if(disabled) return;
 		if(state == NONE){
 			state = HOVER;
 		}
 	}
 	
 	public void mouseExit(){
+		if(disabled) return;
 		state = NONE;
 	}
 	
 	public void mouseClick(){
+		if(disabled) return;
 		state = ACTIVE;
 	}
 	
 	public void mouseRelease(){
+		if(disabled) return;
 		if(state == ACTIVE){
 			state = NONE;
 			for(ButtonListener b: listeners){
@@ -102,5 +109,9 @@ public class Button extends Actor {
 	
 	public void setText(String text){
 		this.text = text;
+	}
+	
+	public void setDisabled(boolean disabled){
+		this.disabled = disabled;
 	}
 }

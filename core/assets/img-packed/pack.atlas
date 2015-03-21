@@ -178,14 +178,14 @@ cave/square4
   orig: 20, 20
   offset: 0, 0
   index: -1
-cave/square5
+cave/square7
   rotate: false
   xy: 52, 42
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
-cave/square7
+cave/square5
   rotate: false
   xy: 52, 42
   size: 20, 20
@@ -312,133 +312,140 @@ filter: Nearest,Nearest
 repeat: none
 ui/arrow-down
   rotate: false
-  xy: 323, 168
+  xy: 323, 144
   size: 15, 12
   orig: 15, 12
   offset: 0, 0
   index: -1
 ui/bg
   rotate: false
-  xy: 2, 215
+  xy: 2, 191
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 ui/button
   rotate: false
-  xy: 2, 151
+  xy: 2, 127
   size: 291, 62
   orig: 291, 62
   offset: 0, 0
   index: -1
 ui/button-active
   rotate: false
-  xy: 516, 665
+  xy: 516, 641
+  size: 291, 62
+  orig: 291, 62
+  offset: 0, 0
+  index: -1
+ui/button-disable
+  rotate: false
+  xy: 2, 63
   size: 291, 62
   orig: 291, 62
   offset: 0, 0
   index: -1
 ui/button-hover
   rotate: false
-  xy: 2, 87
+  xy: 516, 577
   size: 291, 62
   orig: 291, 62
   offset: 0, 0
   index: -1
 ui/dframe-botleft
   rotate: false
-  xy: 370, 182
+  xy: 370, 158
   size: 31, 31
   orig: 31, 31
   offset: 0, 0
   index: -1
 ui/dframe-botright
   rotate: false
-  xy: 516, 559
+  xy: 809, 599
   size: 31, 31
   orig: 31, 31
   offset: 0, 0
   index: -1
 ui/dframe-bracket
   rotate: false
-  xy: 516, 592
+  xy: 809, 632
   size: 31, 71
   orig: 31, 71
   offset: 0, 0
   index: -1
 ui/dframe-horz
   rotate: false
-  xy: 295, 182
+  xy: 295, 158
   size: 73, 31
   orig: 73, 31
   offset: 0, 0
   index: -1
 ui/dframe-topleft
   rotate: false
-  xy: 549, 632
+  xy: 842, 672
   size: 31, 31
   orig: 31, 31
   offset: 0, 0
   index: -1
 ui/dframe-topright
   rotate: false
-  xy: 809, 668
+  xy: 2, 2
   size: 31, 31
   orig: 31, 31
   offset: 0, 0
   index: -1
 ui/dframe-vert
   rotate: false
-  xy: 2, 30
+  xy: 516, 520
   size: 31, 55
   orig: 31, 55
   offset: 0, 0
   index: -1
 ui/frame-botleft
   rotate: false
-  xy: 885, 701
+  xy: 78, 35
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-botright
   rotate: false
-  xy: 2, 2
+  xy: 516, 492
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-horz
   rotate: false
-  xy: 809, 701
+  xy: 2, 35
   size: 74, 26
   orig: 74, 26
   offset: 0, 0
   index: -1
 ui/frame-topleft
   rotate: false
-  xy: 35, 59
+  xy: 549, 549
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-topright
   rotate: false
-  xy: 295, 93
+  xy: 295, 69
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 ui/frame-vert
   rotate: false
-  xy: 295, 121
+  xy: 295, 97
   size: 26, 59
   orig: 26, 59
   offset: 0, 0
   index: -1
 ui/square
   rotate: false
-  xy: 403, 200
+  xy: 403, 176
   size: 13, 13
   orig: 13, 13
   offset: 0, 0

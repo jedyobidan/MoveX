@@ -130,6 +130,7 @@ public class PlayerPhysics implements ContactListener {
 
 	public void move(float x, float y) {
 		body.setTransform(new Vector2(x, y), 0);
+		body.setLinearVelocity(0, 0);
 		setDashbox(false);
 		setFacing(false);
 		groundNormal = new Vector2(0, 1);

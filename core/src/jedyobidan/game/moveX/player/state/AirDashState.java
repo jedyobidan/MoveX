@@ -88,7 +88,6 @@ public class AirDashState extends PlayerState {
 		exitImpulse.y = body.getMass() * - velocity.y;
 		
 		if(clearHeight() < PlayerPhysics.GROUND + PlayerPhysics.HEAD){
-			System.out.println(clearHeight());
 			return; //WARNING: Possible softlock here
 		}
 		

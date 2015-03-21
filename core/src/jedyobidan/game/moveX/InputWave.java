@@ -40,6 +40,11 @@ public class InputWave extends InputAdapter {
 		negEdge = 0;
 		wave = false;
 	}
+	
+	public int getKey() {
+		return key;
+	}
+	
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -60,7 +65,7 @@ public class InputWave extends InputAdapter {
 		}
 		return false;
 	}
-	
+
 
 
 }

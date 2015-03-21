@@ -2,6 +2,7 @@ package jedyobidan.game.moveX;
 
 import jedyobidan.game.moveX.ui.Button;
 import jedyobidan.game.moveX.ui.ButtonListener;
+import jedyobidan.game.moveX.ui.ControlsMenu;
 import jedyobidan.game.moveX.ui.Menu;
 import jedyobidan.game.moveX.ui.PauseMenu;
 
@@ -39,18 +40,7 @@ public class DevUIProcessor extends InputAdapter {
 			System.out.println(level.getPlayer().getPhysics().getBody().getPosition());
 			return true;
 		} else if (keycode == Keys.NUM_0){
-			final Menu menu = new Menu("Menu", 0, Gdx.graphics.getHeight()/2 - 64);
-			ButtonListener l = new ButtonListener(){
-				public void onClick(Button b) {
-					System.out.println("Clicked " + b.getText());
-					level.removeUIActor(menu);
-				}
-			};
-			for(int i =0; i < 5; i++){
-				Button b = new Button("Button " + i, 0, 0);
-				b.addListener(l);
-				menu.addButton(b);
-			}
+			ControlsMenu menu = new ControlsMenu(level.getPlayer().getController());
 			level.addUIActor(menu);
 			return true;
 		}
